@@ -1,6 +1,6 @@
 public class Sprite extends GameObject {
-	protected float xPos;
-	protected float yPos;
+	public float xPos;
+	public float yPos;
 	protected float speed;
 	protected int direct = -1;
 	
