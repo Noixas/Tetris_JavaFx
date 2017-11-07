@@ -1,10 +1,8 @@
 //TODO:Make component an interface
 //Create Physics, input and Graphics component
-class PhysicsComponent
+interface Component
 {
-public  void update(GameObject pGObject, World pWorld)
-  {
-    //pGObject.x += pGObject.velocity;
-  }
+  GameObject owner;
+  public  void update();
 
 };

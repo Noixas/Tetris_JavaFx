@@ -8,6 +8,7 @@ public class World extends GameObject{
 		for(int i=0; i<_children.size(); i++) {
 			_children.get(i).Update();
 		}
+		Input.clearInput();
 	}
 	private void Init()
 	{

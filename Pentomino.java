@@ -2,10 +2,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import java.util.List;
 import java.util.LinkedList;
-public class Pentomino extends Sprite {
-	public static final int TILE_SIZE = 25;
-	public static final int GRID_WIDTH = 15;
-	public static final int GRID_HEIGHT = 20;
+public class Pentomino extends GameObject {
+	public static final int TILE_SIZE = 50;
+	public static final int GRID_WIDTH = 10;
+	public static final int GRID_HEIGHT = 15;
 	//Type of tiles
 	private List<char[][]> pentominoes = new LinkedList<char[][]>();
   private char[][] pentomino;
@@ -19,14 +19,14 @@ public class Pentomino extends Sprite {
 	}
 	public void Update() {
 		move();
-		System.out.println("My new position is " + yPos);
+		//System.out.println("My new position is " + yPos);
 
 	}
 	public void move(int pDir) {
 		xPos = xPos + pDir*TILE_SIZE ;
 	}
   public void move() {
-		System.out.println(Time.deltaTime);
+		//System.out.println(Time.deltaTime);
 		yPos = yPos + speed ;
 	}
   public void rotate(int pDir)

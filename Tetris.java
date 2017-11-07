@@ -13,30 +13,16 @@ import javafx.scene.canvas.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 public class Tetris extends Application {
-	private static final int STAR_COUNT = 500;
-	private final Random random = new Random();
-	public static final int TILE_SIZE = 40;
-	public static final int GRID_WIDTH = 15;
-	public static final int GRID_HEIGHT = 20;
-	private final Rectangle[] nodes = new Rectangle[STAR_COUNT];
-	private final double[] angles = new double[STAR_COUNT];
-	private final long[] start = new long[STAR_COUNT];
-	private double time;
+	long time = 0;
 	public static void main(String[] args) {
 		Time.StartTime();
-		//testing gits
 		World world = new World();
 		for(int i=0; i<3; i++) {
 			Pentomino pent = new Pentomino(5, 10);
 			world.addChild(pent);
 			pent.xPos = i*100;
 		}
-		for(int i=0; i<1; i++) {
-			Time.updateDeltaTime();
-			world.Update();
 
-
-		}
 		launch(args);
 	}
 	@Override
@@ -49,7 +35,6 @@ public class Tetris extends Application {
 		Pane world = new Pane();
 		world.setStyle("-fx-background-color: black;");
 		world.setPrefSize(500,720);
-		Button button2 = new Button("Button 2");
 		GridPane root = new GridPane();
 
 		Pentomino p = new Pentomino(0,0);
@@ -61,55 +46,41 @@ public class Tetris extends Application {
 		world.getChildren().addAll(canvas);
 		Scene scene = new Scene(root, 1280, 720);
 		primaryStage.setScene(scene);
-		Rectangle r = new Rectangle(5,5,25,25);
-		r.setFill(Color.ORANGE);
 		//TODO make it so whenever a pentomino stops, a new one is spawn
 		//TODO spawn pentominoes when off limits
 		//TODO Add color property to pentomino
-		root.getChildren().add(r);
-		if(Input.keyPressed("SPACE"))
-			System.out.println("SPACE");
-			scene.setOnKeyPressed(e -> {
+Input.setScene(scene);
+			/*scene.setOnKeyPressed(e -> {
 			            if (e.getCode() == KeyCode.SPACE) {
 			                p.rotate(1);
+											System.out.println(time);
 			            }
 								 else if (e.getCode() == KeyCode.LEFT) {
 									p.move(-1);
 								} else if (e.getCode() == KeyCode.RIGHT) {
 									p.move(1);
 								}
-								});
+							});*/
+		//Loop of the game
 		AnimationTimer timer = new AnimationTimer() {
 			                       @Override
 			                       public void handle(long now) {
-				                       time += 0.017;
-
+				                       time += now;
 				                       //  if (time >= 0.5) {
-				                       update(r);
-				                       render(gc, r);
+															 if(Input.keyPressed("SPACE")) {
+																 	p.rotate(1);
+																	System.out.println("It works!!!!!!");
+															 }
+
 															 p.Update();
 															 p.Render(gc);
-				                       time = 0;
+
+				                       //time = 0;
 				                       //  }
+
 			                       }
 		                       };
 		timer.start();
 		primaryStage.show();
-	}
-	private void update(Rectangle r)
-	{
-		r.setTranslateY(r.getTranslateY() + 1);
-		//Try move down
-	}
-	private void render(GraphicsContext gc, Rectangle r)
-	{
-		gc.clearRect(0, 0, GRID_WIDTH * TILE_SIZE, GRID_HEIGHT * TILE_SIZE);
-		gc.fillRect(r.getTranslateX(),
-		            r.getTranslateY(),
-		            r.getWidth(),
-		            r.getHeight());
-		System.out.println(r.getTranslateX());
-		gc.setFill(Color.PURPLE);
-		//	gc.setStroke(Color.BLUE);
 	}
 }

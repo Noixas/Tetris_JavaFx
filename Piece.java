@@ -116,8 +116,9 @@ private static char[][] x = {
     {'l','0'},
     {'l','0'},
     {'l','l'}};
-    static{//Add pentominoes to the list, TODO: add the flip version of the pieces
-      pieces.add(l);//1
+    static{
+			//TODO: ask teacher if good programming practice
+			pieces.add(l);//1
       pieces.add(x);//2
       pieces.add(f);//3
       pieces.add(v);//4

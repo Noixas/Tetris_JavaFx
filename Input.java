@@ -9,26 +9,18 @@ import javafx.scene.input.KeyEvent;
 public class Input {
 	private static List<String> input = new LinkedList<String>();
 	private static Scene scene;
+	private static List<String> pressed = new LinkedList<String>();
 	public static void setScene(Scene pScene) {
 		scene = pScene;
-	}
-	public static boolean keyPressed(String pKey) {
-		if(input.contains(pKey)) {
-			input.remove(pKey);
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	public static void updateInput() {
 		scene.setOnKeyPressed(
 			new EventHandler<KeyEvent>() {
 				public void handle(KeyEvent e) {
 					String code = e.getCode().toString();
-					
-					if(!input.contains(code)) {
+
+					if(!pressed.contains(code)) {
 						input.add(code);
+						System.out.println(code);
+						System.out.println(input.size());
 					}
 				}
 			});
@@ -36,11 +28,30 @@ public class Input {
 			new EventHandler<KeyEvent>() {
 				public void handle(KeyEvent e) {
 					String code = e.getCode().toString();
-					if(input.contains(code)) {
-						input.remove(code);
+					if(pressed.contains(code)) {
+						pressed.remove(code);
+						System.out.println("release");
 					}
 				}
 			});
-		
+	}
+	public static boolean keyPressed(String pKey) {
+		if(input.contains(pKey)) {
+			//input.remove(pKey);
+			System.out.println(true);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	public static void clearInput() {
+		for(int i=0; i<input.size(); i++) {
+			String news = input.get(i);
+			pressed.add(news);
+		}
+		input.clear();
+
+
 	}
 }
