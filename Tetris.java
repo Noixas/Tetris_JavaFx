@@ -24,6 +24,7 @@ public class Tetris extends Application {
 	private double time;
 	public static void main(String[] args) {
 		Time.StartTime();
+		//testing gits
 		World world = new World();
 		for(int i=0; i<3; i++) {
 			Pentomino pent = new Pentomino(5, 10);
