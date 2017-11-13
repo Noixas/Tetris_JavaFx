@@ -37,7 +37,7 @@ public class Input {
 	}
 	public static boolean keyPressed(String pKey) {
 		if(input.contains(pKey)) {
-			//input.remove(pKey);
+			input.remove(pKey);
 			System.out.println(true);
 			return true;
 		}

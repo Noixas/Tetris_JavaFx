@@ -2,7 +2,7 @@
 //Create Physics, input and Graphics component
 interface Component
 {
-  GameObject owner;
-  public  void update();
+  //GameObject owner;
+  public void update();
 
 };
