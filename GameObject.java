@@ -7,6 +7,9 @@ public class GameObject {
 	protected float yPos;
 	protected float speed;
 	protected int direct = -1;
+  //TODO add list of components and create its addMEthod and a remove method
+  //NOTE: All remove methods should be overwritten so we can remove stuff by either index, type or if the objects are equals()
+  //TODO removeChild()
   public GameObject() {
     System.out.println("A new game object has been created!");
   }
@@ -18,7 +21,7 @@ public class GameObject {
     _parent = parent;
   }
   public void Update() {
-
+    //TODO  Update all of my children first
   }
   public void addChild(GameObject child) {
     _children.add(child);

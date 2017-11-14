@@ -19,6 +19,7 @@ public class Board extends GameObject {
   public Score getScore() {
     return _score;
   }
+  //TODO add update method
   public void Init()
   {
       //Start Time
@@ -26,5 +27,5 @@ public class Board extends GameObject {
       //Preview next 2 pentominoes
       //Start Score
   }
-  
+
 }

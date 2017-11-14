@@ -12,7 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.canvas.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-
+//TODO clean this class and just have relevant information on it
+//TODO Just keep the JAVAFX and a world update
 public class Tetris extends Application {
 	long time = 0;
 	public static void main(String[] args) {
