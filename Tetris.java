@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.canvas.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import java.util.List;
+import java.util.LinkedList;
 //TODO clean this class and just have relevant information on it
 //TODO Just keep the JAVAFX and a world update
 public class Tetris extends Application {
@@ -40,6 +42,7 @@ public class Tetris extends Application {
 		GridPane root = new GridPane();
 
 		Pentomino p = new Pentomino(0,0);
+		InputPentomino inputP = new InputPentomino(p);
 		Canvas canvas = new Canvas(500,720);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		root.add(left, 0, 0, 1, 1);
@@ -67,13 +70,20 @@ Input.setScene(scene);
 		AnimationTimer timer = new AnimationTimer() {
 			                       @Override
 			                       public void handle(long now) {
+														 if(Input.keyPressed("ESCAPE")) {
+																 	System.out.println("Terminating Game...");
+																	System.exit(0);
+															}
+
 				                       time += now;
 				                       //  if (time >= 0.5) {
-															 if(Input.keyPressed("SPACE")) {
-																 	p.rotate(1);
-																	System.out.println("It works!!!!!!");
+															 List<Component> comps = p.getComponents();
+															 for(int i = 0; i < comps.size();i++)
+															 {
+																 comps.get(i).Update();
 															 }
 															 World.world.Update();
+
 															 p.Update();
 															 p.Render(gc);
 

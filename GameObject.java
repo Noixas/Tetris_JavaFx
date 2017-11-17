@@ -1,8 +1,9 @@
-import java.util.List;
+ import java.util.List;
 import java.util.LinkedList;
 public class GameObject {
   protected GameObject _parent;
   protected List<GameObject> _children = new LinkedList<GameObject>();
+  protected List<Component> _components = new LinkedList<Component>();
   protected float xPos;
 	protected float yPos;
 	protected float speed;
@@ -26,5 +27,21 @@ public class GameObject {
   public void addChild(GameObject child) {
     _children.add(child);
     child.addParent(this);
+  }
+  public void addComponent(Component pComponent)
+  {
+    _components.add(pComponent);
+  }
+  public boolean removeComponent(Component pComponent)
+  {
+    return _components.remove(pComponent);
+  }
+  public void removeComponent(int pIndex)
+  {
+     _components.remove(pIndex);
+  }
+  public List<Component> getComponents()
+  {
+    return _components;
   }
 }

@@ -1,8 +1,12 @@
 //TODO:Make component an interface
 //Create Physics, input and Graphics component
-interface Component
+public abstract class Component
 {
-  //GameObject owner;
-  public void update();
+  protected GameObject _owner;
+  public void setOwner(GameObject pOwner)
+  {
+    _owner = pOwner;
+  }
+  public abstract void Update();
 
 };
