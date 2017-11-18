@@ -20,7 +20,6 @@ public class Pentomino extends GameObject {
 	public void Update() {
 		move();
 		//System.out.println("My new position is " + yPos);
-
 	}
 	public void move(int pDir) {
 		xPos = xPos + pDir*TILE_SIZE ;
@@ -36,18 +35,20 @@ public class Pentomino extends GameObject {
     else if(_rotation > 3) _rotation = 0;
     pentomino = pentominoes.get(_rotation);
   }
-	public void Render(GraphicsContext gc)
+	public int getTileSize()
 	{
-    gc.clearRect(0, 0, GRID_WIDTH * TILE_SIZE, GRID_HEIGHT * TILE_SIZE);
-
-		gc.setFill(Color.BLUE);
-		for(int i = 0; i < pentomino[0].length; i++)
-		{
-			for(int j = 0; j < pentomino.length; j++)
-			{
-        if(pentomino[j][i] != '0')
-				gc.fillRect((xPos) +(i* TILE_SIZE),yPos + (j* TILE_SIZE), TILE_SIZE, TILE_SIZE);
-			}
-		}
+		return TILE_SIZE;
+	}
+	public char[][] getPentArray()
+	{
+		return pentomino;
+	}
+	public float getX()
+	{
+		return xPos;
+	}
+	public float getY()
+	{
+		return yPos;
 	}
 }

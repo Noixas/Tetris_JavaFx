@@ -28,6 +28,16 @@ public class GameObject {
     _children.add(child);
     child.addParent(this);
   }
+  public void translate(float xDir, float yDir, float pDistance)
+  {
+    xPos = xDir * pDistance;
+    yPos = yDir * pDistance;
+  }
+  public void move(float xDir, float yDir, float pDistance)
+  {
+    xPos += xDir * pDistance;
+    yPos += yDir * pDistance;
+  }
   public void addComponent(Component pComponent)
   {
     _components.add(pComponent);

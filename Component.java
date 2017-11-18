@@ -1,5 +1,7 @@
 //TODO:Make component an interface
 //Create Physics, input and Graphics component
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 public abstract class Component
 {
   protected GameObject _owner;
@@ -7,6 +9,6 @@ public abstract class Component
   {
     _owner = pOwner;
   }
-  public abstract void Update();
 
+  public abstract void Update();
 };

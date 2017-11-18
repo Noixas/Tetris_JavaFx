@@ -43,10 +43,12 @@ public class Tetris extends Application {
 
 		Pentomino p = new Pentomino(0,0);
 		InputPentomino inputP = new InputPentomino(p);
+
 		Canvas canvas = new Canvas(500,720);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		root.add(left, 0, 0, 1, 1);
 		root.add(world, 1, 0, 1, 1);
+		GraphicsComponent graphP = new GraphicsComponent(p,gc);
 
 		world.getChildren().addAll(canvas);
 		Scene scene = new Scene(root, 1280, 720);
@@ -80,12 +82,20 @@ Input.setScene(scene);
 															 List<Component> comps = p.getComponents();
 															 for(int i = 0; i < comps.size();i++)
 															 {
-																 comps.get(i).Update();
+																 Component comp = comps.get(i);
+														/*		 if(comp instanceof InputPentomino)
+																 {*/
+																	 comp.Update();
+																// }
+															/*	 else if(comp instanceof GraphicsComponent)
+																 {
+																	 comp.Update(gc);
+																 }*/
 															 }
 															 World.world.Update();
 
 															 p.Update();
-															 p.Render(gc);
+															 //p.Render(gc);
 
 				                       //time = 0;
 				                       //  }
