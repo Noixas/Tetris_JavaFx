@@ -17,22 +17,23 @@ public class PhysicsPentomino extends Component {
   }
   public void fall()
   {
-    System.out.println("FLLING");
     _pentomino.move(0, 1, _speed);
+
   }
   public void move(int pDir)
   {
-    _board.tryMove(_pentomino, pDir);
+  if(_board.tryMove(_pentomino, pDir))
     _pentomino.move(pDir, 0, _pentomino.getTileSize());
   }
   @Override
   public void Update() {
-  // if(_lastBlock + _tileSize >= _pentomino.getY())
-  //  {
-      //_move = _board.tryMove(_pentomino, -1);
-      //_lastBlock = _pentomino.getY();
-    //}
-  //  if(_move)
+   if(_move && _lastBlock + _tileSize >= _pentomino.getY())
+    {
+      _move = _board.tryMove(_pentomino, 0);
+      _lastBlock = _pentomino.getY();
+    }
+
+    if(_move)
       fall();
   }
 }

@@ -19,6 +19,7 @@ public class Board extends GameObject {
 		InputPentomino inputP = new InputPentomino(p);
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
     PhysicsPentomino phyP = new PhysicsPentomino(p,1);
+    _board[0][0] = p;
     addChild(p);
 
   }
@@ -31,30 +32,45 @@ public class Board extends GameObject {
       {
         if(_board[i][j] == pPiece)
         {
-          if(pDir == -1 && ( j + pDir >= 0 ) &&//LEFT, boundary limits
-           (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null))
+          if(pDir == -1 && ((j + pDir < 0) || //LEFT, boundary limits
+          (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null)  ))
           {
+              System.out.println("left"+ j);
 
-              System.out.println("lol");
             return false;
           }
-          else if(pDir == 0 && (j - pDir < _board.length) &&
-           (_board[i + 1][j] != pPiece && _board[i+1][j] != null))//DOWN
+          else if(pDir == 0 && ((i + 1 >= _board.length) ||
+           (_board[i + 1][j] != pPiece && _board[i+1][j] != null)))//DOWN
           {
-            System.out.println("lol");
+            System.out.println("down");
             return false;
           }
           else if(pDir == 1 &&  ( j + pDir < _board[0].length ) &&//RIGHT, boundary limits
            (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null))
           {
 
-              System.out.println("lol");
+              System.out.println("right");
             return false;
           }
         }
       }
     }
-
+    for(int i = 0; i < _board.length; i++)
+    {
+      for(int j = 0; j < _board[0].length; j++)
+      {
+        if(_board[i][j] == pPiece){
+          if(pDir == -1 && j+pDir >= 0 ){
+            _board[i][j + pDir] = pPiece;
+            _board[i][j] = null;
+          }
+          else if(pDir == 1 && j+pDir < _board[0].length) {
+            _board[i][j + pDir] = pPiece;
+            _board[i][j] = null;
+          }
+      }
+      }
+    }
     return true;
   }
   public int getWidth() {
