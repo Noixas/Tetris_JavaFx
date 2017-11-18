@@ -23,7 +23,7 @@ public class GraphicsComponent extends Component{
 
   public void Render(GraphicsContext gc)
   {
-      gc.clearRect(0, 0, GRID_WIDTH * TILE_SIZE, GRID_HEIGHT * TILE_SIZE);
+
   		gc.setFill(Color.BLUE);
   		for(int i = 0; i < _pent[0].length; i++)
   		{
@@ -31,6 +31,7 @@ public class GraphicsComponent extends Component{
   			{
           if(_pent[j][i] != '0')
   				gc.fillRect((_pentomino.getX()) +(i* TILE_SIZE),_pentomino.getY() + (j* TILE_SIZE), TILE_SIZE, TILE_SIZE);
+          System.out.println(_pentomino.getY());
   			}
   		}
   	}

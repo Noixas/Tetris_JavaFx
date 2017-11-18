@@ -20,12 +20,7 @@ public class Tetris extends Application {
 	long time = 0;
 	public static void main(String[] args) {
 		Time.StartTime();
-		World world = new World();
-		for(int i=0; i<3; i++) {
-			Pentomino pent = new Pentomino(5, 10);
-			world.addChild(pent);
-			pent.xPos = i*100;
-		}
+
 
 		launch(args);
 	}
@@ -41,21 +36,21 @@ public class Tetris extends Application {
 		world.setPrefSize(500,720);
 		GridPane root = new GridPane();
 
-		Pentomino p = new Pentomino(0,0);
-		InputPentomino inputP = new InputPentomino(p);
 
 		Canvas canvas = new Canvas(500,720);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		root.add(left, 0, 0, 1, 1);
 		root.add(world, 1, 0, 1, 1);
-		GraphicsComponent graphP = new GraphicsComponent(p,gc);
 
 		world.getChildren().addAll(canvas);
 		Scene scene = new Scene(root, 1280, 720);
 		primaryStage.setScene(scene);
+
+		World worldGame = new World(canvas);
 		//TODO make it so whenever a pentomino stops, a new one is spawn
 		//TODO spawn pentominoes when off limits
 		//TODO Add color property to pentomino
+
 Input.setScene(scene);
 			/*scene.setOnKeyPressed(e -> {
 			            if (e.getCode() == KeyCode.SPACE) {
@@ -79,22 +74,10 @@ Input.setScene(scene);
 
 				                       time += now;
 				                       //  if (time >= 0.5) {
-															 List<Component> comps = p.getComponents();
-															 for(int i = 0; i < comps.size();i++)
-															 {
-																 Component comp = comps.get(i);
-														/*		 if(comp instanceof InputPentomino)
-																 {*/
-																	 comp.Update();
-																// }
-															/*	 else if(comp instanceof GraphicsComponent)
-																 {
-																	 comp.Update(gc);
-																 }*/
-															 }
+
 															 World.world.Update();
 
-															 p.Update();
+															 //p.Update();
 															 //p.Render(gc);
 
 				                       //time = 0;

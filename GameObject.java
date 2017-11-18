@@ -23,11 +23,21 @@ public class GameObject {
   }
   public void Update() {
     //TODO  Update all of my children first
+
   }
   public void addChild(GameObject child) {
     _children.add(child);
     child.addParent(this);
   }
+  public List<GameObject> getAllChildren(List<GameObject> pList)
+	{
+		for(int i = 0; i < _children.size(); i++)
+		{
+			_children.get(i).getAllChildren(pList);
+			pList.add(_children.get(i));
+		}
+		return pList;
+	}
   public void translate(float xDir, float yDir, float pDistance)
   {
     xPos = xDir * pDistance;
@@ -54,4 +64,12 @@ public class GameObject {
   {
     return _components;
   }
+  public float getX()
+	{
+		return xPos;
+	}
+	public float getY()
+	{
+		return yPos;
+	}
 }

@@ -10,23 +10,28 @@ public class Pentomino extends GameObject {
 	private List<char[][]> pentominoes = new LinkedList<char[][]>();
   private char[][] pentomino;
   private int _rotation = 0;
-	public Pentomino(int pX, int pY) {
+	private Board _board;
+	public Pentomino(int pX, int pY, Board pBoard) {
 		super(pX, pY);
 		speed = 2f;
 		System.out.println("A new pentomino has been created!");
     pentominoes = Piece.getPieces(0);
     pentomino = pentominoes.get(0);
+		_board = pBoard;
 	}
 	public void Update() {
-		move();
+		//move();
 		//System.out.println("My new position is " + yPos);
 	}
 	public void move(int pDir) {
-		xPos = xPos + pDir*TILE_SIZE ;
-	}
-  public void move() {
-		//System.out.println(Time.deltaTime);
-		yPos = yPos + speed ;
+		for(int i = 0; i<_components.size();i++)
+		{
+			if(_components.get(i) instanceof PhysicsPentomino)
+			{
+				PhysicsPentomino ph = (PhysicsPentomino) _components.get(i);
+				ph.move(pDir);
+			}
+		}
 	}
   public void rotate(int pDir)
   {
@@ -34,6 +39,7 @@ public class Pentomino extends GameObject {
     if(_rotation < 0) _rotation = 3;
     else if(_rotation > 3) _rotation = 0;
     pentomino = pentominoes.get(_rotation);
+
   }
 	public int getTileSize()
 	{
@@ -43,12 +49,9 @@ public class Pentomino extends GameObject {
 	{
 		return pentomino;
 	}
-	public float getX()
+	public Board getBoard()
 	{
-		return xPos;
+		return _board;
 	}
-	public float getY()
-	{
-		return yPos;
-	}
+	
 }
