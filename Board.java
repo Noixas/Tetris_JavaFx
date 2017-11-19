@@ -89,7 +89,7 @@ public class Board extends GameObject {
         if(_board[i][j] == pPiece)
         {
           if(pDir == -1 && ((j + pDir < 0) || //LEFT, boundary limits
-          (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null)  ))
+          (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null) || (_board[i+1][j + pDir] != pPiece && _board[i+1][j + pDir] != null)  ))
           {
             //  System.out.println("left"+ j);
             return false;
@@ -100,8 +100,8 @@ public class Board extends GameObject {
           //  System.out.println("down");
             return false;
           }
-          else if(pDir == 1 &&  ( j + pDir >= _board[0].length ) ||//RIGHT, boundary limits
-           (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null))
+          else if(pDir == 1 &&  (( j + pDir >= _board[0].length ) ||//RIGHT, boundary limits
+           (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null)|| (_board[i+1][j + pDir] != pPiece && _board[i+1][j + pDir] != null) ))
           {
               //System.out.println("right");
             return false;

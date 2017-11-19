@@ -27,6 +27,10 @@ public class PhysicsPentomino extends Component {
   @Override
   public void Update() {
 //TODO: when rotate update the _lastBlock position
+  if(_pentomino._rotated){
+      _lastBlock =  _pentomino.getY()+ _pentomino.getHeight();
+      _pentomino._rotated = false;
+    }
    if(_move && (_lastBlock + _tileSize) <= _pentomino.getY() + _pentomino.getHeight())
     {
         System.out.println("_lastBLOCK"+_lastBlock+" GET Y "+ (_pentomino.getY()+ _pentomino.getHeight())+ "Tile SIZE  " + _tileSize);

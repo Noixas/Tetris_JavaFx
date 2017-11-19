@@ -13,6 +13,7 @@ public class Pentomino extends GameObject {
 	private Board _board;
   private Vector2D _pivot;
 	private boolean _done = false;
+	public boolean _rotated = false;
 	public Pentomino(int pX, int pY, Board pBoard) {
 		super(pX, pY);
 		_pivot =  new Vector2D(pX,pY);
@@ -61,10 +62,13 @@ public class Pentomino extends GameObject {
 	    if(_rotation < 0) _rotation = 3;
 	    else if(_rotation > 3) _rotation = 0;
 	    pentomino = pentominoes.get(_rotation);
+
 			_board.updatePentomino(this);
 			_board.tryMove(this, 0);
+			_rotated = true;
 		}
   }
+
 	public int getTileSize()
 	{
 		return TILE_SIZE;

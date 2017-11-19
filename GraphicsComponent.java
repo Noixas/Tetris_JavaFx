@@ -28,10 +28,11 @@ public class GraphicsComponent extends Component{
   		{
   			for(int j = 0; j < _pent.length; j++)
   			{
-          if(_pent[j][i] != '0')
+          if(_pent[j][i] != '0'){
   				gc.fillRect((_pentomino.getX()) +(i* TILE_SIZE),_pentomino.getY() + (j* TILE_SIZE), TILE_SIZE, TILE_SIZE);
-        //  System.out.println(_pentomino.getY()+ (j* TILE_SIZE));
-  			}
+      
+    			}
+        }
   		}
   	}
 }
