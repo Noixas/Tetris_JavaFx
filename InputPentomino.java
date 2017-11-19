@@ -8,7 +8,6 @@ public class InputPentomino extends Component {
   @Override
   public void Update() {
     if(Input.keyPressed("UP")) {
-    //  System.out.println("Update pent");
        _pentomino.rotate(1);
     }
     if(Input.keyPressed("DOWN")) {

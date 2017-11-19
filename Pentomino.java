@@ -11,8 +11,10 @@ public class Pentomino extends GameObject {
   private char[][] pentomino;
   private int _rotation = 0;
 	private Board _board;
+  private Vector2D _pivot;
 	public Pentomino(int pX, int pY, Board pBoard) {
 		super(pX, pY);
+		_pivot =  new Vector2D(pX,pY);
 		speed = 2f;
 		System.out.println("A new pentomino has been created!");
     pentominoes = Piece.getPieces(0);
@@ -20,8 +22,6 @@ public class Pentomino extends GameObject {
 		_board = pBoard;
 	}
 	public void Update() {
-		//move();
-		//System.out.println("My new position is " + yPos);
 	}
 	public void move(int pDir) {
 		for(int i = 0; i<_components.size();i++)
@@ -33,13 +33,21 @@ public class Pentomino extends GameObject {
 			}
 		}
 	}
+	public Vector2D getPivot()
+	{
+		return _pivot;
+	}
+	public void setPivot(Vector2D pPivot)
+	{
+		_pivot = pPivot;
+	}
   public void rotate(int pDir)
   {
-    _rotation += pDir;
+		_rotation += pDir;
     if(_rotation < 0) _rotation = 3;
     else if(_rotation > 3) _rotation = 0;
     pentomino = pentominoes.get(_rotation);
-
+		_board.updatePentomino(this);
   }
 	public int getTileSize()
 	{
@@ -53,5 +61,5 @@ public class Pentomino extends GameObject {
 	{
 		return _board;
 	}
-	
+
 }

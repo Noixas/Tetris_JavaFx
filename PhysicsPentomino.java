@@ -22,8 +22,8 @@ public class PhysicsPentomino extends Component {
   }
   public void move(int pDir)
   {
-  if(_board.tryMove(_pentomino, pDir))
-    _pentomino.move(pDir, 0, _pentomino.getTileSize());
+    if(_board.tryMove(_pentomino, pDir))
+      _pentomino.move(pDir, 0, _pentomino.getTileSize());
   }
   @Override
   public void Update() {
@@ -31,6 +31,7 @@ public class PhysicsPentomino extends Component {
     {
       _move = _board.tryMove(_pentomino, 0);
       _lastBlock = _pentomino.getY();
+      //System.out.println(_lastBlock);
     }
 
     if(_move)

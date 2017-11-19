@@ -21,10 +21,10 @@ public class World extends GameObject{
 	}
 	public void Update() {
 		_canvas.getGraphicsContext2D().clearRect(0, 0, GRID_WIDTH * TILE_SIZE, GRID_HEIGHT * TILE_SIZE);
+
 		List<GameObject> childs = getAllChildren(new LinkedList<GameObject>());
 		for(int i=0; i<childs.size(); i++) {
 			List<Component> comps = childs.get(i).getComponents();
-
 			for(int j = 0; j < comps.size(); j++)
 			{
 				Component comp = comps.get(j);
@@ -33,9 +33,8 @@ public class World extends GameObject{
 					comp.Update();
 			  }
 			}
+
 			childs.get(i).Update();
-
-
 			for(int j = 0; j< comps.size(); j++)
 			{
 				Component comp = comps.get(j);
