@@ -14,36 +14,39 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import java.util.List;
 import java.util.LinkedList;
+//import java.util.Scanner;
 //TODO clean this class and just have relevant information on it
 //TODO Just keep the JAVAFX and a world update
 public class Tetris extends Application {
 	long time = 0;
+
 	public static void main(String[] args) {
 		Time.StartTime();
-
+	//	Scanner in = new Scanner(System.in);
+		//int n1 = in.nextInt();
 
 		launch(args);
 	}
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Tetris!");
-		//Input.updateInput();
+		int tile_size = 50;
 		Pane left = new Pane();
 		left.setStyle("-fx-background-color: gray;");
-		left.setPrefSize(390,720);
+		left.setPrefSize(390,750);
 		Pane world = new Pane();
 		world.setStyle("-fx-background-color: black;");
-		world.setPrefSize(500,720);
+		world.setPrefSize(tile_size*10,tile_size*15);
 		GridPane root = new GridPane();
 
 
-		Canvas canvas = new Canvas(500,720);
+		Canvas canvas = new Canvas(500,750);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		root.add(left, 0, 0, 1, 1);
 		root.add(world, 1, 0, 1, 1);
 
 		world.getChildren().addAll(canvas);
-		Scene scene = new Scene(root, 1280, 720);
+		Scene scene = new Scene(root, 1280, 750);
 		primaryStage.setScene(scene);
 
 		World worldGame = new World(canvas);

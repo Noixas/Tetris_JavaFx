@@ -12,7 +12,7 @@ public class World extends GameObject{
 	public World(Canvas pCanvas) {
 		world = this;
 		_canvas = pCanvas;
-		Board board = new Board(5,15, _canvas.getGraphicsContext2D());
+		Board board = new Board(10,15, _canvas.getGraphicsContext2D());
 		addChild(board);
 	}
 	public void addCanvas(Canvas pCanvas)
@@ -27,11 +27,11 @@ public class World extends GameObject{
 			List<Component> comps = childs.get(i).getComponents();
 			for(int j = 0; j < comps.size(); j++)
 			{
-				Component comp = comps.get(j);
-	 		 if(comp instanceof InputPentomino)
-				{
-					comp.Update();
-			  }
+					Component comp = comps.get(j);
+		 		 if(comp instanceof InputPentomino)
+					{
+						comp.Update();
+				  }
 			}
 
 			childs.get(i).Update();

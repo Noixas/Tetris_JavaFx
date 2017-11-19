@@ -7,6 +7,7 @@ public class GameObject {
   protected float xPos;
 	protected float yPos;
 	protected float speed;
+  protected Vector2D _position;
 	protected int direct = -1;
   //TODO add list of components and create its addMEthod and a remove method
   //NOTE: All remove methods should be overwritten so we can remove stuff by either index, type or if the objects are equals()
@@ -17,6 +18,7 @@ public class GameObject {
   public GameObject(int pX, int pY) {
     xPos = pX;
     yPos = pY;
+    _position = new Vector2D(xPos,yPos);
   }
   public void addParent(GameObject parent){
     _parent = parent;
@@ -38,15 +40,21 @@ public class GameObject {
 		}
 		return pList;
 	}
-  public void translate(float xDir, float yDir, float pDistance)
+  public List<GameObject> getChildren()
+	{
+		return _children;
+	}
+  public void translate(float xPos, float yPos, float pDistance)
   {
-    xPos = xDir * pDistance;
-    yPos = yDir * pDistance;
+    xPos = xPos * pDistance;
+    yPos = yPos * pDistance;
+    _position.setXY(xPos,yPos);
   }
   public void move(float xDir, float yDir, float pDistance)
   {
     xPos += xDir * pDistance;
     yPos += yDir * pDistance;
+      _position.setXY(xPos,yPos);
   }
   public void addComponent(Component pComponent)
   {
@@ -72,4 +80,7 @@ public class GameObject {
 	{
 		return yPos;
 	}
+  public Vector2D getPosition(){
+    return _position;
+  }
 }

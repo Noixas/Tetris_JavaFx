@@ -12,13 +12,12 @@ public class PhysicsPentomino extends Component {
     _owner.addComponent(this);
     _board = _pentomino.getBoard();
     _tileSize = _pentomino.getTileSize();
-    _lastBlock = 0;
+    _lastBlock = _pentomino.getY() + _pentomino.getHeight();
     _move = true;
   }
   public void fall()
   {
     _pentomino.move(0, 1, _speed);
-
   }
   public void move(int pDir)
   {
@@ -27,14 +26,34 @@ public class PhysicsPentomino extends Component {
   }
   @Override
   public void Update() {
-   if(_move && _lastBlock + _tileSize >= _pentomino.getY())
+//TODO: when rotate update the _lastBlock position
+   if(_move && (_lastBlock + _tileSize) <= _pentomino.getY() + _pentomino.getHeight())
     {
-      _move = _board.tryMove(_pentomino, 0);
-      _lastBlock = _pentomino.getY();
-      //System.out.println(_lastBlock);
+        System.out.println("_lastBLOCK"+_lastBlock+" GET Y "+ (_pentomino.getY()+ _pentomino.getHeight())+ "Tile SIZE  " + _tileSize);
+        _move = _board.tryMove(_pentomino, 0);
+
+
+      if(_move){
+        Vector2D v = _pentomino.getPivot();
+        v.y += 1;
+        _board.updatePentomino(_pentomino, v);
+        _lastBlock = _pentomino.getY()+ _pentomino.getHeight();
+
+      }
+      else
+      _pentomino.setDone();
+        System.out.println(_board.toString());
     }
 
-    if(_move)
+    if(checkMove())
       fall();
+      else
+        _pentomino.setDone();
+  }
+  private boolean checkMove()
+  {
+    _move=  _board.tryMove(_pentomino, 0);
+
+    return _move;
   }
 }

@@ -18,6 +18,8 @@ public class InputPentomino extends Component {
     }
     else if(Input.keyPressed("RIGHT")) {
        _pentomino.move(1);
+       System.out.println(_owner);
+       //System.exit(0);
     }
   }
 }

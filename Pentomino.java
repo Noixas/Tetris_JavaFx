@@ -12,6 +12,7 @@ public class Pentomino extends GameObject {
   private int _rotation = 0;
 	private Board _board;
   private Vector2D _pivot;
+	private boolean _done = false;
 	public Pentomino(int pX, int pY, Board pBoard) {
 		super(pX, pY);
 		_pivot =  new Vector2D(pX,pY);
@@ -24,14 +25,16 @@ public class Pentomino extends GameObject {
 	public void Update() {
 	}
 	public void move(int pDir) {
-		for(int i = 0; i<_components.size();i++)
-		{
-			if(_components.get(i) instanceof PhysicsPentomino)
-			{
-				PhysicsPentomino ph = (PhysicsPentomino) _components.get(i);
-				ph.move(pDir);
+		if(!_done){
+			for(int i = 0; i<_components.size();i++)
+				{
+					if(_components.get(i) instanceof PhysicsPentomino)
+					{
+						PhysicsPentomino ph = (PhysicsPentomino) _components.get(i);
+						ph.move(pDir);
+					}
+				}
 			}
-		}
 	}
 	public Vector2D getPivot()
 	{
@@ -41,13 +44,26 @@ public class Pentomino extends GameObject {
 	{
 		_pivot = pPivot;
 	}
+	public void setDone()
+	{
+		_done = true;
+		for(int i = 0; i<_components.size();i++)
+			{
+				if(_components.get(i) instanceof InputPentomino ){
+					_components.remove(i);
+				}
+			}
+	}
   public void rotate(int pDir)
   {
-		_rotation += pDir;
-    if(_rotation < 0) _rotation = 3;
-    else if(_rotation > 3) _rotation = 0;
-    pentomino = pentominoes.get(_rotation);
-		_board.updatePentomino(this);
+		if(!_done){
+			_rotation += pDir;
+	    if(_rotation < 0) _rotation = 3;
+	    else if(_rotation > 3) _rotation = 0;
+	    pentomino = pentominoes.get(_rotation);
+			_board.updatePentomino(this);
+			_board.tryMove(this, 0);
+		}
   }
 	public int getTileSize()
 	{
@@ -60,6 +76,14 @@ public class Pentomino extends GameObject {
 	public Board getBoard()
 	{
 		return _board;
+	}
+	public int getHeight()
+	{
+		return pentomino.length * TILE_SIZE;
+	}
+	public String toString()
+	{
+		return "NULL";
 	}
 
 }

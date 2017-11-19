@@ -12,7 +12,7 @@ public class Board extends GameObject {
   private GraphicsContext _gc;
   private float _speed;
   public Board(int pWidth, int pHeight, GraphicsContext pGc) {
-    _speed = 1;
+    _speed = 5;
     _width = pWidth;
     _height = pHeight;
     _gc = pGc; //The context where we will draw the board
@@ -57,25 +57,29 @@ public class Board extends GameObject {
   }
   public void updatePentomino(Pentomino pPent)
   {
-      char[][] pos = pPent.getPentArray();
-      Vector2D pivot = pPent.getPivot();
-      System.out.println(pivot.toString());
-        //pPent.getPivot();
-      for(int i = 0; i < _board.length; i++)
+      erasePentomino(pPent);//Erase the old positions of the pentomino
+      addPentomino(pPent, pPent.getPivot()); // Add the new rotation of the pentomino
+      pPent.yPos = pPent.getPivot().y * 50;
+  }
+  public void updatePentomino(Pentomino pPent, Vector2D pPivot)
+  {
+      erasePentomino(pPent);//Erase the old positions of the pentomino
+      addPentomino(pPent,pPivot); // Add the new rotation of the pentomino
+  }
+  private void erasePentomino(Pentomino pPent)
+  {
+    for(int i = 0; i < _board.length; i++)
+    {
+      for(int j = 0; j < _board[0].length; j++)
       {
-        for(int j = 0; j < _board[0].length; j++)
+        if(_board[i][j] == pPent)
         {
-          if(_board[i][j] == pPent)
-          {
-            _board[i][j] = null;
-          }
+          _board[i][j] = null;
         }
       }
-      addPentomino(pPent,pivot);
-      System.out.println(pivot.toString());
-
+    }
   }
-  //0 is down
+
   public boolean tryMove(Pentomino pPiece, int pDir)
   {
     for(int i = 0; i < _board.length; i++)
@@ -87,48 +91,41 @@ public class Board extends GameObject {
           if(pDir == -1 && ((j + pDir < 0) || //LEFT, boundary limits
           (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null)  ))
           {
-              System.out.println("left"+ j);
-
+            //  System.out.println("left"+ j);
             return false;
           }
-          else if(pDir == 0 && ((i + 1 >= _board.length) ||
+          else if(pDir == 0 && ((i + 1 >= _board.length) ||  //0 is down
            (_board[i + 1][j] != pPiece && _board[i+1][j] != null)))//DOWN
           {
-            System.out.println("down");
+          //  System.out.println("down");
             return false;
           }
-          else if(pDir == 1 &&  ( j + pDir < _board[0].length ) &&//RIGHT, boundary limits
+          else if(pDir == 1 &&  ( j + pDir >= _board[0].length ) ||//RIGHT, boundary limits
            (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null))
           {
-
-              System.out.println("right");
+              //System.out.println("right");
             return false;
           }
         }
       }
     }
-    for(int i = 0; i < _board.length; i++)
-    {
-      for(int j = 0; j < _board[0].length; j++)
-      {
-        if(_board[i][j] == pPiece){
-          if(pDir == -1 && j+pDir >= 0 ){
-            _board[i][j + pDir] = pPiece;
-            _board[i][j] = null;
-          }
-          else if(pDir == 0 && i+1 < _board.length)
-          {
-            _board[i+1][j ] = pPiece;
-            //_board[i][j] = null;
-            return true;
-          }
-          else if(pDir == 1 && j+ pDir < _board[0].length) {//when going to the right
-            _board[i][j + pDir] = pPiece;
-            _board[i][j] = null;
-          }
+    //Update pivot point
+    Vector2D newPivot = pPiece.getPivot();
+      switch(pDir){
+        case -1:
+          newPivot.x += pDir;
+          updatePentomino(pPiece, newPivot);
+          break;
+          case 0:
+        //  newPivot.y += 1;
+          updatePentomino(pPiece, newPivot);
+          break;
+          case 1:
+          newPivot.x += pDir;
+          updatePentomino(pPiece, newPivot);
+          break;
       }
-      }
-    }
+
     return true;
   }
   public int getWidth() {
@@ -142,20 +139,43 @@ public class Board extends GameObject {
   }
   public void Update()
   {
-    String s = "";
+
     if(Input.keyPressed("SPACE"))
     {
-      for(int i = 0; i < _board.length; i++)
-      {
-        for(int j = 0; j < _board[0].length; j++)
-        {
-          s += _board[i][j] + "  ";
-        }
-        s += "\n";
-      }
-      System.out.println(s);
+      System.out.println(this.toString());
     //  System.exit(0);
     }
+    if(Input.keyPressed("Q"))
+    {
+      Pentomino p = new Pentomino(0,0,this);
+      InputPentomino inputP = new InputPentomino(p);
+      GraphicsComponent graphP = new GraphicsComponent(p,_gc);
+      PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
+      addPentomino(p,0,0);
+      addChild(p);
+      updatePentomino(p);
+    }
+    if(Input.keyPressed("S"))
+    {
+      List<GameObject> check = getChildren();
+      for(int i = 0; i<check.size();i++)
+      {
+          System.out.println(check.get(i).getPosition());
+      }
+    }
+  }
+  public String toString()
+  {
+    String s = "";
+    for(int i = 0; i < _board.length; i++)
+    {
+      for(int j = 0; j < _board[0].length; j++)
+      {
+        s += _board[i][j] + "  ";
+      }
+      s += "\n";
+    }
+    return s;
   }
   public void Init()
   {
