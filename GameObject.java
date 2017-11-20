@@ -50,7 +50,7 @@ public class GameObject {
     yPos = yPos * pDistance;
     _position.setXY(xPos,yPos);
   }
-  public void move(float xDir, float yDir, float pDistance)
+  public void worldMove(float xDir, float yDir, float pDistance)
   {
     xPos += xDir * pDistance;
     yPos += yDir * pDistance;

@@ -17,12 +17,12 @@ public class PhysicsPentomino extends Component {
   }
   public void fall()
   {
-    _pentomino.move(0, 1, _speed);
+    _owner.worldMove(0, 1, _speed);
   }
   public void move(int pDir)
   {
     if(_board.tryMove(_pentomino, pDir))
-      _pentomino.move(pDir, 0, _pentomino.getTileSize());
+      _owner.worldMove(pDir, 0, _pentomino.getTileSize());
   }
   @Override
   public void Update() {
