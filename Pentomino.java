@@ -1,6 +1,7 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import java.util.List;
+import java.lang.Math;
 import java.util.LinkedList;
 public class Pentomino extends GameObject {
 	public static final int TILE_SIZE = 50;
@@ -67,7 +68,35 @@ public class Pentomino extends GameObject {
 			_rotated = true;
 		}
   }
+	public void eraseBlock(Vector2D pVec)
+	{
+		pVec.x = Math.abs(pVec.x-_pivot.x);
+		pVec.y = Math.abs(pVec.y-_pivot.y);
+		pentomino[(int)pVec.y][(int)pVec.x] = '0';
 
+	}
+	public void resizePentomino()
+	{
+    int counter = 0;
+		for(int i = 0; i < pentomino.length; i++)
+    {
+      for(int j = 0; j < pentomino[0].length; j++)
+      {
+				if(counter == pentomino[0].length-1){
+					//eraseRow(i);
+					counter = 0;
+				}
+				if(pentomino[i][j] == '0')
+				{
+					j = pentomino[0].length;
+					counter=0;
+				}
+				else{
+					counter++;
+				}
+			}
+		}
+	}
 	public int getTileSize()
 	{
 		return _tileSize;

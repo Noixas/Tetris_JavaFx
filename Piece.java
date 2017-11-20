@@ -7,10 +7,10 @@ public class Piece {
 	public static List<char[][]> getPieces(int pIndex)//Todo return all rotations of the piece
 	{
   List<char[][]> allRotations = new LinkedList<char[][]>();
-    allRotations.add(pieces.get(pIndex));
-    allRotations.add(rotate(pieces.get(pIndex),90));//Rotated
-    allRotations.add(rotate(pieces.get(pIndex),180));
-    allRotations.add(rotate(pieces.get(pIndex),270));
+    allRotations.add(getPiece(pIndex));
+    allRotations.add(rotate(getPiece(pIndex),90));//Rotated
+    allRotations.add(rotate(getPiece(pIndex),180));
+    allRotations.add(rotate(getPiece(pIndex),270));
 		return allRotations;
 	}
   public static char[][] flip(char[][] pentomino) { //This flips horizontally(column per column)
@@ -25,7 +25,15 @@ public class Piece {
     }
     return newPentomino;
   }
-
+public static char[][] getPiece(int pIndex)
+{
+	char[][] buffer = pieces.get(pIndex);
+	char[][] finalPiece = new char[buffer.length][buffer[0].length];
+	for(int i=0; i<buffer.length; i++)
+  for(int j=0; j<buffer[i].length; j++)
+    finalPiece[i][j]=buffer[i][j];
+		return finalPiece;
+}
 
 
   public static char[][] rotate(char[][] pentomino, int degrees) {

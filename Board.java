@@ -129,9 +129,40 @@ public class Board extends GameObject {
   public Score getScore() {
     return _score;
   }
+  public void eraseRow(int pPos)
+  {
+    for(int j = 0; j < _board[pPos].length; j++)
+    {
+      _board[pPos][j].eraseBlock(new Vector2D(j,pPos));
+      _board[pPos][j] = null;
+    }
+  }
+  public void checkRow()
+  {
+    int counter = 0;
+    for(int i = 0; i < _board.length; i++)
+    {
+      for(int j = 0; j < _board[0].length; j++)
+      {
+        if(counter == _board[0].length-1){
+          eraseRow(i);
+          counter = 0;
+        }
+        if(_board[i][j] == null)
+        {
+          j = _board[0].length;
+          counter=0;
+        }
+        else{
+          counter++;
+        }
+
+      }
+    }
+  }
   public void Update()
   {
-
+    checkRow();
     if(Input.keyPressed("SPACE"))
     {
       System.out.println(this.toString());
