@@ -12,7 +12,7 @@ public class World extends GameObject{
 	public World(Canvas pCanvas) {
 		world = this;
 		_canvas = pCanvas;
-		Board board = new Board(10,15, _canvas.getGraphicsContext2D());
+		Board board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D());
 		addChild(board);
 	}
 	public void addCanvas(Canvas pCanvas)
@@ -20,6 +20,10 @@ public class World extends GameObject{
 		_canvas = pCanvas;
 	}
 	public void Update() {
+		if(Input.keyPressed("ESCAPE")) {
+				 System.out.println("Terminating Game...");
+				 System.exit(0);
+		 }
 		_canvas.getGraphicsContext2D().clearRect(0, 0, GRID_WIDTH * TILE_SIZE, GRID_HEIGHT * TILE_SIZE);
 
 		List<GameObject> childs = getAllChildren(new LinkedList<GameObject>());

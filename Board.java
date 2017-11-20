@@ -5,25 +5,27 @@ import javafx.scene.paint.Color;
 public class Board extends GameObject {
   private int _width;
   private int _height;
+  private int _tileSize;
   private Pentomino current;
   private Pentomino[][] _board ;
   private List<Pentomino> _pentominoes = new LinkedList<Pentomino>();
   private Score _score = new Score();
   private GraphicsContext _gc;
   private float _speed;
-  public Board(int pWidth, int pHeight, GraphicsContext pGc) {
+  public Board(int pWidth, int pHeight, int pTileSize, GraphicsContext pGc) {
     _speed = 5;
     _width = pWidth;
     _height = pHeight;
+    _tileSize = pTileSize;
     _gc = pGc; //The context where we will draw the board
     _board = new Pentomino[_height][_width];
-    Pentomino p = new Pentomino(0,0,this);
+    Pentomino p = new Pentomino(0,0,0,_tileSize,this);
 		InputPentomino inputP = new InputPentomino(p);
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
     addPentomino(p,0,0);
     addChild(p);
-    updatePentomino(p);
+    updatePentominoAtBoard(p);
 
   }
   public void addPentomino(Pentomino pPent, int x, int y)
@@ -55,13 +57,15 @@ public class Board extends GameObject {
       }
       pPent.setPivot(pVec);
   }
-  public void updatePentomino(Pentomino pPent)
+  //Update pentomino in the same pivot point
+  public void updatePentominoAtBoard(Pentomino pPent)
   {
       erasePentomino(pPent);//Erase the old positions of the pentomino
       addPentomino(pPent, pPent.getPivot()); // Add the new rotation of the pentomino
       pPent.yPos = pPent.getPivot().y * 50;
   }
-  public void updatePentomino(Pentomino pPent, Vector2D pPivot)
+    //Update pentomino in a new pivot point
+  public void updatePentominoAtBoard(Pentomino pPent, Vector2D pPivot)
   {
       erasePentomino(pPent);//Erase the old positions of the pentomino
       addPentomino(pPent,pPivot); // Add the new rotation of the pentomino
@@ -111,20 +115,8 @@ public class Board extends GameObject {
     }
     //Update pivot point
     Vector2D newPivot = pPiece.getPivot();
-      switch(pDir){
-        case -1:
-          newPivot.x += pDir;
-          updatePentomino(pPiece, newPivot);
-          break;
-          case 0:
-        //  newPivot.y += 1;
-          updatePentomino(pPiece, newPivot);
-          break;
-          case 1:
-          newPivot.x += pDir;
-          updatePentomino(pPiece, newPivot);
-          break;
-      }
+    newPivot.x += pDir;
+    updatePentominoAtBoard(pPiece, newPivot);
 
     return true;
   }
@@ -147,13 +139,13 @@ public class Board extends GameObject {
     }
     if(Input.keyPressed("Q"))
     {
-      Pentomino p = new Pentomino(0,0,this);
+      Pentomino p = new Pentomino(0,0,0,_tileSize,this);
       InputPentomino inputP = new InputPentomino(p);
       GraphicsComponent graphP = new GraphicsComponent(p,_gc);
       PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
       addPentomino(p,0,0);
       addChild(p);
-      updatePentomino(p);
+      updatePentominoAtBoard(p);
     }
     if(Input.keyPressed("S"))
     {

@@ -26,7 +26,6 @@ public class PhysicsPentomino extends Component {
   }
   @Override
   public void Update() {
-//TODO: when rotate update the _lastBlock position
   if(_pentomino._rotated){
       _lastBlock =  _pentomino.getY()+ _pentomino.getHeight();
       _pentomino._rotated = false;
@@ -36,28 +35,22 @@ public class PhysicsPentomino extends Component {
         System.out.println("_lastBLOCK"+_lastBlock+" GET Y "+ (_pentomino.getY()+ _pentomino.getHeight())+ "Tile SIZE  " + _tileSize);
         _move = _board.tryMove(_pentomino, 0);
 
-
       if(_move){
         Vector2D v = _pentomino.getPivot();
         v.y += 1;
-        _board.updatePentomino(_pentomino, v);
+        _board.updatePentominoAtBoard(_pentomino, v);
         _lastBlock = _pentomino.getY()+ _pentomino.getHeight();
-
       }
-      else
-      _pentomino.setDone();
         System.out.println(_board.toString());
     }
-
-    if(checkMove())
+    else if(checkMove())
       fall();
       else
         _pentomino.setDone();
   }
   private boolean checkMove()
   {
-    _move=  _board.tryMove(_pentomino, 0);
-
+    _move =  _board.tryMove(_pentomino, 0);
     return _move;
   }
 }

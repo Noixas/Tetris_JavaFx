@@ -10,20 +10,20 @@ public class Pentomino extends GameObject {
 	private List<char[][]> pentominoes = new LinkedList<char[][]>();
   private char[][] pentomino;
   private int _rotation = 0;
+	private int _type;
 	private Board _board;
+	private int _tileSize;
   private Vector2D _pivot;
 	private boolean _done = false;
 	public boolean _rotated = false;
-	public Pentomino(int pX, int pY, Board pBoard) {
+	public Pentomino(int pX, int pY, int pType,int pTileSize, Board pBoard) {
 		super(pX, pY);
+		_tileSize = pTileSize;
 		_pivot =  new Vector2D(pX,pY);
-		speed = 2f;
-		System.out.println("A new pentomino has been created!");
-    pentominoes = Piece.getPieces(0);
-    pentomino = pentominoes.get(0);
 		_board = pBoard;
-	}
-	public void Update() {
+		_type= pType;
+    pentominoes = Piece.getPieces(_type);//Get all posible ways of the pentomino
+    pentomino = pentominoes.get(_rotation);
 	}
 	public void move(int pDir) {
 		if(!_done){
@@ -31,8 +31,8 @@ public class Pentomino extends GameObject {
 				{
 					if(_components.get(i) instanceof PhysicsPentomino)
 					{
-						PhysicsPentomino ph = (PhysicsPentomino) _components.get(i);
-						ph.move(pDir);
+						PhysicsPentomino physicsComp = (PhysicsPentomino) _components.get(i);
+						physicsComp.move(pDir);
 					}
 				}
 			}
@@ -48,7 +48,7 @@ public class Pentomino extends GameObject {
 	public void setDone()
 	{
 		_done = true;
-		for(int i = 0; i<_components.size();i++)
+		for(int i = 0; i<_components.size();i++)//remove input component
 			{
 				if(_components.get(i) instanceof InputPentomino ){
 					_components.remove(i);
@@ -62,8 +62,7 @@ public class Pentomino extends GameObject {
 	    if(_rotation < 0) _rotation = 3;
 	    else if(_rotation > 3) _rotation = 0;
 	    pentomino = pentominoes.get(_rotation);
-
-			_board.updatePentomino(this);
+			_board.updatePentominoAtBoard(this);
 			_board.tryMove(this, 0);
 			_rotated = true;
 		}
@@ -71,7 +70,7 @@ public class Pentomino extends GameObject {
 
 	public int getTileSize()
 	{
-		return TILE_SIZE;
+		return _tileSize;
 	}
 	public char[][] getPentArray()
 	{
@@ -83,7 +82,7 @@ public class Pentomino extends GameObject {
 	}
 	public int getHeight()
 	{
-		return pentomino.length * TILE_SIZE;
+		return pentomino.length * getTileSize();
 	}
 	public String toString()
 	{

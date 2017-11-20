@@ -34,6 +34,9 @@ public class Tetris extends Application {
 		Pane left = new Pane();
 		left.setStyle("-fx-background-color: gray;");
 		left.setPrefSize(390,750);
+		Pane right = new Pane();
+		right.setStyle("-fx-background-color: gray;");
+		right.setPrefSize(390,750);
 		Pane world = new Pane();
 		world.setStyle("-fx-background-color: black;");
 		world.setPrefSize(tile_size*10,tile_size*15);
@@ -44,7 +47,7 @@ public class Tetris extends Application {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		root.add(left, 0, 0, 1, 1);
 		root.add(world, 1, 0, 1, 1);
-
+		root.add(right, 2, 0, 1, 1);
 		world.getChildren().addAll(canvas);
 		Scene scene = new Scene(root, 1280, 750);
 		primaryStage.setScene(scene);
@@ -54,38 +57,13 @@ public class Tetris extends Application {
 		//TODO spawn pentominoes when off limits
 		//TODO Add color property to pentomino
 
-Input.setScene(scene);
-			/*scene.setOnKeyPressed(e -> {
-			            if (e.getCode() == KeyCode.SPACE) {
-			                p.rotate(1);
-											System.out.println(time);
-			            }
-								 else if (e.getCode() == KeyCode.LEFT) {
-									p.move(-1);
-								} else if (e.getCode() == KeyCode.RIGHT) {
-									p.move(1);
-								}
-							});*/
+		Input.setScene(scene);
 		//Loop of the game
 		AnimationTimer timer = new AnimationTimer() {
 			                       @Override
-			                       public void handle(long now) {
-														 if(Input.keyPressed("ESCAPE")) {
-																 	System.out.println("Terminating Game...");
-																	System.exit(0);
-															}
-
+			                       public void handle(long now) {														
 				                       time += now;
-				                       //  if (time >= 0.5) {
-
 															 World.world.Update();
-
-															 //p.Update();
-															 //p.Render(gc);
-
-				                       //time = 0;
-				                       //  }
-
 			                       }
 		                       };
 		timer.start();
