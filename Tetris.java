@@ -73,7 +73,6 @@ public class Tetris extends Application {
 		//Style for the gameTimer box
 
 		Label scoreCounter = new Label();
-		scoreCounter.setText("This is going to be the Scorecounter");
 		scoreCounter.setStyle("-fx-font: 30 arial;");
 		scoreCounter.setTextFill(Color.web("#FF00BC"));
 		scoreCounter.relocate(20, 200);
@@ -96,6 +95,7 @@ public class Tetris extends Application {
 															 World.world.Update();
 															 Time.updateGameTime();
 															 gameTimer.setText("Time: " + Time.getGameTime());
+															 scoreCounter.setText("Score: " + Score.getScore());
 			                       }
 		                       };
 		timer.start();
