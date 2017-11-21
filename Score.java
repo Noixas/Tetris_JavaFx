@@ -1,9 +1,9 @@
 public class Score {
   private int _score = 0;
-  private int points = 0;
+
 
   public Score() {
-    
+
   }
   public void Update() {
 
