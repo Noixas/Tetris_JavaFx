@@ -144,10 +144,6 @@ public class Board extends GameObject {
     {
       for(int j = 0; j < _board[0].length; j++)
       {
-        if(counter == _board[0].length-1){
-          eraseRow(i);
-          counter = 0;
-        }
         if(_board[i][j] == null)
         {
           j = _board[0].length;
@@ -155,6 +151,10 @@ public class Board extends GameObject {
         }
         else{
           counter++;
+        }
+        if(counter == _board[0].length){
+          eraseRow(i);
+          counter = 0;
         }
 
       }
