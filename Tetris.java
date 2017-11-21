@@ -84,8 +84,6 @@ public class Tetris extends Application {
 		//adding gameTimer and timerBox to right pane
 
 
-
-
 		Input.setScene(scene);
 		//Loop of the game
 		AnimationTimer timer = new AnimationTimer() {
