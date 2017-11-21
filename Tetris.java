@@ -63,17 +63,28 @@ public class Tetris extends Application {
 		gameTimer.relocate(90, 20);
 		gameTimer.setStyle("-fx-font: 30 arial;");
 		gameTimer.setTextFill(Color.web("#FF00BC"));
-
+		//Style of the gameTimer
 
 		Rectangle timerBox = new Rectangle(250, 40);
 		timerBox.setArcWidth(30.0);
 		timerBox.setArcHeight(30.0);
 		timerBox.setFill(Color.rgb(0, 0, 0, .99));
 		timerBox.relocate(82, 18);
+		//Style for the gameTimer box
 
-		//gameTimer.getChildren().add(timerBox);
+		Label scoreCounter = new Label();
+		scoreCounter.setText("This is going to be the Scorecounter");
+		scoreCounter.setStyle("-fx-font: 30 arial;");
+		scoreCounter.setTextFill(Color.web("#FF00BC"));
+		scoreCounter.relocate(20, 200);
+
+
 		right.getChildren().add(timerBox);
 		right.getChildren().add(gameTimer);
+		right.getChildren().add(scoreCounter);
+		//adding gameTimer and timerBox to right pane
+
+
 
 
 		Input.setScene(scene);
