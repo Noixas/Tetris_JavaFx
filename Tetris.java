@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.scene.shape.*;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.canvas.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -57,13 +58,21 @@ public class Tetris extends Application {
 		//TODO spawn pentominoes when off limits
 		//TODO Add color property to pentomino
 
+		Label gameTimer = new Label();
+		gameTimer.relocate(160, 20);
+		gameTimer.setStyle("-fx-border-color: white");
+		right.getChildren().add(gameTimer);
+
+
 		Input.setScene(scene);
 		//Loop of the game
 		AnimationTimer timer = new AnimationTimer() {
 			                       @Override
-			                       public void handle(long now) {														
+			                       public void handle(long now) {
 				                       time += now;
 															 World.world.Update();
+															 Time.updateGameTime();
+															 gameTimer.setText("Time: " + Time.getGameTime());
 			                       }
 		                       };
 		timer.start();
