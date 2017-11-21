@@ -95,19 +95,19 @@ public class Board extends GameObject {
           if(pDir == -1 && ((j + pDir < 0) || //LEFT, boundary limits
           (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null) || (_board[i+1][j + pDir] != pPiece && _board[i+1][j + pDir] != null)  ))
           {
-            //  System.out.println("left"+ j);
+              //System.out.println("left"+ j);
             return false;
           }
           else if(pDir == 0 && ((i + 1 >= _board.length) ||  //0 is down
            (_board[i + 1][j] != pPiece && _board[i+1][j] != null)))//DOWN
           {
-          //  System.out.println("down");
+           //System.out.println("down");
             return false;
           }
           else if(pDir == 1 &&  (( j + pDir >= _board[0].length ) ||//RIGHT, boundary limits
            (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null)|| (_board[i+1][j + pDir] != pPiece && _board[i+1][j + pDir] != null) ))
           {
-              //System.out.println("right");
+             // System.out.println("right");
             return false;
           }
         }
