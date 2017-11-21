@@ -115,7 +115,7 @@ public class Pentomino extends GameObject {
 	}
 	public String toString()
 	{
-		return "NULL";
+		return "PENT";
 	}
 
 }

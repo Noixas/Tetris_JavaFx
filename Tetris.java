@@ -61,7 +61,7 @@ public class Tetris extends Application {
 		//Loop of the game
 		AnimationTimer timer = new AnimationTimer() {
 			                       @Override
-			                       public void handle(long now) {														
+			                       public void handle(long now) {
 				                       time += now;
 															 World.world.Update();
 			                       }
