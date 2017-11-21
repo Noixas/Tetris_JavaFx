@@ -23,12 +23,12 @@ public class Board extends GameObject {
 		InputPentomino inputP = new InputPentomino(p);
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
-    addPentomino(p,0,0);
+    addPentominoToBoard(p,0,0);
     addChild(p);
     updatePentominoAtBoard(p);
 
   }
-  public void addPentomino(Pentomino pPent, int x, int y)
+  public void addPentominoToBoard(Pentomino pPent, int x, int y)
   {
       char[][] pos = pPent.getPentArray();
       for(int i = 0; i < pos.length; i++)
@@ -42,7 +42,7 @@ public class Board extends GameObject {
         }
       }
   }
-  public void addPentomino(Pentomino pPent, Vector2D pVec)
+  public void addPentominoToBoard(Pentomino pPent, Vector2D pVec)
   {
       char[][] pos = pPent.getPentArray();
       for(int i = 0; i < pos.length; i++)
@@ -61,14 +61,14 @@ public class Board extends GameObject {
   public void updatePentominoAtBoard(Pentomino pPent)
   {
       erasePentomino(pPent);//Erase the old positions of the pentomino
-      addPentomino(pPent, pPent.getPivot()); // Add the new rotation of the pentomino
+      addPentominoToBoard(pPent, pPent.getPivot()); // Add the new rotation of the pentomino
       pPent.yPos = pPent.getPivot().y * 50;
   }
     //Update pentomino in a new pivot point
   public void updatePentominoAtBoard(Pentomino pPent, Vector2D pPivot)
   {
       erasePentomino(pPent);//Erase the old positions of the pentomino
-      addPentomino(pPent,pPivot); // Add the new rotation of the pentomino
+      addPentominoToBoard(pPent,pPivot); // Add the new rotation of the pentomino
   }
   private void erasePentomino(Pentomino pPent)
   {
@@ -95,19 +95,19 @@ public class Board extends GameObject {
           if(pDir == -1 && ((j + pDir < 0) || //LEFT, boundary limits
           (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null) || (_board[i+1][j + pDir] != pPiece && _board[i+1][j + pDir] != null)  ))
           {
-            //  System.out.println("left"+ j);
+              //System.out.println("left"+ j);
             return false;
           }
           else if(pDir == 0 && ((i + 1 >= _board.length) ||  //0 is down
            (_board[i + 1][j] != pPiece && _board[i+1][j] != null)))//DOWN
           {
-          //  System.out.println("down");
+           //System.out.println("down");
             return false;
           }
           else if(pDir == 1 &&  (( j + pDir >= _board[0].length ) ||//RIGHT, boundary limits
            (_board[i][j + pDir] != pPiece && _board[i][j + pDir] != null)|| (_board[i+1][j + pDir] != pPiece && _board[i+1][j + pDir] != null) ))
           {
-              //System.out.println("right");
+             // System.out.println("right");
             return false;
           }
         }
@@ -145,10 +145,6 @@ public class Board extends GameObject {
     {
       for(int j = 0; j < _board[0].length; j++)
       {
-        if(counter == _board[0].length-1){
-          eraseRow(i);
-          counter = 0;
-        }
         if(_board[i][j] == null)
         {
           j = _board[0].length;
@@ -156,6 +152,10 @@ public class Board extends GameObject {
         }
         else{
           counter++;
+        }
+        if(counter == _board[0].length){
+          eraseRow(i);
+          counter = 0;
         }
 
       }
@@ -172,11 +172,11 @@ public class Board extends GameObject {
     }
     if(Input.keyPressed("Q"))
     {
-      Pentomino p = new Pentomino(0,0,0,_tileSize,this);
+      Pentomino p = new Pentomino((_width*_tileSize)/2,0,0,_tileSize,this);
       InputPentomino inputP = new InputPentomino(p);
       GraphicsComponent graphP = new GraphicsComponent(p,_gc);
       PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
-      addPentomino(p,0,0);
+      addPentominoToBoard(p,new Vector2D(_width/2,0));
       addChild(p);
       updatePentominoAtBoard(p);
     }

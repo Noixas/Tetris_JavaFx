@@ -4,9 +4,6 @@ import java.util.List;
 import java.lang.Math;
 import java.util.LinkedList;
 public class Pentomino extends GameObject {
-	public static final int TILE_SIZE = 50;
-	public static final int GRID_WIDTH = 10;
-	public static final int GRID_HEIGHT = 15;
 	//Type of tiles
 	private List<char[][]> pentominoes = new LinkedList<char[][]>();
   private char[][] pentomino;
@@ -26,6 +23,17 @@ public class Pentomino extends GameObject {
     pentominoes = Piece.getPieces(_type);//Get all posible ways of the pentomino
     pentomino = pentominoes.get(_rotation);
 	}
+
+	public Pentomino(Vector2D pPos, int pType,int pTileSize, Board pBoard) {
+		super((int)pPos.x, (int)pPos.y);
+		_tileSize = pTileSize;
+		_pivot =  pPos;
+		_board = pBoard;
+		_type= pType;
+    pentominoes = Piece.getPieces(_type);//Get all posible ways of the pentomino
+    pentomino = pentominoes.get(_rotation);
+	}
+
 	public void move(int pDir) {
 		if(!_done){
 			for(int i = 0; i<_components.size();i++)
@@ -115,7 +123,7 @@ public class Pentomino extends GameObject {
 	}
 	public String toString()
 	{
-		return "NULL";
+		return "PENT";
 	}
 
 }

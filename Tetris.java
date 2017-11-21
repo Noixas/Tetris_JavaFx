@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import javafx.scene.shape.*;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.canvas.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -57,13 +59,43 @@ public class Tetris extends Application {
 		//TODO spawn pentominoes when off limits
 		//TODO Add color property to pentomino
 
+		Label gameTimer = new Label();
+		gameTimer.relocate(90, 20);
+		gameTimer.setStyle("-fx-font: 30 arial;");
+		gameTimer.setTextFill(Color.web("#FF00BC"));
+		//Style of the gameTimer
+
+		Rectangle timerBox = new Rectangle(250, 40);
+		timerBox.setArcWidth(30.0);
+		timerBox.setArcHeight(30.0);
+		timerBox.setFill(Color.rgb(0, 0, 0, .99));
+		timerBox.relocate(82, 18);
+		//Style for the gameTimer box
+
+		Label scoreCounter = new Label();
+		scoreCounter.setStyle("-fx-font: 30 arial;");
+		scoreCounter.setTextFill(Color.web("#FF00BC"));
+		scoreCounter.relocate(20, 200);
+
+
+		right.getChildren().add(timerBox);
+		right.getChildren().add(gameTimer);
+		right.getChildren().add(scoreCounter);
+		//adding gameTimer and timerBox to right pane
+
+
+
+
 		Input.setScene(scene);
 		//Loop of the game
 		AnimationTimer timer = new AnimationTimer() {
 			                       @Override
-			                       public void handle(long now) {														
+			                       public void handle(long now) {
 				                       time += now;
 															 World.world.Update();
+															 Time.updateGameTime();
+															 gameTimer.setText("Time: " + Time.getGameTime());
+															 scoreCounter.setText("Score: " + Score.getScore());
 			                       }
 		                       };
 		timer.start();
