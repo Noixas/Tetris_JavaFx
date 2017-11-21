@@ -134,6 +134,7 @@ public class Board extends GameObject {
     for(int j = 0; j < _board[pPos].length; j++)
     {
       _board[pPos][j].eraseBlock(new Vector2D(j,pPos));
+      updatePentominoAtBoard(_board[pPos][j]);
       _board[pPos][j] = null;
     }
   }
@@ -159,6 +160,7 @@ public class Board extends GameObject {
 
       }
     }
+
   }
   public void Update()
   {
