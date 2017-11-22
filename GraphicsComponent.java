@@ -23,14 +23,16 @@ public class GraphicsComponent extends Component{
 
   public void Render(GraphicsContext gc)
   {
-  		gc.setFill(Color.BLUE);
   		for(int i = 0; i < _pent[0].length; i++)
   		{
   			for(int j = 0; j < _pent.length; j++)
   			{
           if(_pent[j][i] != '0'){
-  				gc.fillRect((_pentomino.getX()) +(i* TILE_SIZE),_pentomino.getY() + (j* TILE_SIZE), TILE_SIZE, TILE_SIZE);
-      
+            gc.setFill(Color.WHITE);
+  				  gc.fillRect(((_pentomino.getX()) +(i* TILE_SIZE)),_pentomino.getY() + (j* TILE_SIZE), TILE_SIZE, TILE_SIZE);
+	          gc.setFill(Color.BLUE);
+            gc.fillRect((_pentomino.getX()) +(i* TILE_SIZE) +1,_pentomino.getY() + (j* TILE_SIZE) +1, TILE_SIZE-2, TILE_SIZE-2);
+
     			}
         }
   		}
