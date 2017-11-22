@@ -56,7 +56,7 @@ public class Pentomino extends GameObject {
 	public void setDone()
 	{
 		if(!_done){
-		_board.pentominoDone();		
+		_board.pentominoDone();
 		System.out.println("Pent Done");
 	}
 		_done = true;
@@ -74,9 +74,18 @@ public class Pentomino extends GameObject {
 	    if(_rotation < 0) _rotation = 3;
 	    else if(_rotation > 3) _rotation = 0;
 	    _pentomino = _pentominoes.get(_rotation);
+
+		if(_board.tryMove(this, 0) == false)
+		{
+			_pivot.x -= 8;
+			_board.updatePentominoAtBoard(this,_pivot);
+		}
+		else
+		{
+			System.out.println("OTHER");
 			_board.updatePentominoAtBoard(this);
-			_board.tryMove(this, 0);
-			_rotated = true;
+		}
+		_rotated = true;
 		}
   }
 	public void eraseBlock(Vector2D pVec)

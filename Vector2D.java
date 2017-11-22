@@ -1,6 +1,7 @@
 public class Vector2D{
   public float x;
   public float y;
+  public static Vector2D Zero = new Vector2D(0,0);
   public Vector2D(int pX, int pY)
   {
     x = (int)pX;
@@ -25,5 +26,6 @@ public class Vector2D{
   public String toString() {
       return "Vector2D(" + x + ", " + y + ")";
    }
+
 
 }

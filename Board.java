@@ -19,28 +19,14 @@ public class Board extends GameObject {
     _tileSize = pTileSize;
     _gc = pGc; //The context where we will draw the board
     _board = new Pentomino[_height][_width];
-    Pentomino p = new Pentomino(0,0,0,_tileSize,this);
+    Pentomino p = new Pentomino((_width*_tileSize)/2,0,0,_tileSize,this);
 		InputPentomino inputP = new InputPentomino(p);
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
-    addPentominoToBoard(p,0,0);
+    addPentominoToBoard(p,new Vector2D(_width/2,0));
     addChild(p);
     updatePentominoAtBoard(p);
 
-  }
-  public void addPentominoToBoard(Pentomino pPent, int x, int y)
-  {
-      char[][] pos = pPent.getPentArray();
-      for(int i = 0; i < pos.length; i++)
-      {
-        for(int j = 0; j < pos[0].length; j++)
-        {
-          if(pos[i][j] != '0')
-          {
-            _board[y+i][x+j] = pPent;
-          }
-        }
-      }
   }
   public void addPentominoToBoard(Pentomino pPent, Vector2D pVec)
   {
@@ -51,7 +37,17 @@ public class Board extends GameObject {
         {
           if(pos[i][j] != '0')
           {
+
+              if((int)pVec.x+j >= _board[0].length)//x is bigger than the Board
+              {
+                pVec.x = _board[0].length - pos[0].length;
+                updatePentominoAtBoard(pPent,pVec);
+                    pPent.xPos = pVec.x * 50;
+                i = pos.length;
+                j = pos[0].length;
+              }
             _board[(int)pVec.y+i][(int)pVec.x+j] = pPent;
+
           }
         }
       }
@@ -83,7 +79,15 @@ public class Board extends GameObject {
       }
     }
   }
-
+  public void eraseRow(int pPos)
+  {
+    for(int j = 0; j < _board[pPos].length; j++)
+    {
+      _board[pPos][j].eraseBlock(new Vector2D(j,pPos));
+      updatePentominoAtBoard(_board[pPos][j]);
+      _board[pPos][j] = null;
+    }
+  }
   public boolean tryMove(Pentomino pPiece, int pDir)
   {
     for(int i = 0; i < _board.length; i++)
@@ -120,24 +124,7 @@ public class Board extends GameObject {
 
     return true;
   }
-  public int getWidth() {
-    return _width;
-  }
-  public int getHeight() {
-    return _height;
-  }
-  public Score getScore() {
-    return _score;
-  }
-  public void eraseRow(int pPos)
-  {
-    for(int j = 0; j < _board[pPos].length; j++)
-    {
-      _board[pPos][j].eraseBlock(new Vector2D(j,pPos));
-      updatePentominoAtBoard(_board[pPos][j]);
-      _board[pPos][j] = null;
-    }
-  }
+
   public void checkRow()
   {
     int counter = 0;
@@ -167,7 +154,6 @@ public class Board extends GameObject {
     if(Input.keyPressed("SPACE"))
     {
       System.out.println(this.toString());
-    //  System.exit(0);
     }
     if(Input.keyPressed("Q"))
     {
@@ -199,11 +185,20 @@ public class Board extends GameObject {
     {
       for(int j = 0; j < _board[0].length; j++)
       {
-        s += _board[i][j] + "  ";
+        s += _board[i][j] + "Y: "+i+ "  ";
       }
       s += "\n";
     }
     return s;
+  }
+  public int getWidth() {
+    return _width;
+  }
+  public int getHeight() {
+    return _height;
+  }
+  public Score getScore() {
+    return _score;
   }
   public void Init()
   {
