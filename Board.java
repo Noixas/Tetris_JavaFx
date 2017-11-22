@@ -14,6 +14,7 @@ public class Board extends GameObject {
   private GraphicsContext _gc;
   private float _speed;
   private Random _rnd;
+  private int _rowCombo = 1;
   public Board(int pWidth, int pHeight, int pTileSize, GraphicsContext pGc) {
     _speed = 5;
     _rnd = new Random();
@@ -91,6 +92,9 @@ public class Board extends GameObject {
       updatePentominoAtBoard(_board[pPos][j]);
       _board[pPos][j] = null;
     }
+    _score.addScore(100 * _rowCombo);
+    _rowCombo++;
+    System.out.println("ROOOOOWWW COMBOOO"+_rowCombo);
   }
   public boolean tryMove(Pentomino pPiece, int pDir)
   {
@@ -155,6 +159,7 @@ public class Board extends GameObject {
   }
   public void Update()
   {
+    _rowCombo = 0;
     if(Input.keyPressed("SPACE"))
     {
       System.out.println(this.toString());
@@ -186,7 +191,9 @@ public class Board extends GameObject {
   }
   private void SpawnPentomino()
   {
-    Pentomino p = new Pentomino((_width*_tileSize)/2,0,_rnd.nextInt(Piece.getPiecesQuantity()),_tileSize,this);
+    int nxtRnd = _rnd.nextInt(Piece.getPiecesQuantity());
+    nxtRnd = 0;
+    Pentomino p = new Pentomino((_width*_tileSize)/2,0,nxtRnd,_tileSize,this);
     InputPentomino inputP = new InputPentomino(p);
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
