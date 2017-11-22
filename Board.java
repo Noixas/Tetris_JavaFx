@@ -164,7 +164,6 @@ public class Board extends GameObject {
   }
   public void Update()
   {
-    checkRow();
     if(Input.keyPressed("SPACE"))
     {
       System.out.println(this.toString());
@@ -188,6 +187,10 @@ public class Board extends GameObject {
           System.out.println(check.get(i).getPosition());
       }
     }
+  }
+  public void pentominoDone()
+  {
+      checkRow();
   }
   public String toString()
   {

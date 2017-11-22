@@ -4,9 +4,8 @@ import java.util.List;
 import java.lang.Math;
 import java.util.LinkedList;
 public class Pentomino extends GameObject {
-	//Type of tiles
-	private List<char[][]> pentominoes = new LinkedList<char[][]>();
-  private char[][] pentomino;
+	private List<char[][]> _pentominoes = new LinkedList<char[][]>();
+  private char[][] _pentomino;
   private int _rotation = 0;
 	private int _type;
 	private Board _board;
@@ -20,8 +19,8 @@ public class Pentomino extends GameObject {
 		_pivot =  new Vector2D(pX,pY);
 		_board = pBoard;
 		_type= pType;
-    pentominoes = Piece.getPieces(_type);//Get all posible ways of the pentomino
-    pentomino = pentominoes.get(_rotation);
+    _pentominoes = Piece.getPieces(_type);//Get all posible ways of the pentomino
+    _pentomino = _pentominoes.get(_rotation);
 	}
 
 	public Pentomino(Vector2D pPos, int pType,int pTileSize, Board pBoard) {
@@ -30,8 +29,8 @@ public class Pentomino extends GameObject {
 		_pivot =  pPos;
 		_board = pBoard;
 		_type= pType;
-    pentominoes = Piece.getPieces(_type);//Get all posible ways of the pentomino
-    pentomino = pentominoes.get(_rotation);
+    _pentominoes = Piece.getPieces(_type);//Get all posible ways of the pentomino
+    _pentomino = _pentominoes.get(_rotation);
 	}
 
 	public void move(int pDir) {
@@ -56,6 +55,10 @@ public class Pentomino extends GameObject {
 	}
 	public void setDone()
 	{
+		if(!_done){
+		_board.pentominoDone();		
+		System.out.println("Pent Done");
+	}
 		_done = true;
 		for(int i = 0; i<_components.size();i++)//remove input component
 			{
@@ -70,7 +73,7 @@ public class Pentomino extends GameObject {
 			_rotation += pDir;
 	    if(_rotation < 0) _rotation = 3;
 	    else if(_rotation > 3) _rotation = 0;
-	    pentomino = pentominoes.get(_rotation);
+	    _pentomino = _pentominoes.get(_rotation);
 			_board.updatePentominoAtBoard(this);
 			_board.tryMove(this, 0);
 			_rotated = true;
@@ -80,23 +83,23 @@ public class Pentomino extends GameObject {
 	{
 		pVec.x = Math.abs(pVec.x-_pivot.x);
 		pVec.y = Math.abs(pVec.y-_pivot.y);
-		pentomino[(int)pVec.y][(int)pVec.x] = '0';
+		_pentomino[(int)pVec.y][(int)pVec.x] = '0';
 
 	}
 	public void resizePentomino()
 	{
     int counter = 0;
-		for(int i = 0; i < pentomino.length; i++)
+		for(int i = 0; i < _pentomino.length; i++)
     {
-      for(int j = 0; j < pentomino[0].length; j++)
+      for(int j = 0; j < _pentomino[0].length; j++)
       {
-				if(counter == pentomino[0].length-1){
+				if(counter == _pentomino[0].length-1){
 					//eraseRow(i);
 					counter = 0;
 				}
-				if(pentomino[i][j] == '0')
+				if(_pentomino[i][j] == '0')
 				{
-					j = pentomino[0].length;
+					j = _pentomino[0].length;
 					counter=0;
 				}
 				else{
@@ -111,7 +114,7 @@ public class Pentomino extends GameObject {
 	}
 	public char[][] getPentArray()
 	{
-		return pentomino;
+		return _pentomino;
 	}
 	public Board getBoard()
 	{
@@ -119,7 +122,7 @@ public class Pentomino extends GameObject {
 	}
 	public int getHeight()
 	{
-		return pentomino.length * getTileSize();
+		return _pentomino.length * getTileSize();
 	}
 	public String toString()
 	{
