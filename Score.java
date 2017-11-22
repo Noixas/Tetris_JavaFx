@@ -3,10 +3,10 @@ public class Score {
   private static int points = 0;
 
   public Score() {
-    if(Pentomino.setDone() == true) {
+    /*if(Pentomino.setDone() == true) {
       points = 5;
     }
-
+    */
 
   }
   public void Update() {
@@ -17,7 +17,7 @@ public class Score {
     _score += points;
   }
 
-  public int getScore() {
+  public static int getScore() {
     return _score;
   }
 }
