@@ -135,7 +135,7 @@ public class Board extends GameObject {
 
   public void checkRow()
   {
-    int counter = 0;
+    int counter = 1;
     for(int i = 0; i < _board.length; i++)
     {
       for(int j = 0; j < _board[0].length; j++)
