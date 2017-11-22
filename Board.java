@@ -182,6 +182,7 @@ public class Board extends GameObject {
   {
       checkRow();
       SpawnPentomino();
+      _score.addScore(20);
   }
   private void SpawnPentomino()
   {
