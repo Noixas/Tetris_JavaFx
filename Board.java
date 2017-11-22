@@ -2,6 +2,7 @@ import java.util.List;
 import java.util.LinkedList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import java.util.Random;
 public class Board extends GameObject {
   private int _width;
   private int _height;
@@ -12,8 +13,10 @@ public class Board extends GameObject {
   private Score _score = new Score();
   private GraphicsContext _gc;
   private float _speed;
+  private Random _rnd;
   public Board(int pWidth, int pHeight, int pTileSize, GraphicsContext pGc) {
     _speed = 5;
+    _rnd = new Random();
     _width = pWidth;
     _height = pHeight;
     _tileSize = pTileSize;
@@ -53,6 +56,7 @@ public class Board extends GameObject {
       }
       pPent.setPivot(pVec);
   }
+
   //Update pentomino in the same pivot point
   public void updatePentominoAtBoard(Pentomino pPent)
   {
@@ -177,6 +181,17 @@ public class Board extends GameObject {
   public void pentominoDone()
   {
       checkRow();
+      SpawnPentomino();
+  }
+  private void SpawnPentomino()
+  {
+    Pentomino p = new Pentomino((_width*_tileSize)/2,0,_rnd.nextInt(Piece.getPiecesQuantity()),_tileSize,this);
+    InputPentomino inputP = new InputPentomino(p);
+    GraphicsComponent graphP = new GraphicsComponent(p,_gc);
+    PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
+    addPentominoToBoard(p,new Vector2D(_width/2,0));
+    addChild(p);
+    updatePentominoAtBoard(p);
   }
   public String toString()
   {

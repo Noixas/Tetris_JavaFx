@@ -7,12 +7,11 @@ public class Score {
       points = 5;
     }
     */
-
+  //  PentominoObserver.addObserver(this);
   }
   public void Update() {
 
   }
-
   public void addScore(int points) {
     _score += points;
   }

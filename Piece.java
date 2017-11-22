@@ -25,7 +25,7 @@ public class Piece {
     }
     return newPentomino;
   }
-public static char[][] getPiece(int pIndex)
+private static char[][] getPiece(int pIndex)
 {
 	char[][] buffer = pieces.get(pIndex);
 	char[][] finalPiece = new char[buffer.length][buffer[0].length];
@@ -34,7 +34,10 @@ public static char[][] getPiece(int pIndex)
     finalPiece[i][j]=buffer[i][j];
 		return finalPiece;
 }
-
+public static int getPiecesQuantity()
+{
+	return pieces.size();
+}
 
   public static char[][] rotate(char[][] pentomino, int degrees) {
     int width = pentomino[0].length;
