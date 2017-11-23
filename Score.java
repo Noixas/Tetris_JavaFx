@@ -19,4 +19,8 @@ public class Score {
   public static int getScore() {
     return _score;
   }
+  public static void Restart()
+  {
+    _score = 0;
+  }
 }

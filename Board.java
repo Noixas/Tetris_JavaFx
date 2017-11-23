@@ -174,13 +174,14 @@ public class Board extends GameObject {
       addChild(p);
       updatePentominoAtBoard(p);
     }
-    if(Input.keyPressed("S"))
+    if(Input.keyPressed("W"))
     {
-      List<GameObject> check = getChildren();
-      for(int i = 0; i<check.size();i++)
-      {
-          System.out.println(check.get(i).getPosition());
-      }
+      _speed++;
+    }
+     else if(Input.keyPressed("S"))
+    {
+      if(_speed > 0)
+      _speed--;
     }
   }
   public void pentominoDone()

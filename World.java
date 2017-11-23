@@ -9,11 +9,12 @@ public class World extends GameObject{
 	public static final int GRID_WIDTH = 10;
 	public static final int GRID_HEIGHT = 15;
 	public static World world;
+	private Board _board;
 	public World(Canvas pCanvas) {
 		world = this;
 		_canvas = pCanvas;
-		Board board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D());
-		addChild(board);
+		_board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D());
+		addChild(_board);
 	}
 	public void addCanvas(Canvas pCanvas)
 	{
@@ -24,6 +25,9 @@ public class World extends GameObject{
 				 System.out.println("Terminating Game...");
 				 System.exit(0);
 		 }
+		 if(Input.keyPressed("R")) {
+ 				RestartGame();
+ 		 }
 		_canvas.getGraphicsContext2D().clearRect(0, 0, GRID_WIDTH * TILE_SIZE, GRID_HEIGHT * TILE_SIZE);
 
 		List<GameObject> childs = getAllChildren(new LinkedList<GameObject>());
@@ -54,7 +58,15 @@ public class World extends GameObject{
 		}
 		Input.clearInput();
 	}
-
+	public void RestartGame()
+	{
+		System.out.println("Restarting Game...");
+		Score.Restart();
+	  Time.StartTime();
+	  removeChild(_board);
+	  _board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D());
+	 addChild(_board);
+	}
 	private void Init()
 	{
 

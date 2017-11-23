@@ -31,6 +31,15 @@ public class GameObject {
     _children.add(child);
     child.addParent(this);
   }
+  public void removeChild(GameObject child)
+  {
+    child.clearParent();
+    _children.remove(child);
+  }
+  public void clearParent()
+  {
+    _parent = null;
+  }
   public List<GameObject> getAllChildren(List<GameObject> pList)
 	{
 		for(int i = 0; i < _children.size(); i++)
