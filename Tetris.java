@@ -34,10 +34,10 @@ public class Tetris extends Application {
 		primaryStage.setTitle("Tetris!");
 		int tile_size = 50;
 		Pane left = new Pane();
-		left.setStyle("-fx-background-color: gray;");
+		left.setStyle("-fx-background-color: #a3c4ff");
 		left.setPrefSize(390,750);
 		Pane right = new Pane();
-		right.setStyle("-fx-background-color: gray;");
+		right.setStyle("-fx-background-color: #a3c4ff");
 		right.setPrefSize(390,750);
 		Pane world = new Pane();
 		world.setStyle("-fx-background-color: black;");
@@ -75,9 +75,17 @@ public class Tetris extends Application {
 		Label scoreCounter = new Label();
 		scoreCounter.setStyle("-fx-font: 30 arial;");
 		scoreCounter.setTextFill(Color.web("#FF00BC"));
-		scoreCounter.relocate(20, 200);
+		scoreCounter.relocate(90, 80);
+		//Style of scoreCounter
 
+		Rectangle scoreBox = new Rectangle(250, 40);
+		scoreBox.setArcWidth(30.0);
+		scoreBox.setArcHeight(30.0);
+		scoreBox.setFill(Color.rgb(0, 0, 0, .99));
+		scoreBox.relocate(82, 80);
+		//Style for the scoreCounter scoreBox
 
+		right.getChildren().add(scoreBox);
 		right.getChildren().add(timerBox);
 		right.getChildren().add(gameTimer);
 		right.getChildren().add(scoreCounter);
