@@ -128,7 +128,7 @@ public class Tetris extends Application {
 		highscores.setStyle("-fx-font: 30 arial;");
 		highscores.setTextFill(Color.rgb(255, 0, 0, .60));
 		highscores.relocate(75, 354);
-
+		//Style for highscorelist and implementation of highscores
 
 		right.getChildren().addAll(scoreBox, timerBox, gameTimer, scoreCounter, preview, highscore, highscoreLabel, highscoreLine, highscores);
 
