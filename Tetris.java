@@ -60,7 +60,7 @@ public class Tetris extends Application {
 		//TODO Add color property to pentomino
 
 		Label gameTimer = new Label();
-		gameTimer.relocate(90, 20);
+		gameTimer.relocate(90, 650);
 		gameTimer.setStyle("-fx-font: 30 arial;");
 		gameTimer.setTextFill(Color.web("#FF00BC"));
 		//Style of the gameTimer
@@ -69,20 +69,20 @@ public class Tetris extends Application {
 		timerBox.setArcWidth(30.0);
 		timerBox.setArcHeight(30.0);
 		timerBox.setFill(Color.rgb(0, 0, 0, .99));
-		timerBox.relocate(82, 18);
+		timerBox.relocate(82, 648);
 		//Style for the gameTimer box
 
 		Label scoreCounter = new Label();
 		scoreCounter.setStyle("-fx-font: 30 arial;");
 		scoreCounter.setTextFill(Color.web("#FF00BC"));
-		scoreCounter.relocate(90, 80);
+		scoreCounter.relocate(90, 700);
 		//Style of scoreCounter
 
 		Rectangle scoreBox = new Rectangle(250, 40);
 		scoreBox.setArcWidth(30.0);
 		scoreBox.setArcHeight(30.0);
 		scoreBox.setFill(Color.rgb(0, 0, 0, .99));
-		scoreBox.relocate(82, 80);
+		scoreBox.relocate(82, 698);
 		//Style for the scoreCounter scoreBox
 
 		right.getChildren().add(scoreBox);
