@@ -34,10 +34,10 @@ public class Tetris extends Application {
 		primaryStage.setTitle("Tetris!");
 		int tile_size = 50;
 		Pane left = new Pane();
-		left.setStyle("-fx-background-color: #a3c4ff");
+		left.setStyle("-fx-background-color: #357dff");
 		left.setPrefSize(390,750);
 		Pane right = new Pane();
-		right.setStyle("-fx-background-color: #a3c4ff");
+		right.setStyle("-fx-background-color: #357dff");
 		right.setPrefSize(390,750);
 		Pane world = new Pane();
 		world.setStyle("-fx-background-color: black;");
@@ -60,36 +60,77 @@ public class Tetris extends Application {
 		//TODO Add color property to pentomino
 
 		Label gameTimer = new Label();
-		gameTimer.relocate(90, 650);
 		gameTimer.setStyle("-fx-font: 30 arial;");
-		gameTimer.setTextFill(Color.web("#FF00BC"));
+		gameTimer.setTextFill(Color.web("#FF0000"));
+		gameTimer.relocate(75, 192);
 		//Style of the gameTimer
 
 		Rectangle timerBox = new Rectangle(250, 40);
-		timerBox.setArcWidth(30.0);
-		timerBox.setArcHeight(30.0);
+		timerBox.setArcWidth(25.0);
+		timerBox.setArcHeight(25.0);
 		timerBox.setFill(Color.rgb(0, 0, 0, .99));
-		timerBox.relocate(82, 648);
+		timerBox.relocate(70, 190);
+		timerBox.setStroke(Color.rgb(255, 0, 0, .99));
+		timerBox.setStrokeWidth(3);
 		//Style for the gameTimer box
 
 		Label scoreCounter = new Label();
 		scoreCounter.setStyle("-fx-font: 30 arial;");
-		scoreCounter.setTextFill(Color.web("#FF00BC"));
-		scoreCounter.relocate(90, 700);
+		scoreCounter.setTextFill(Color.web("#ff0000"));
+		scoreCounter.relocate(75, 252);
 		//Style of scoreCounter
 
 		Rectangle scoreBox = new Rectangle(250, 40);
-		scoreBox.setArcWidth(30.0);
-		scoreBox.setArcHeight(30.0);
+		scoreBox.setArcWidth(25.0);
+		scoreBox.setArcHeight(25.0);
 		scoreBox.setFill(Color.rgb(0, 0, 0, .99));
-		scoreBox.relocate(82, 698);
+		scoreBox.relocate(70, 250);
+		scoreBox.setStroke(Color.rgb(255, 0, 0, .99));
+		scoreBox.setStrokeWidth(3);
 		//Style for the scoreCounter scoreBox
 
-		right.getChildren().add(scoreBox);
-		right.getChildren().add(timerBox);
-		right.getChildren().add(gameTimer);
-		right.getChildren().add(scoreCounter);
-		//adding gameTimer and timerBox to right pane
+		Rectangle preview = new Rectangle(250, 150);
+		preview.setArcWidth(25.0);
+		preview.setArcHeight(25.0);
+		preview.setFill(Color.rgb(0, 0, 0, .99));
+		preview.relocate(70, 20);
+		preview.setStroke(Color.rgb(255, 0, 0, .99));
+		preview.setStrokeWidth(3);
+		//Style for the pentominopreviewer
+
+		Rectangle highscore = new Rectangle(250, 420);
+		highscore.setArcWidth(25.0);
+		highscore.setArcHeight(25.0);
+		highscore.setFill(Color.rgb(0, 0, 0, .99));
+		highscore.relocate(70, 310);
+		highscore.setStroke(Color.rgb(255, 0, 0, .99));
+		highscore.setStrokeWidth(3);
+		Label highscoreLabel = new Label();
+		highscoreLabel.setText("Highscores");
+		highscoreLabel.setStyle("-fx-font: 30 arial;");
+		highscoreLabel.setTextFill(Color.rgb(255, 0, 0, .99));
+		highscoreLabel.relocate(75, 312);
+		Rectangle highscoreLine = new Rectangle(250, 3);
+		highscoreLine.setFill(Color.rgb(255, 0, 0, .40));
+		highscoreLine.relocate(70, 350);
+		Label highscores = new Label();
+		highscores.setText(
+			" 1. \n" +
+			" 2. \n" +
+			" 3. \n" +
+			" 4. \n" +
+			" 5. \n" +
+			" 6. \n" +
+			" 7. \n" +
+			" 8. \n" +
+			" 9. \n" +
+			"10. \n");
+		highscores.setStyle("-fx-font: 30 arial;");
+		highscores.setTextFill(Color.rgb(255, 0, 0, .60));
+		highscores.relocate(75, 354);
+
+
+		right.getChildren().addAll(scoreBox, timerBox, gameTimer, scoreCounter, preview, highscore, highscoreLabel, highscoreLine, highscores);
 
 
 		Input.setScene(scene);
