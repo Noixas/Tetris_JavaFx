@@ -26,7 +26,6 @@ public class Tetris extends Application {
 		Time.StartTime();
 	//	Scanner in = new Scanner(System.in);
 		//int n1 = in.nextInt();
-
 		launch(args);
 	}
 	@Override
@@ -114,17 +113,11 @@ public class Tetris extends Application {
 		highscoreLine.setFill(Color.rgb(255, 0, 0, .40));
 		highscoreLine.relocate(70, 350);
 		Label highscores = new Label();
-		highscores.setText(
-			" 1. \n" +
-			" 2. \n" +
-			" 3. \n" +
-			" 4. \n" +
-			" 5. \n" +
-			" 6. \n" +
-			" 7. \n" +
-			" 8. \n" +
-			" 9. \n" +
-			"10. \n");
+
+		HighscoreManager hm = new HighscoreManager();
+		hm.addHScore(Score.getScore());
+		hm.updateScoreFile();
+		highscores.setText(hm.getHScoreString());
 		highscores.setStyle("-fx-font: 30 arial;");
 		highscores.setTextFill(Color.rgb(255, 0, 0, .60));
 		highscores.relocate(75, 354);
