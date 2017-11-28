@@ -24,6 +24,7 @@ public class Tetris extends Application {
 
 	public static void main(String[] args) {
 		Time.StartTime();
+		HighscoreManager.init();
 	//	Scanner in = new Scanner(System.in);
 		//int n1 = in.nextInt();
 		launch(args);
@@ -58,76 +59,9 @@ public class Tetris extends Application {
 		//TODO spawn pentominoes when off limits
 		//TODO Add color property to pentomino
 
-		Label gameTimer = new Label();
-		gameTimer.setStyle("-fx-font: 30 arial;");
-		gameTimer.setTextFill(Color.web("#FF0000"));
-		gameTimer.relocate(75, 192);
-		//Style of the gameTimer
 
-		Rectangle timerBox = new Rectangle(250, 40);
-		timerBox.setArcWidth(25.0);
-		timerBox.setArcHeight(25.0);
-		timerBox.setFill(Color.rgb(0, 0, 0, .99));
-		timerBox.relocate(70, 190);
-		timerBox.setStroke(Color.rgb(255, 0, 0, .99));
-		timerBox.setStrokeWidth(3);
-		//Style for the gameTimer box
-
-		Label scoreCounter = new Label();
-		scoreCounter.setStyle("-fx-font: 30 arial;");
-		scoreCounter.setTextFill(Color.web("#ff0000"));
-		scoreCounter.relocate(75, 252);
-		//Style of scoreCounter
-
-		Rectangle scoreBox = new Rectangle(250, 40);
-		scoreBox.setArcWidth(25.0);
-		scoreBox.setArcHeight(25.0);
-		scoreBox.setFill(Color.rgb(0, 0, 0, .99));
-		scoreBox.relocate(70, 250);
-		scoreBox.setStroke(Color.rgb(255, 0, 0, .99));
-		scoreBox.setStrokeWidth(3);
-		//Style for the scoreCounter scoreBox
-
-		Rectangle preview = new Rectangle(250, 150);
-		preview.setArcWidth(25.0);
-		preview.setArcHeight(25.0);
-		preview.setFill(Color.rgb(0, 0, 0, .99));
-		preview.relocate(70, 20);
-		preview.setStroke(Color.rgb(255, 0, 0, .99));
-		preview.setStrokeWidth(3);
-		//Style for the pentominopreviewer
-
-		Rectangle highscore = new Rectangle(250, 420);
-		highscore.setArcWidth(25.0);
-		highscore.setArcHeight(25.0);
-		highscore.setFill(Color.rgb(0, 0, 0, .99));
-		highscore.relocate(70, 310);
-		highscore.setStroke(Color.rgb(255, 0, 0, .99));
-		highscore.setStrokeWidth(3);
-		Label highscoreLabel = new Label();
-		highscoreLabel.setText("Highscores");
-		highscoreLabel.setStyle("-fx-font: 30 arial;");
-		highscoreLabel.setTextFill(Color.rgb(255, 0, 0, .99));
-		highscoreLabel.relocate(75, 312);
-		Rectangle highscoreLine = new Rectangle(250, 3);
-		highscoreLine.setFill(Color.rgb(255, 0, 0, .40));
-		highscoreLine.relocate(70, 350);
-		Label highscores = new Label();
-
-		HighscoreManager hm = new HighscoreManager();
-		hm.addHScore(200);
-		hm.addHScore(500);
-		hm.addHScore(700);
-		hm.updateScoreFile();
-		highscores.setText(hm.getHScoreString());
-		highscores.setStyle("-fx-font: 30 arial;");
-		highscores.setTextFill(Color.rgb(255, 0, 0, .60));
-		highscores.relocate(75, 354);
-		//Style for highscorelist and implementation of highscores
-
-		right.getChildren().addAll(scoreBox, timerBox, gameTimer, scoreCounter, preview, highscore, highscoreLabel, highscoreLine, highscores);
-
-
+		BoardUI constructUI = new BoardUI(right);
+		//Contructing the UI
 
 		Input.setScene(scene);
 		//Loop of the game
@@ -137,8 +71,8 @@ public class Tetris extends Application {
 				                       time += now;
 															 World.world.Update();
 															 Time.updateGameTime();
-															 gameTimer.setText("Time: " + Time.getGameTime());
-															 scoreCounter.setText("Score: " + Score.getScore());
+															 constructUI.updateTime();
+															 constructUI.updateCounter();
 			                       }
 		                       };
 		timer.start();

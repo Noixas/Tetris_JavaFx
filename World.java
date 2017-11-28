@@ -23,6 +23,8 @@ public class World extends GameObject{
 	public void Update() {
 		if(Input.keyPressed("ESCAPE")) {
 				 System.out.println("Terminating Game...");
+				_board.setGameDone(true);
+				_board.GameDone();
 				 System.exit(0);
 		 }
 		 if(Input.keyPressed("R")) {

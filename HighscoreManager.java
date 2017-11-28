@@ -2,39 +2,39 @@ import java.io.*;
 import java.util.*;
 
 public class HighscoreManager {
-  private ArrayList<HScore> hScores;
+  private static ArrayList<HScore> hScores;
 
   private static final String HIGHSCORE_FILE = "hScores.dat";
   //Creation of the highscores file, where the highscores are stored
 
-  ObjectOutputStream scoreOutputStream = null;
-  ObjectInputStream scoreInputStream = null;
+  static ObjectOutputStream scoreOutputStream = null;
+  static ObjectInputStream scoreInputStream = null;
 
   public HighscoreManager() {
     hScores = new ArrayList<HScore>();
   }
 
-  public ArrayList<HScore> getHScores() {
+  public static ArrayList<HScore> getHScores() {
     loadScoreFile();
     sort();
     return hScores;
   }
   //Method that returns a sorted highscore arraylist
 
-  private void sort() {
+  private static void sort() {
     HScoreComparator comparator = new HScoreComparator();
     Collections.sort(hScores, comparator);
   }
   //Method for sorting the ArrayList
 
-  public void addHScore(int hScore) {
+  public static void addHScore(int hScore) {
     loadScoreFile();
     hScores.add(new HScore(hScore));
     updateScoreFile();
   }
   //adding a score to the hScores.dat file
 
-  public void loadScoreFile() {
+  public static void loadScoreFile() {
     try {
       scoreInputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILE));
       hScores = (ArrayList<HScore>) scoreInputStream.readObject();
@@ -62,7 +62,7 @@ public class HighscoreManager {
   }
   //this function loads the arraylist in the file and puts it in the hScores-arraylist
 
-  public void updateScoreFile() {
+  public static void updateScoreFile() {
     try {
       scoreOutputStream = new ObjectOutputStream(new FileOutputStream(HIGHSCORE_FILE));
       scoreOutputStream.writeObject(hScores);
@@ -87,7 +87,7 @@ public class HighscoreManager {
   }
   //this funcion is like the one above, it is just the other way around, it writes the hScores-arraylist to the file
 
-  public String getHScoreString() {
+  public static String getHScoreString() {
     String hScoreString = "";
     int max = 10;
 
@@ -106,5 +106,11 @@ public class HighscoreManager {
     return hScoreString;
   }
   //method that returns all the highscores in the hScores-arraylist
+  public static void init() {
+    hScores = new ArrayList<HScore>();
+  }
 
+  public static void clearArray() {
+    hScores = new ArrayList<HScore>();
+  }
 }
