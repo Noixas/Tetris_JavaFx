@@ -17,7 +17,9 @@ public class Score {
   }
   public void Done()
   {
-    
+    HighscoreManager newManager = new HighscoreManager();
+    HighscoreManager.addHScore(this.getScore());
+    HighscoreManager.updateScoreFile();
   }
 
   public static int getScore() {

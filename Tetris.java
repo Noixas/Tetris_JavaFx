@@ -24,6 +24,7 @@ public class Tetris extends Application {
 
 	public static void main(String[] args) {
 		Time.StartTime();
+		HighscoreManager.init();
 	//	Scanner in = new Scanner(System.in);
 		//int n1 = in.nextInt();
 		launch(args);
@@ -114,12 +115,7 @@ public class Tetris extends Application {
 		highscoreLine.relocate(70, 350);
 		Label highscores = new Label();
 
-		HighscoreManager hm = new HighscoreManager();
-		hm.addHScore(200);
-		hm.addHScore(500);
-		hm.addHScore(700);
-		hm.updateScoreFile();
-		highscores.setText(hm.getHScoreString());
+		highscores.setText(HighscoreManager.getHScoreString());
 		highscores.setStyle("-fx-font: 30 arial;");
 		highscores.setTextFill(Color.rgb(255, 0, 0, .60));
 		highscores.relocate(75, 354);
