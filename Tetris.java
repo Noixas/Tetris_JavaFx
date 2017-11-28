@@ -115,7 +115,9 @@ public class Tetris extends Application {
 		Label highscores = new Label();
 
 		HighscoreManager hm = new HighscoreManager();
-		hm.addHScore(Score.getScore());
+		hm.addHScore(200);
+		hm.addHScore(500);
+		hm.addHScore(700);
 		hm.updateScoreFile();
 		highscores.setText(hm.getHScoreString());
 		highscores.setStyle("-fx-font: 30 arial;");
@@ -124,6 +126,7 @@ public class Tetris extends Application {
 		//Style for highscorelist and implementation of highscores
 
 		right.getChildren().addAll(scoreBox, timerBox, gameTimer, scoreCounter, preview, highscore, highscoreLabel, highscoreLine, highscores);
+
 
 
 		Input.setScene(scene);
