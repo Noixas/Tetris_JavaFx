@@ -60,7 +60,7 @@ public class Tetris extends Application {
 		//TODO Add color property to pentomino
 
 
-		BoardUI constructUI = new BoardUI(right);
+		BoardUI constructUI = new BoardUI(right, left);
 		//Contructing the UI
 
 		Input.setScene(scene);
