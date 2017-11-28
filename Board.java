@@ -33,6 +33,8 @@ public class Board extends GameObject {
     addChild(p);
     updatePentominoAtBoard(p);
 
+
+
   }
   public void addPentominoToBoard(Pentomino pPent, Vector2D pVec)
   {
@@ -157,10 +159,8 @@ public class Board extends GameObject {
           eraseRow(i);
           counter = 0;
         }
-
       }
     }
-
   }
   public void Update()
   {
@@ -201,6 +201,7 @@ public class Board extends GameObject {
   }
   private void SpawnPentomino()
   {
+    if(_done ==false){
     int nxtRnd = _rnd.nextInt(Piece.getPiecesQuantity());
     nxtRnd = 0;
     Pentomino p = new Pentomino((_width*_tileSize)/2,0,nxtRnd,_tileSize,this);
@@ -209,8 +210,17 @@ public class Board extends GameObject {
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
     current = p;
     addPentominoToBoard(p,new Vector2D(_width/2,0));
-    addChild(p);
-    updatePentominoAtBoard(p);
+
+    if(checkLose(p))
+    {
+      setGameDone(true);
+      //TODO: Destroy this pentomino
+    }
+    else{
+      addChild(p);
+      updatePentominoAtBoard(p);
+    }
+  }
   }
   public void setGameDone(boolean pBool)
   {
@@ -237,12 +247,22 @@ public class Board extends GameObject {
     {
       for(int j = 0; j < _board[0].length; j++)
       {
-        s += _board[i][j] + "Y: "+i+ "  ";
+        s += _board[i][j]+ " ";// + "Y: "+i+ "  ";
       }
       s += "\n";
     }
     return s;
   }
+  public boolean checkLose(Pentomino p)
+  {
+    if(tryMove(p,0) == false){
+      System.out.println("YOU LOST");
+      return true;
+    }
+    else return false;
+
+  }
+
   public int getWidth() {
     return _width;
   }
