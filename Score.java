@@ -15,6 +15,10 @@ public class Score {
   public void addScore(int points) {
     _score += points;
   }
+  public void Done()
+  {
+    
+  }
 
   public static int getScore() {
     return _score;

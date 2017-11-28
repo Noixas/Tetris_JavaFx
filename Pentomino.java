@@ -137,5 +137,9 @@ public class Pentomino extends GameObject {
 	{
 		return "PENT";
 	}
+	public boolean isDone()
+	{
+		return _done;
+	}
 
 }

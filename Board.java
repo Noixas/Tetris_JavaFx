@@ -7,6 +7,7 @@ public class Board extends GameObject {
   private int _width;
   private int _height;
   private int _tileSize;
+  private boolean _done = false;
   private Pentomino current;
   private Pentomino[][] _board ;
   private List<Pentomino> _pentominoes = new LinkedList<Pentomino>();
@@ -27,6 +28,7 @@ public class Board extends GameObject {
 		InputPentomino inputP = new InputPentomino(p);
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
+    current = p;
     addPentominoToBoard(p,new Vector2D(_width/2,0));
     addChild(p);
     updatePentominoAtBoard(p);
@@ -35,6 +37,7 @@ public class Board extends GameObject {
   public void addPentominoToBoard(Pentomino pPent, Vector2D pVec)
   {
       char[][] pos = pPent.getPentArray();
+
       for(int i = 0; i < pos.length; i++)
       {
         for(int j = 0; j < pos[0].length; j++)
@@ -50,6 +53,8 @@ public class Board extends GameObject {
                 i = pos.length;
                 j = pos[0].length;
               }
+              if(pVec.y+i >= _board.length)
+              setGameDone(true);
             _board[(int)pVec.y+i][(int)pVec.x+j] = pPent;
 
           }
@@ -160,6 +165,7 @@ public class Board extends GameObject {
   public void Update()
   {
     _rowCombo = 0;
+    if(_done == false){
     if(Input.keyPressed("SPACE"))
     {
       System.out.println(this.toString());
@@ -170,6 +176,7 @@ public class Board extends GameObject {
       InputPentomino inputP = new InputPentomino(p);
       GraphicsComponent graphP = new GraphicsComponent(p,_gc);
       PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
+      current = p;
       addPentominoToBoard(p,new Vector2D(_width/2,0));
       addChild(p);
       updatePentominoAtBoard(p);
@@ -183,6 +190,8 @@ public class Board extends GameObject {
       if(_speed > 0)
       _speed--;
     }
+  }
+    GameDone();
   }
   public void pentominoDone()
   {
@@ -198,10 +207,29 @@ public class Board extends GameObject {
     InputPentomino inputP = new InputPentomino(p);
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
+    current = p;
     addPentominoToBoard(p,new Vector2D(_width/2,0));
     addChild(p);
     updatePentominoAtBoard(p);
   }
+  public void setGameDone(boolean pBool)
+  {
+      _done = pBool;
+  }
+  public boolean GameDone()
+  {
+    if(_done)
+    _score.Done();
+    return _done;
+    /*if(current.yPos == current._position.y && current.isDone())
+    {
+      for(int i = 0; i<5000;i++)
+      System.out.println("DOOOOOONE");
+      System.exit(0);
+      return true;
+    }
+    else return false;
+*/  }
   public String toString()
   {
     String s = "";
