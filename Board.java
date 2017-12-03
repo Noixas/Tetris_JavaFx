@@ -17,6 +17,8 @@ public class Board extends GameObject {
   private float _speed;
   private Random _rnd;
   private int _rowCombo = 1;
+  private PentominoesPool pp = new PentominoesPool();
+
   public Board(int pWidth, int pHeight, int pTileSize, GraphicsContext pGc) {
     _speed = 5;
     _rnd = new Random();
@@ -200,22 +202,26 @@ public class Board extends GameObject {
       SpawnPentomino();
       _score.addScore(20);
   }
+
+  private void newPentomino() {
+    p = new Pentomino((_width*_tileSize)/2,0,pp.getPentPool().peek(),_tileSize,this);
+    pp.getPentPool().pop();
+    InputPentomino inputP = new InputPentomino(p);
+    GraphicsComponent graphP = new GraphicsComponent(p,_gc);
+    PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
+    current = p;
+    addPentominoToBoard(p,new Vector2D(_width/2,0));
+  }
+
   private void SpawnPentomino()
   {
     if(_done ==false){
-    /*int nxtRnd = _rnd.nextInt(Piece.getPiecesQuantity());
-    nxtRnd = 0;*/
-    PentominoesPool pp= new PentominoesPool();
-    pp.newPentPool();
-    if(!pp.getPentPool().empty()) {
-      p = new Pentomino((_width*_tileSize)/2,0,pp.getPentPool().peek(),_tileSize,this);
-      pp.getPentPool().pop();
-      InputPentomino inputP = new InputPentomino(p);
-      GraphicsComponent graphP = new GraphicsComponent(p,_gc);
-      PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
-      current = p;
-      addPentominoToBoard(p,new Vector2D(_width/2,0));
-    }
+      if(!pp.getPentPool().empty()) {
+        newPentomino();
+      } else {
+        pp.newPentPool();
+        newPentomino();
+      }
 
 
     if(checkLose(p))
