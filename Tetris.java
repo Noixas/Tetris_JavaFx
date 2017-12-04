@@ -25,7 +25,7 @@ public class Tetris extends Application {
 	//private static Button startGame;
 
 	public static void main(String[] args) {
-		Time.StartTime();
+
 		HighscoreManager.init();
 		MenuUI.init();
 	//	Scanner in = new Scanner(System.in);
@@ -56,6 +56,7 @@ public class Tetris extends Application {
 		startGame.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				Time.StartTime();
 				primaryStage();
 			}
 		});
