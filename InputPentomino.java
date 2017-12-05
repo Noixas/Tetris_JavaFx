@@ -10,7 +10,7 @@ public class InputPentomino extends Component {
     if(Input.keyPressed("UP")) {
        _pentomino.rotate(1);
     }
-    if(Input.keyPressed("DOWN")) {
+    else if(Input.keyPressed("DOWN")) {
        _pentomino.rotate(-1);
     }
     if(Input.keyPressed("LEFT")) {
@@ -18,8 +18,6 @@ public class InputPentomino extends Component {
     }
     else if(Input.keyPressed("RIGHT")) {
        _pentomino.move(1);
-       System.out.println(_owner);
-       //System.exit(0);
     }
     if(Input.keyPressed("SPACE"))
     {

@@ -1,29 +1,39 @@
 public class PhysicsPentomino extends Component {
-  private Pentomino _pentomino;
-	protected float _speed;
-  private Board _board;
-  private int _tileSize;
-  private float _lastBlock;
-  private boolean _sideMove;
-  private boolean _fallMove;
-  private float _moveStep = 1f;
+  private Pentomino        _pentomino;
+	protected float          _speed;
+  private Board            _board;
+  private int              _tileSize;
+  private float            _lastBlock;
+  private boolean          _sideMove = true;
+  private boolean          _fallMove= true;
+  private float            _moveStep = 1f;
   public PhysicsPentomino(GameObject pOwner, float pSpeed) {
     _owner = pOwner;
     _speed = pSpeed;
-    //_speed = 1;
     _pentomino = (Pentomino) _owner;
-    _owner.addComponent(this);
     _board = _pentomino.getBoard();
     _tileSize = _pentomino.getTileSize();
     _lastBlock = _pentomino.getY() + _pentomino.getPentominoHeight();
-    _sideMove = true;
-    _fallMove= true;
+    _owner.addComponent(this);
   }
-  public void fallWorld()
-  {
-    _owner.worldMove(0, 1, _speed);//Fall in world
+
+  @Override
+  public void Update() {
+    if(_pentomino.getRotated()){
+      //Do the rotation in here
+      // _lastBlock =  _pentomino.getY()+ _pentomino.getPentominoHeight() ;
+      _pentomino.rotationUsed();
+    }
+    if(checkFallMove())
+    {
+      _moveStep -= Time.DeltaTime();//Substract the amount of time last frame took
+      //fallWorldSmooth(); //For smooth falling
+      if(_moveStep <= 0)
+        fallStepBoard();
+    }
+    else _pentomino.setDone();
   }
-  public void move(int pDir)
+  public void move(int pDir)//APROVED
   {
     _sideMove = _board.tryMove(_pentomino, pDir);
     if(_sideMove){
@@ -33,26 +43,7 @@ public class PhysicsPentomino extends Component {
       _board.updatePentominoAtBoard(_pentomino, v);//Update the position in the board
     }
   }
-  @Override
-  public void Update() {
-    if(_pentomino.getRotated()){
-      //Do the rotation in here
-    //  _lastBlock =  _pentomino.getY()+ _pentomino.getPentominoHeight() ;
-      _pentomino.rotationUsed();
-    }
-    if(checkFallMove())
-    {
-      _moveStep -= Time.DeltaTime();//Substract the amount of time last frame took
-      //fallWorld(); //For smooth falling
-      //System.out.println(_moveStep);
-      if(_moveStep <=0)
-      {
-        fallBoard();
-      }
-    }else
-        _pentomino.setDone();
-  }
-  public void fallBoard()
+  public void fallStepBoard()//APROVED
   {
     _owner.worldMove(0, 1, _pentomino.getTileSize());
     _moveStep = _speed;
@@ -63,9 +54,13 @@ public class PhysicsPentomino extends Component {
 
     System.out.println(_board.toString());
   }
-  private boolean checkFallMove()
+  private boolean checkFallMove()//APROVED
   {
     _fallMove =  _board.tryMove(_pentomino, 0);
     return _fallMove;
+  }
+  public void fallWorldSmooth()//APROVED
+  {
+    _owner.worldMove(0, 1, _speed);//Fall in world
   }
 }

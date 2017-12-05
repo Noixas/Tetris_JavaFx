@@ -20,22 +20,27 @@ public class GraphicsComponent extends Component{
   @Override
   public void Update()
   {
-    _pent = _pentomino.getPentArray();
-    if(!_blink || _timePased < 0){
+    _pent = _pentomino.getPentArray();//get the newest array(in case we rotated)
+    if(!_blink)
     Render(_gc);
-      _timePased += Time.deltaTime;
-    }
-    else{
-      _timePased += Time.deltaTime;
-      if(_blinking < _timePased)
-      {
-        _timePased = -_blinking-.2f;
-        Render(_gc);
-      }
-    }
-  }
+    else
+    Blinking();
 
-  public void Render(GraphicsContext gc)
+  }
+  private void Blinking()
+  {
+    _timePased += Time.deltaTime;
+    if(_timePased < 0){
+      Render(_gc);
+    }
+    else if(_blinking < _timePased)
+    {
+      _timePased = -_blinking*2;
+      Render(_gc);
+    }
+    // Else Do Nothing
+  }
+  private void Render(GraphicsContext gc)
   {
   		for(int i = 0; i < _pent[0].length; i++)
   		{
