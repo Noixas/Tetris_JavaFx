@@ -19,6 +19,9 @@ public class Board extends GameObject {
   private float             _speed = .5f;
   private Random            _random = new Random();
   private int              _rowCombo = 1;
+
+  private PentominoesPool  _pp = new PentominoesPool();
+
   public Board(int pWidth, int pHeight, int pTileSize, GraphicsContext pGc) {
     _width = pWidth;
     _height = pHeight;
@@ -128,10 +131,6 @@ public class Board extends GameObject {
         }
       }
     }
-    //Update pivot point,*moved to physics component
-  /*  Vector2D newPivot = pPiece.getPivot();
-    newPivot.x += pDir;
-    updatePentominoAtBoard(pPiece, newPivot);*/
     return true;
   }
 
@@ -191,26 +190,27 @@ public class Board extends GameObject {
       }
     }
   }
-  private void SpawnPentomino()//APROVED
+  private void newPentomino()
   {
-    if(_done) return;//If we are done, stop spawning pentominoes
-
-    int nxtRnd = _random.nextInt(Piece.getPiecesQuantity());
-    nxtRnd = 0;
-    Pentomino p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),0,_tileSize,this);
+    Pentomino p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),_pp.getPentPool().pop(),_tileSize,this);
     InputPentomino inputP = new InputPentomino(p);
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
     _activePentomino = p;
     addPentominoToBoard(p,new Vector2D(_width/2,0));
-    if(checkLose(p))//check if spawning this pentomino will make the game lose
+    addchild(p);
+    if(_pp.getPentPool().empty()) _pp.newPentPool();
+
+  }
+  private void SpawnPentomino()//APROVED
+  {
+    if(_done) return;//If we are done, stop spawning pentominoes
+    newPentomino();
+
+    if(checkLose(_activePentomino))//check if spawning this pentomino will make the game lose
     {
       setGameDone(true);
       //TODO: Destroy this pentomino
-    }
-    else{
-      addChild(p);
-      updatePentominoAtBoard(p);
     }
   }
   public void setGameDone(boolean pBool)//APROVED
