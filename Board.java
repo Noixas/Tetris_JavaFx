@@ -86,7 +86,7 @@ public class Board extends GameObject {
             return new Vector2D(pivot.x - (newRot[0].length-j), pivot.y);
             else if(_board[y+i][x+j] != oldRot &&  _board[y+i][x+j] != null)
             {
-              if(i > j){
+              if(i >= j){
               Vector2D n = new Vector2D(pivot.x, pivot.y - (newRot.length-i));
               n.toString();
                 return n;
@@ -180,7 +180,7 @@ public class Board extends GameObject {
         }
       }
     }
-  
+
   private void newPentomino()
   {
     Pentomino p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),_pp.getPentPool().pop(),_tileSize,this);
