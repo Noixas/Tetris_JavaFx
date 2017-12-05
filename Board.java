@@ -4,108 +4,44 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import java.util.Random;
 public class Board extends GameObject {
-  private int _width;
-  private int _height;
-  private int _tileSize;
-  private boolean _done = false;
-  private Pentomino current;
-  private Pentomino p;
-  private Pentomino[][] _board ;
-  private List<Pentomino> _pentominoes = new LinkedList<Pentomino>();
-  private Score _score = new Score();
-  private GraphicsContext _gc;
-  private float _speed;
-  private Random _rnd;
-  private int _rowCombo = 1;
-  private PentominoesPool pp = new PentominoesPool();
+  private int               _width;
+  private int               _height;
+  private int               _tileSize;
+  private float             _delay = 5.0f;
+  private boolean           _done = false;
+  private float             _startDelayTime = 0;
+  private boolean           _startDelay = false;
+  private Pentomino         _activePentomino;
+  private Pentomino[][]     _board ;
+  private List<Pentomino>   _pentominoes = new LinkedList<Pentomino>();
+  private Score             _score = new Score();
+  private GraphicsContext   _gc;
+  private float             _speed = .3f;
+  private Random            _random = new Random();
+  private int              _rowCombo = 1;
+
+  private PentominoesPool  _pp = new PentominoesPool();
 
   public Board(int pWidth, int pHeight, int pTileSize, GraphicsContext pGc) {
-    _speed = 5;
-    _rnd = new Random();
     _width = pWidth;
     _height = pHeight;
     _tileSize = pTileSize;
     _gc = pGc; //The context where we will draw the board
     _board = new Pentomino[_height][_width];
-    Pentomino p = new Pentomino((_width*_tileSize)/2,0,0,_tileSize,this);
-		InputPentomino inputP = new InputPentomino(p);
-    GraphicsComponent graphP = new GraphicsComponent(p,_gc);
-    PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
-    current = p;
-    addPentominoToBoard(p,new Vector2D(_width/2,0));
-    addChild(p);
-    updatePentominoAtBoard(p);
-
-
-
-  }
+    SpawnPentomino();///Spawn the first pentomino
+  }//APROVED
   public void addPentominoToBoard(Pentomino pPent, Vector2D pVec)
   {
       char[][] pos = pPent.getPentArray();
-
       for(int i = 0; i < pos.length; i++)
-      {
         for(int j = 0; j < pos[0].length; j++)
-        {
           if(pos[i][j] != '0')
           {
-
-              if((int)pVec.x+j >= _board[0].length)//x is bigger than the Board
-              {
-                pVec.x = _board[0].length - pos[0].length;
-                updatePentominoAtBoard(pPent,pVec);
-                    pPent.xPos = pVec.x * 50;
-                i = pos.length;
-                j = pos[0].length;
-              }
-              if(pVec.y+i >= _board.length)
-              setGameDone(true);
             _board[(int)pVec.y+i][(int)pVec.x+j] = pPent;
-
           }
-        }
-      }
       pPent.setPivot(pVec);
   }
 
-  //Update pentomino in the same pivot point
-  public void updatePentominoAtBoard(Pentomino pPent)
-  {
-      erasePentomino(pPent);//Erase the old positions of the pentomino
-      addPentominoToBoard(pPent, pPent.getPivot()); // Add the new rotation of the pentomino
-      pPent.yPos = pPent.getPivot().y * 50;
-  }
-    //Update pentomino in a new pivot point
-  public void updatePentominoAtBoard(Pentomino pPent, Vector2D pPivot)
-  {
-      erasePentomino(pPent);//Erase the old positions of the pentomino
-      addPentominoToBoard(pPent,pPivot); // Add the new rotation of the pentomino
-  }
-  private void erasePentomino(Pentomino pPent)
-  {
-    for(int i = 0; i < _board.length; i++)
-    {
-      for(int j = 0; j < _board[0].length; j++)
-      {
-        if(_board[i][j] == pPent)
-        {
-          _board[i][j] = null;
-        }
-      }
-    }
-  }
-  public void eraseRow(int pPos)
-  {
-    for(int j = 0; j < _board[pPos].length; j++)
-    {
-      _board[pPos][j].eraseBlock(new Vector2D(j,pPos));
-      updatePentominoAtBoard(_board[pPos][j]);
-      _board[pPos][j] = null;
-    }
-    _score.addScore(100 * _rowCombo);
-    _rowCombo++;
-    System.out.println("ROOOOOWWW COMBOOO"+_rowCombo);
-  }
   public boolean tryMove(Pentomino pPiece, int pDir)
   {
     for(int i = 0; i < _board.length; i++)
@@ -135,125 +71,150 @@ public class Board extends GameObject {
         }
       }
     }
-    //Update pivot point
-    Vector2D newPivot = pPiece.getPivot();
-    newPivot.x += pDir;
-    updatePentominoAtBoard(pPiece, newPivot);
-
     return true;
   }
+  public Vector2D tryRotation(Pentomino oldRot, char[][] newRot, Vector2D pivot)//Aproved
+  {
+        int x = (int)pivot.x;
+        int y = (int)pivot.y;
+        for(int i = 0; i < newRot.length; i++)
+          for(int j = 0; j < newRot[0].length; j++)
+          {
+            if(y+i >= _board.length)
+            return new Vector2D(pivot.x, pivot.y - (newRot.length-i));
+            else if(x+j >= _board[0].length)
+            return new Vector2D(pivot.x - (newRot[0].length-j), pivot.y);
+            else if(_board[y+i][x+j] != oldRot &&  _board[y+i][x+j] != null)
+            {
+              if(i >= j){
+              Vector2D n = new Vector2D(pivot.x, pivot.y - (newRot.length-i));
+              n.toString();
+                return n;
+              }
+              else{
+              Vector2D n = new Vector2D(pivot.x - (newRot[0].length-j), pivot.y);
+              n.toString();
 
-  public void checkRow()
+                return n;
+              }
+            }
+          }
+
+    return Vector2D.Zero;
+  }
+  public void pentominoDone()
+  {
+    if(_startDelay == false)
+    {
+      _startDelay = true;
+      _startDelayTime = Time.getGameTime();
+    }
+  }
+  private void tryDonePentomino()//NON APROVED
+  {
+    if(_delay < 0){
+    _activePentomino.settleDone();
+    checkRow();
+    SpawnPentomino();
+    _score.addScore(20);
+    _delay = 50.0f;
+    _startDelay = false;
+    _startDelayTime = 0;
+    }
+    else if(_startDelay){
+      _delay -= (Time.getGameTime() - _startDelayTime);
+      _activePentomino.startBlinking();
+    //  System.out.println(_delay);
+    }
+  }
+  public void Update()//APROVED
+  {
+    _rowCombo = 1;
+    if(_done == false){
+      if(Input.keyPressed("W"))_speed += .1f;
+      else if(Input.keyPressed("S") && _speed > 0) _speed-= .1f;;
+    }
+    tryDonePentomino();
+    checkIfGameDone();
+  }
+  public void eraseRow(int pPos)//Aproved
+  {
+    for(int j = 0; j < _board[pPos].length; j++)
+    {
+      _board[pPos][j].eraseBlock(new Vector2D(j,pPos));//x,y
+      updatePentominoAtBoard(_board[pPos][j],_board[pPos][j].getPivot());
+      _board[pPos][j] = null;
+    }
+    _score.addScore(100 * _rowCombo);
+    _rowCombo++;
+    System.out.println("ROOOOOWWW COMBOOO"+_rowCombo);
+  }
+  //Update pentomino in a new pivot point
+  public void updatePentominoAtBoard(Pentomino pPent, Vector2D pPivot)//Aproved
+  {
+      erasePentomino(pPent);//Erase the old positions of the pentomino
+      addPentominoToBoard(pPent,pPivot); // Add the new rotation of the pentomino
+  }
+  private void erasePentomino(Pentomino pPent)//APROVED
+  {
+    for(int i = 0; i < _board.length; i++)
+      for(int j = 0; j < _board[0].length; j++)
+        if(_board[i][j] == pPent)  _board[i][j] = null;
+  }
+  public void checkRow()//APROVED
   {
     int counter = 1;
     for(int i = 0; i < _board.length; i++)
-    {
       for(int j = 0; j < _board[0].length; j++)
       {
         if(_board[i][j] == null)
         {
           j = _board[0].length;
-          counter=0;
+          counter = 1;
         }
-        else{
-          counter++;
-        }
+        else counter++;
+
         if(counter == _board[0].length){
           eraseRow(i);
-          counter = 0;
+          counter = 1;
         }
       }
     }
-  }
-  public void Update()
-  {
-    _rowCombo = 0;
-    if(_done == false){
-    if(Input.keyPressed("SPACE"))
-    {
-      System.out.println(this.toString());
-    }
-    if(Input.keyPressed("Q"))
-    {
-      Pentomino p = new Pentomino((_width*_tileSize)/2,0,0,_tileSize,this);
-      InputPentomino inputP = new InputPentomino(p);
-      GraphicsComponent graphP = new GraphicsComponent(p,_gc);
-      PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
-      current = p;
-      addPentominoToBoard(p,new Vector2D(_width/2,0));
-      addChild(p);
-      updatePentominoAtBoard(p);
-    }
-    if(Input.keyPressed("W"))
-    {
-      _speed++;
-    }
-     else if(Input.keyPressed("S"))
-    {
-      if(_speed > 0)
-      _speed--;
-    }
-  }
-    GameDone();
-  }
-  public void pentominoDone()
-  {
-      checkRow();
-      SpawnPentomino();
-      _score.addScore(20);
-  }
 
-  private void newPentomino() {
-    p = new Pentomino((_width*_tileSize)/2,0,pp.getPentPool().peek(),_tileSize,this);
-    pp.getPentPool().pop();
+  private void newPentomino()
+  {
+    Pentomino p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),_pp.getPentPool().pop(),_tileSize,this);
     InputPentomino inputP = new InputPentomino(p);
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
-    current = p;
+    _activePentomino = p;
     addPentominoToBoard(p,new Vector2D(_width/2,0));
+    addChild(p);
+    if(_pp.getPentPool().empty()) _pp.newPentPool();
+
   }
-
-  private void SpawnPentomino()
+  private void SpawnPentomino()//APROVED
   {
-    if(_done ==false){
-      if(!pp.getPentPool().empty()) {
-        newPentomino();
-      } else {
-        pp.newPentPool();
-        newPentomino();
-      }
+    if(_done) return;//If we are done, stop spawning pentominoes
+    newPentomino();
 
-
-    if(checkLose(p))
+    if(checkLose(_activePentomino))//check if spawning this pentomino will make the game lose
     {
       setGameDone(true);
       //TODO: Destroy this pentomino
     }
-    else{
-      addChild(p);
-      updatePentominoAtBoard(p);
-    }
   }
-  }
-  public void setGameDone(boolean pBool)
+  public void setGameDone(boolean pBool)//APROVED
   {
       _done = pBool;
   }
-  public boolean GameDone()
+  public boolean checkIfGameDone()//APROVED
   {
     if(_done)
-    _score.Done();
+    _score.Done();// Tell score to save it in the file
     return _done;
-    /*if(current.yPos == current._position.y && current.isDone())
-    {
-      for(int i = 0; i<5000;i++)
-      System.out.println("DOOOOOONE");
-      System.exit(0);
-      return true;
-    }
-    else return false;
-*/  }
-  public String toString()
+  }
+  public String toString()//APROVED
   {
     String s = "";
     for(int i = 0; i < _board.length; i++)
@@ -266,30 +227,19 @@ public class Board extends GameObject {
     }
     return s;
   }
-  public boolean checkLose(Pentomino p)
+  public boolean checkLose(Pentomino p)//APROVED
   {
     if(tryMove(p,0) == false){
       System.out.println("YOU LOST");
       return true;
-    }
-    else return false;
+    } else return false;
 
-  }
-
-  public int getWidth() {
-    return _width;
-  }
-  public int getHeight() {
-    return _height;
-  }
-  public Score getScore() {
-    return _score;
   }
   public void Init()
-  {
+  { //TODO:
       //Start Time
       //Spawn first Pentomino
-      //Preview next 2 pentominoes
+      //Preview next pentominoe
       //Start Score
   }
 

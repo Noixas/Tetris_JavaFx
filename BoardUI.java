@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 
-public class BoardUI {
+public class BoardUI extends GameObject {
 
   Label gameTimer;
   Label scoreCounter;
@@ -52,7 +52,11 @@ public class BoardUI {
   public void updateTime() {
     gameTimer.setText("Time: " + Time.getGameTime());
   }
-
+  public void Update()
+  {
+    updateTime();
+    updateCounter();
+  }
 
   private void createCounter(Pane rightPane) {
     Rectangle scoreBox = new Rectangle(250, 40);
