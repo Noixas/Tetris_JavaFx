@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import java.util.List;
 import java.util.LinkedList;
+import javafx.event.*;
 //import java.util.Scanner;
 //TODO clean this class and just have relevant information on it
 //TODO Just keep the JAVAFX and a world update
@@ -29,6 +30,7 @@ public class Tetris extends Application {
 		//int n1 = in.nextInt();
 		launch(args);
 	}
+
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Tetris!");

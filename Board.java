@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import java.util.Random;
 public class Board extends GameObject {
+
   private int               _width;
   private int               _height;
   private int               _tileSize;
@@ -19,6 +20,9 @@ public class Board extends GameObject {
   private float             _speed = .3f;
   private Random            _random = new Random();
   private int              _rowCombo = 1;
+
+  private PentominoesPool pp = new PentominoesPool();
+
   public Board(int pWidth, int pHeight, int pTileSize, GraphicsContext pGc) {
     _width = pWidth;
     _height = pHeight;
@@ -177,19 +181,20 @@ public class Board extends GameObject {
         }
       }
   }
-  private void SpawnPentomino()//APROVED
-  {
-    if(_done) return;//If we are done, stop spawning pentominoes
-    int nxtRnd = _random.nextInt(Piece.getPiecesQuantity());
-    nxtRnd = 0;
-    Pentomino p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),0,_tileSize,this);
+  private void newPentomino() {
+    Pentomino p = new Pentomino((_width*_tileSize)/2,0,pp.getPentPool().pop(),_tileSize,this);
     InputPentomino inputP = new InputPentomino(p);
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
     _activePentomino = p;
     addPentominoToBoard(p,new Vector2D(_width/2,0));
     addChild(p);
-    if(checkLose(p))//check if spawning this pentomino will make the game lose
+  }
+  private void SpawnPentomino()
+  {
+    if(_done) return;
+    newPentomino();
+    if(checkLose(p))
     {
       setGameDone(true);
       //TODO: Destroy this pentomino
