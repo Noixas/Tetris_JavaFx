@@ -33,8 +33,8 @@ public class Tetris extends Application {
 		launch(args);
 	}
 
-	@Override
-	public void start(Stage menuStage) {
+
+	/* public void start(Stage menuStage) {
 		menuStage.setTitle("Tetris menu");
 		Pane menu = new Pane();
 		menu.setStyle("-fx-background-color: #357dff");
@@ -74,10 +74,9 @@ public class Tetris extends Application {
 		});
 
 		menuStage.show();
-	}
-
-	public void primaryStage() {
-		Stage primaryStage = new Stage();
+	} */
+	@Override
+	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Tetris!");
 		int tile_size = 50;
 		Pane left = new Pane();

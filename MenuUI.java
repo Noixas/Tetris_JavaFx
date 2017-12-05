@@ -21,6 +21,7 @@ public class MenuUI {
     startGame.setText("Start Game");
     startGame.setPrefSize(200, 50);
     startGame.relocate(100, 150);
+    startGame.setVisible(false);
     mainPane.getChildren().add(startGame);
   }
 
