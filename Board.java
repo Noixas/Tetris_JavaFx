@@ -198,7 +198,7 @@ public class Board extends GameObject {
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
     _activePentomino = p;
     addPentominoToBoard(p,new Vector2D(_width/2,0));
-    addchild(p);
+    addChild(p);
     if(_pp.getPentPool().empty()) _pp.newPentPool();
 
   }
