@@ -25,7 +25,7 @@ public class World extends GameObject{
 		if(Input.keyPressed("ESCAPE")) {
 				 System.out.println("Terminating Game...");
 				_board.setGameDone(true);
-				_board.GameDone();
+				_board.checkIfGameDone();
 				 System.exit(0);
 		 }
 		 if(Input.keyPressed("R")) {
