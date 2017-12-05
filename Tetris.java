@@ -31,48 +31,6 @@ public class Tetris extends Application {
 		launch(args);
 	}
 
-	/*
-	public void start(Stage menuStage) {
-		menuStage.setTitle("Tetris menu");
-		Pane menu = new Pane();
-		menu.setStyle("-fx-background-color: #357dff");
-		menu.setPrefSize(400, 500);
-		GridPane menuGrid = new GridPane();
-
-		menuGrid.getChildren().add(menu);
-
-		MenuUI constructMenu = new MenuUI(menu);
-
-		Scene menuScene = new Scene(menuGrid, 400, 500);
-		menuStage.setScene(menuScene);
-
-		Button startGame = new Button();
-    startGame.setText("Start Game");
-    startGame.setPrefSize(200, 50);
-    startGame.relocate(100, 150);
-    menu.getChildren().add(startGame);
-		startGame.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				Time.StartTime();
-				primaryStage();
-			}
-		});
-
-		Button quitGame = new Button();
-    quitGame.setText("Quit");
-    quitGame.setPrefSize(200, 50);
-    quitGame.relocate(100, 250);
-    menu.getChildren().add(quitGame);
-		quitGame.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				System.exit(0);
-			}
-		});
-
-		menuStage.show();
-	} */
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Tetris!");
