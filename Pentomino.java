@@ -4,24 +4,15 @@ import java.util.List;
 import java.lang.Math;
 import java.util.LinkedList;
 public class Pentomino extends GameObject {
-	private List<char[][]> _pentominoes = new LinkedList<char[][]>();
-  private char[][] _pentomino;
-  private int _rotation = 0;
-	private int _type;
-	private Board _board;
-	private int _tileSize;
-  private Vector2D _pivot;
-	private boolean _done = false;
-	public boolean _rotated = false;
-	public Pentomino(int pX, int pY, int pType,int pTileSize, Board pBoard) {
-		super(pX, pY);
-		_tileSize = pTileSize;
-		_pivot =  new Vector2D(pX,pY);
-		_board = pBoard;
-		_type= pType;
-    _pentominoes = Piece.getPieces(_type);//Get all posible ways of the pentomino
-    _pentomino = _pentominoes.get(_rotation);
-	}
+	private List<char[][]> 		_pentominoes = new LinkedList<char[][]>();
+  private char[][] 					_pentomino;
+  private int 							_rotation = 0;
+	private int 							_type;
+	private Board 						_board;
+	private int 							_tileSize;
+  private Vector2D 					_pivot;
+	private boolean 					_done = false;
+	private boolean 					_rotated = false;
 
 	public Pentomino(Vector2D pPos, int pType,int pTileSize, Board pBoard) {
 		super((int)pPos.x, (int)pPos.y);
@@ -32,33 +23,20 @@ public class Pentomino extends GameObject {
     _pentominoes = Piece.getPieces(_type);//Get all posible ways of the pentomino
     _pentomino = _pentominoes.get(_rotation);
 	}
-
 	public void move(int pDir) {
-		if(!_done){
+		if(!_done){//If not done then keep moving
 			for(int i = 0; i<_components.size();i++)
+			{
+				if(_components.get(i) instanceof PhysicsPentomino)
 				{
-					if(_components.get(i) instanceof PhysicsPentomino)
-					{
-						PhysicsPentomino physicsComp = (PhysicsPentomino) _components.get(i);
-						physicsComp.move(pDir);
-					}
+					PhysicsPentomino physicsComp = (PhysicsPentomino) _components.get(i);
+					physicsComp.move(pDir);
 				}
 			}
+		}
 	}
-	public Vector2D getPivot()
+	public void FinallyDone()
 	{
-		return _pivot;
-	}
-	public void setPivot(Vector2D pPivot)
-	{
-		_pivot = pPivot;
-	}
-	public void setDone()
-	{
-		if(!_done){
-		_board.pentominoDone();
-		System.out.println("Pent Done");
-	}
 		_done = true;
 		for(int i = 0; i<_components.size();i++)//remove input component
 			{
@@ -77,13 +55,14 @@ public class Pentomino extends GameObject {
 
 		if(_board.tryMove(this, 0) == false)
 		{
-			_pivot.x -= 8;
+			_pivot.x -= 8;//TODO: ?? why -8
 			_board.updatePentominoAtBoard(this,_pivot);
 		}
-		else
+		else//TODO:check also if the rotation is possiblke at the sides, if not then push up
 		{
-			System.out.println("OTHER");
-			_board.updatePentominoAtBoard(this);
+			//_pivot.y = _pivot.y + getY();
+			//yPos = (_pivot.y * 50) + Math.abs(yPos - (_pivot.y * 50 ));
+			_board.updatePentominoAtBoard(this,_pivot);
 		}
 		_rotated = true;
 		}
@@ -93,7 +72,6 @@ public class Pentomino extends GameObject {
 		pVec.x = Math.abs(pVec.x-_pivot.x);
 		pVec.y = Math.abs(pVec.y-_pivot.y);
 		_pentomino[(int)pVec.y][(int)pVec.x] = '0';
-
 	}
 	public void resizePentomino()
 	{
@@ -129,17 +107,39 @@ public class Pentomino extends GameObject {
 	{
 		return _board;
 	}
-	public int getHeight()
+	public int getPentominoHeight()
 	{
 		return _pentomino.length * getTileSize();
-	}
-	public String toString()
-	{
-		return "PENT";
 	}
 	public boolean isDone()
 	{
 		return _done;
 	}
-
+	public boolean getRotated()
+	{
+		return _rotated;
+	}
+	public void rotationUsed()
+	{
+		_rotated = false;
+	}
+	public Vector2D getPivot()
+	{
+		return _pivot;
+	}
+	public void setPivot(Vector2D pPivot)
+	{
+		_pivot = pPivot;
+	}
+	public void setDone()
+	{
+		if(!_done){
+		_board.pentominoDone();
+		//System.out.println("Pent Done");
+		}
+	}
+	public String toString()
+	{
+		return "PENT";
+	}
 }

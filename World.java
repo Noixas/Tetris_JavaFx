@@ -15,6 +15,7 @@ public class World extends GameObject{
 		_canvas = pCanvas;
 		_board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D());
 		addChild(_board);
+
 	}
 	public void addCanvas(Canvas pCanvas)
 	{
@@ -40,21 +41,20 @@ public class World extends GameObject{
 					Component comp = comps.get(j);
 		 		 if(comp instanceof InputPentomino)
 					{
-						comp.Update();
+						comp.Update();//Update Input
 				  }
 			}
-
-			childs.get(i).Update();
+			childs.get(i).Update();//Update objects after input
 			for(int j = 0; j< comps.size(); j++)
 			{
 				Component comp = comps.get(j);
 		  	if(comp instanceof PhysicsPentomino)
 				{
-					comp.Update();
+					comp.Update();//Update physics
 				}
 				else if(comp instanceof GraphicsComponent)
 				{
-			  		comp.Update();
+		  		comp.Update();//Render screen
 				}
 			}
 		}
@@ -67,11 +67,6 @@ public class World extends GameObject{
 	  Time.StartTime();
 	  removeChild(_board);
 	  _board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D());
-	 addChild(_board);
+	 	addChild(_board);
 	}
-	private void Init()
-	{
-
-	}
-
 }

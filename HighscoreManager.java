@@ -33,7 +33,7 @@ public class HighscoreManager {
     updateScoreFile();
   }
   //adding a score to the hScores.dat file
-
+@SuppressWarnings("unchecked")//Trust me, I´m an engineer ;)
   public static void loadScoreFile() {
     try {
       scoreInputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILE));

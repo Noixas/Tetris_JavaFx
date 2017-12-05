@@ -14,11 +14,17 @@ public class Time {
 	}
 
 	public static void updateGameTime() {
+		deltaTime =  ((System.nanoTime() - startTime)-gameTime)/1000000000;
 		gameTime = System.nanoTime() - startTime;
+
 	}
 
 	public static float getGameTime() {
 		return gameTime / 1000000000;
+	}
+	public static float DeltaTime()
+	{
+		return deltaTime;
 	}
 
 }
