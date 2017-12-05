@@ -180,7 +180,7 @@ public class Board extends GameObject {
         }
       }
     }
-  }
+  
   private void newPentomino()
   {
     Pentomino p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),_pp.getPentPool().pop(),_tileSize,this);

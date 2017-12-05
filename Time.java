@@ -10,6 +10,7 @@ public class Time {
 
 	public static void StartTime() {
 		startTime = System.nanoTime();
+		gameTime = 0;
 		System.out.println("This is startTime: " + startTime);
 	}
 

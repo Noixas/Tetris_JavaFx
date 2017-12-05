@@ -48,24 +48,6 @@ public class PhysicsPentomino extends Component {
     }
   }
 
-  @Override
-  public void Update() {
-    if(_pentomino.getRotated()){
-      //Do the rotation in here
-    //  _lastBlock =  _pentomino.getY()+ _pentomino.getPentominoHeight() ;
-      _pentomino.rotationUsed();
-    }
-    if(checkFallMove())
-    {
-      _moveStep -= Time.DeltaTime();//Substract the amount of time last frame took
-      //fallWorld(); //For smooth falling
-      //System.out.println(_moveStep);
-      if(_moveStep <=0)
-      {
-        fallStepBoard();
-      }
-    }
-  }
   public void fallStepBoard()//APROVED
   {
     _owner.worldMove(0, 1, _pentomino.getTileSize());
