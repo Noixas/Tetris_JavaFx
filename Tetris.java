@@ -22,19 +22,17 @@ import javafx.event.*;
 //TODO Just keep the JAVAFX and a world update
 public class Tetris extends Application {
 	long time = 0;
-	//private static Button startGame;
 
 	public static void main(String[] args) {
-
+		Time.StartTime();
 		HighscoreManager.init();
-		MenuUI.init();
 	//	Scanner in = new Scanner(System.in);
 		//int n1 = in.nextInt();
 		launch(args);
 	}
 
-
-	/* public void start(Stage menuStage) {
+	/*
+	public void start(Stage menuStage) {
 		menuStage.setTitle("Tetris menu");
 		Pane menu = new Pane();
 		menu.setStyle("-fx-background-color: #357dff");
