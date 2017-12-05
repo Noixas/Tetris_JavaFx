@@ -33,6 +33,10 @@ public class PhysicsPentomino extends Component {
     }
     else _pentomino.setDone();
   }
+  public void rotate()
+  {
+
+  }
   public void move(int pDir)//APROVED
   {
     _sideMove = _board.tryMove(_pentomino, pDir);

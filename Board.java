@@ -155,7 +155,7 @@ public class Board extends GameObject {
   private void tryDonePentomino()//NON APROVED
   {
     if(_delay < 0){
-    _activePentomino.FinallyDone();
+    _activePentomino.settleDone();
     checkRow();
     SpawnPentomino();
     _score.addScore(20);
