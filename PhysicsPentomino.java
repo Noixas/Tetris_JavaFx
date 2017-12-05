@@ -40,35 +40,28 @@ public class PhysicsPentomino extends Component {
     //  _lastBlock =  _pentomino.getY()+ _pentomino.getPentominoHeight() ;
       _pentomino.rotationUsed();
     }
-    //Update the position if we passed the pixels of the next block
-/* if(_fallMove && (_lastBlock + _tileSize) <= _pentomino.getY() + _pentomino.getPentominoHeight())
-    {
-        System.out.println("_lastBLOCK"+_lastBlock+" GET Y "+ (_pentomino.getY()+ _pentomino.getPentominoHeight())+ "Tile SIZE  " + _tileSize);
-        Vector2D v = _pentomino.getPivot();
-        v.y += 1; //increase pivot point
-        _board.updatePentominoAtBoard(_pentomino, v);//Update the position in the board
-        _lastBlock = _pentomino.getY() +  _pentomino.getPentominoHeight();//save in which block we are
-
-        System.out.println(_board.toString());
-    }*/
-    else if(checkFallMove())
+    if(checkFallMove())
     {
       _moveStep -= Time.DeltaTime();//Substract the amount of time last frame took
       //fallWorld(); //For smooth falling
       //System.out.println(_moveStep);
       if(_moveStep <=0)
       {
-        _owner.worldMove(0, 1, _pentomino.getTileSize());
-        _moveStep = _speed;
-        Vector2D v = _pentomino.getPivot();
-        v.y += 1; //increase pivot point
-        _board.updatePentominoAtBoard(_pentomino, v);//Update the position in the board
-        _lastBlock = _pentomino.getY() +  _pentomino.getPentominoHeight();//save in which block we are
-
-        System.out.println(_board.toString());
+        fallBoard();
       }
     }else
         _pentomino.setDone();
+  }
+  public void fallBoard()
+  {
+    _owner.worldMove(0, 1, _pentomino.getTileSize());
+    _moveStep = _speed;
+    Vector2D v = _pentomino.getPivot();
+    v.y += 1; //increase pivot point
+    _board.updatePentominoAtBoard(_pentomino, v);//Update the position in the board
+    _lastBlock = _pentomino.getY() +  _pentomino.getPentominoHeight();//save in which block we are
+
+    System.out.println(_board.toString());
   }
   private boolean checkFallMove()
   {

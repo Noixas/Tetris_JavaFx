@@ -43,6 +43,10 @@ public class Pentomino extends GameObject {
 				if(_components.get(i) instanceof InputPentomino ){
 					_components.remove(i);
 				}
+				if(_components.get(i) instanceof GraphicsComponent ){
+					GraphicsComponent GraphComp = (GraphicsComponent) _components.get(i);
+					GraphComp.DisableBlinking();
+				}
 			}
 	}
   public void rotate(int pDir)
@@ -55,7 +59,7 @@ public class Pentomino extends GameObject {
 
 		if(_board.tryMove(this, 0) == false)
 		{
-			_pivot.x -= 8;//TODO: ?? why -8
+			//_pivot.x -= 8;//TODO: ?? why -8
 			_board.updatePentominoAtBoard(this,_pivot);
 		}
 		else//TODO:check also if the rotation is possiblke at the sides, if not then push up
@@ -92,6 +96,34 @@ public class Pentomino extends GameObject {
 				else{
 					counter++;
 				}
+			}
+		}
+	}
+	public void fallAllTheWay()
+	{
+		if(!_done){//If not done then keep moving
+			for(int i = 0; i<_components.size();i++)
+			{
+				if(_components.get(i) instanceof PhysicsPentomino)
+				{
+					PhysicsPentomino physicsComp = (PhysicsPentomino) _components.get(i);
+					while(_board.tryMove(this, 0)){
+						physicsComp.fallBoard();
+						System.out.println(true);
+					}
+					setDone();
+				}
+			}
+		}
+	}
+	public void startBlinking()
+	{
+		for(int i = 0; i<_components.size();i++)
+		{
+			if(_components.get(i) instanceof GraphicsComponent)
+			{
+				GraphicsComponent GraphComp = (GraphicsComponent) _components.get(i);
+				GraphComp.EnableBlinking();
 			}
 		}
 	}
@@ -135,6 +167,7 @@ public class Pentomino extends GameObject {
 	{
 		if(!_done){
 		_board.pentominoDone();
+
 		//System.out.println("Pent Done");
 		}
 	}

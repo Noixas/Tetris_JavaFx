@@ -4,6 +4,9 @@ public class GraphicsComponent extends Component{
   private Pentomino _pentomino;
     private char[][] _pent;
     private GraphicsContext _gc;
+    private float _blinking =  .15f;
+    private float _timePased = 0;
+    private boolean _blink = false;
     public static final int TILE_SIZE = 50;
     public static final int GRID_WIDTH = 10;
     public static final int GRID_HEIGHT = 15;
@@ -18,7 +21,18 @@ public class GraphicsComponent extends Component{
   public void Update()
   {
     _pent = _pentomino.getPentArray();
+    if(!_blink || _timePased < 0){
     Render(_gc);
+      _timePased += Time.deltaTime;
+    }
+    else{
+      _timePased += Time.deltaTime;
+      if(_blinking < _timePased)
+      {
+        _timePased = -_blinking-.2f;
+        Render(_gc);
+      }
+    }
   }
 
   public void Render(GraphicsContext gc)
@@ -27,6 +41,7 @@ public class GraphicsComponent extends Component{
   		{
   			for(int j = 0; j < _pent.length; j++)
   			{
+
           if(_pent[j][i] != '0'){
             gc.setFill(Color.WHITE);
   				  gc.fillRect(((_pentomino.getX()) +(i* TILE_SIZE)),_pentomino.getY() + (j* TILE_SIZE), TILE_SIZE, TILE_SIZE);
@@ -37,4 +52,12 @@ public class GraphicsComponent extends Component{
         }
   		}
   	}
+    public void EnableBlinking()
+    {
+      _blink = true;
+    }
+    public void DisableBlinking()
+    {
+      _blink = false;
+    }
 }

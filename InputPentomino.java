@@ -21,5 +21,9 @@ public class InputPentomino extends Component {
        System.out.println(_owner);
        //System.exit(0);
     }
+    if(Input.keyPressed("SPACE"))
+    {
+      _pentomino.fallAllTheWay();
+    }
   }
 }

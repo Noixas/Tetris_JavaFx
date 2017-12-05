@@ -16,7 +16,7 @@ public class Board extends GameObject {
   private List<Pentomino>   _pentominoes = new LinkedList<Pentomino>();
   private Score             _score = new Score();
   private GraphicsContext   _gc;
-  private float             _speed = .5f;
+  private float             _speed = .3f;
   private Random            _random = new Random();
   private int              _rowCombo = 1;
   public Board(int pWidth, int pHeight, int pTileSize, GraphicsContext pGc) {
@@ -40,9 +40,17 @@ public class Board extends GameObject {
               {
                 pVec.x = _board[0].length - pos[0].length;
                 updatePentominoAtBoard(pPent,pVec);
-                    pPent.xPos = pVec.x * 50;
+                pPent.xPos = pVec.x * 50;
                 i = pos.length;
                 j = pos[0].length;
+              }
+              else if((int)pVec.x+j <0)
+              {
+                  pVec.x = 0;
+                  updatePentominoAtBoard(pPent,pVec);
+                  pPent.xPos = pVec.x * 50;
+                  i = pos.length;
+                  j = pos[0].length;
               }
               if(pVec.y+i >= _board.length)
               setGameDone(true);
@@ -50,6 +58,7 @@ public class Board extends GameObject {
             _board[(int)pVec.y+i][(int)pVec.x+j] = pPent;
           }catch(Exception e)//Temporary catch while identified bug is being fix, (the falling glitch between world/board))
             {
+              System.out.println("Board.java Line: 53");
               System.out.println("Y: "+pVec.y + " X: "+pVec.x );
               System.out.println("I: "+i + " J: "+j);
               System.out.println(e);
@@ -146,7 +155,7 @@ public class Board extends GameObject {
   private void tryDonePentomino()//NON APROVED
   {
     if(_delay < 0){
-      _activePentomino.FinallyDone();
+    _activePentomino.FinallyDone();
     checkRow();
     SpawnPentomino();
     _score.addScore(20);
@@ -156,6 +165,7 @@ public class Board extends GameObject {
     }
     else if(_startDelay){
       _delay -= (Time.getGameTime() - _startDelayTime);
+      _activePentomino.startBlinking();
     //  System.out.println(_delay);
     }
   }
