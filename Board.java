@@ -33,24 +33,7 @@ public class Board extends GameObject {
       for(int i = 0; i < pos.length; i++)
         for(int j = 0; j < pos[0].length; j++)
           if(pos[i][j] != '0')
-          {/*
-              if((int)pVec.x+j >= _board[0].length)//x is bigger than the Board
-              {
-                pVec.x = _board[0].length - pos[0].length;
-                updatePentominoAtBoard(pPent,pVec);
-                pPent.xPos = pVec.x * 50;
-                i = pos.length;
-                j = pos[0].length;
-              }
-              else if((int)pVec.x+j <0)
-              {
-                  pVec.x = 0;
-                  updatePentominoAtBoard(pPent,pVec);
-                  pPent.xPos = pVec.x * 50;
-                  i = pos.length;
-                  j = pos[0].length;
-              }*/
-              //if(pVec.y+i >= _board.length)  setGameDone(true);
+          {
             _board[(int)pVec.y+i][(int)pVec.x+j] = pPent;
           }
       pPent.setPivot(pVec);
