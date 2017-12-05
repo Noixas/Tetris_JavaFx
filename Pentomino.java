@@ -31,8 +31,29 @@ public class Pentomino extends GameObject {
 			_rotation += pDir;
 	    if(_rotation < 0) _rotation = 3;
 	    else if(_rotation > 3) _rotation = 0;
-	    _pentomino = _pentominoes.get(_rotation);
+	    //_pentomino = _pentominoes.get(_rotation);
+			Vector2D originalPivot = getPivot();
+			Vector2D newPivot = getPivot();
+			newPivot = _board.tryRotation(this,_pentominoes.get(_rotation), newPivot);
+			if(newPivot.equals(Vector2D.Zero))
+			{
+				_pentomino = _pentominoes.get(_rotation);
+				_board.updatePentominoAtBoard(this,getPivot());
+			}
+			else{
+				_pivot = newPivot;
+				while(!newPivot.equals(Vector2D.Zero))
+				{
+					_pivot = newPivot;
+					newPivot = _board.tryRotation(this,_pentominoes.get(_rotation), _pivot);
 
+				}
+				_pentomino = _pentominoes.get(_rotation);
+				_board.updatePentominoAtBoard(this,_pivot);
+				xPos = _pivot.x *_tileSize;
+				yPos = _pivot.y * _tileSize;
+			}
+/*
 			if(_board.tryMove(this, 0) == false)
 			{
 				//_pivot.x -= 8;//TODO: ?? why -8
@@ -43,7 +64,7 @@ public class Pentomino extends GameObject {
 				//_pivot.y = _pivot.y + getY();
 				//yPos = (_pivot.y * 50) + Math.abs(yPos - (_pivot.y * 50 ));
 				_board.updatePentominoAtBoard(this,_pivot);
-			}
+			}*/
 			_rotated = true;
 		}
   }
