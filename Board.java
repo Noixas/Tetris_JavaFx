@@ -41,7 +41,17 @@ public class Board extends GameObject {
           }
       pPent.setPivot(pVec);
   }
-
+  public void addSplitPentomino(Pentomino old, Pentomino[] newP)
+  {
+    erasePentomino(old);
+    for(int i = 0; i < newP.length; i++)
+    {
+      GraphicsComponent graphP = new GraphicsComponent(newP[i],_gc);
+      PhysicsPentomino phyP = new PhysicsPentomino(newP[i],_speed);
+      addPentominoToBoard(newP[i],newP[i].getPivot());
+      addChild(newP[i]);
+    }
+  }
   public boolean tryMove(Pentomino pPiece, int pDir)
   {
     for(int i = 0; i < _board.length; i++)

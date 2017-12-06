@@ -23,7 +23,14 @@ public class Pentomino extends GameObject {
     _pentominoes = Piece.getPieces(_type);//Get all posible ways of the pentomino
     _pentomino = _pentominoes.get(_rotation);
 	}
-
+		public Pentomino(Vector2D pPos, char[][] pPent,int pTileSize, Board pBoard) {
+			super((int)pPos.x, (int)pPos.y);
+			_tileSize = pTileSize;
+			_pivot =  pPos;
+			_board = pBoard;
+	    _pentominoes = Piece.getPieces(0);//Get all posible ways of the pentomino
+	    _pentomino = pPent;
+		}
   public void rotate(int pDir)
   {
 		if(!_done){
@@ -83,6 +90,28 @@ public class Pentomino extends GameObject {
 		pVec.x = Math.abs(pVec.x-_pivot.x);
 		pVec.y = Math.abs(pVec.y-_pivot.y);
 		_pentomino[(int)pVec.y][(int)pVec.x] = '0';
+	}
+	private void checkIfSplitPentomino()
+	{
+		int counter = _pentomino[0].length - 1;
+		for(int i = 0; i < _pentomino.length; i++)
+			for(int j = 0; j < _pentomino[0].length; j++){
+				if(_pentomino[j][i] == '0')	counter--;
+				if(counter == 0)	SplitPentomino(i);
+		}
+	}
+	private void SplitPentomino(int pRow)
+	{
+		char[][] above = new char[pRow-1][_pentomino[0].length];
+		char[][] below = new char[_pentomino.length - pRow][_pentomino[0].length];
+		System.out.println("ABOVE \n"+above);
+		System.out.println("BELOW \n"+below);
+		Pentomino a = new Pentomino(new Vector2D(xPos, yPos),above,_tileSize,_board);
+		Pentomino b = new Pentomino(new Vector2D(xPos, yPos+(pRow*_tileSize)),above,_tileSize,_board);
+		Pentomino[] newP = new Pentomino[2];
+		newP[0] = a;
+		newP[1] = b;
+		_board().addSplitPentomino(this,newP);
 	}
 	public void fallAllTheWay()//APROVED
 	{
