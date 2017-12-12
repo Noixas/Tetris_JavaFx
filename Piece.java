@@ -25,7 +25,7 @@ public class Piece {
     }
     return newPentomino;
   }
-private static char[][] getPiece(int pIndex)
+public static char[][] getPiece(int pIndex)
 {
 	char[][] buffer = pieces.get(pIndex);
 	char[][] finalPiece = new char[buffer.length][buffer[0].length];

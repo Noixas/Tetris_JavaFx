@@ -184,6 +184,10 @@ public class Pentomino extends GameObject {
 	{
 		return _pivot;
 	}
+	public int getType ()
+	{
+		return _type;
+	}
 	public String toString()
 	{
 		return "PENT";

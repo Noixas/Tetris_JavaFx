@@ -1,7 +1,8 @@
 /*public class Bot {
-  List<Pentomino> boardPreviews = new ArrayList<Pentomino> ();
-  Board currentBoard = getBoard();
-  public static void startBot() {
+  private List<Board> boardPreviews = new ArrayList<Board> ();
+  private Board _currentBoard = new Board();
+
+  public void startBot() {
     int botInt = 0;
     while(botInt < 10) {
       Input.keyPressed("UP");
@@ -9,22 +10,30 @@
     }
   }
 
+  private Bot(currentboard) {
+    Update();
 
-  public static void makeBoardPreview() {
+  }
+
+  private void Update() {
+    this._currentBoard =
+  }
+
+  private void makeBoardPreview() {
     boardPreviews.add(candidateBoard);
 
   }
 
-  public static void checkMoveOutcome() {
+  private void checkMoveOutcome() {
 
   }
 
 //Heuristics
-  public static int holesCount() {//Counts how many "holes" there are
+  private int holesCount() {//Counts how many "holes" there are
 
   }
 
-  public static int bumpinessCount() {//Counts how bumpy the "mass of pentoinoes is"
+  private int bumpinessCount() {//Counts how bumpy the "mass of pentoinoes is"
   for(int i=0;i<currentBoard[0].length;i++) {
 
   }
@@ -33,7 +42,7 @@
 
   }
 
-  public static int heightCount() { //Counts the cumulative height of all the columns
+  private int heightCount() { //Counts the cumulative height of all the columns
     int totalHeight = 0;
     for(int i=0;i<currentBoard.length;i++) {
       totalHeight += candidateBoard.columnHeight(i);
@@ -41,12 +50,12 @@
     return totalHeight;
   }
 
-  public static int completeLinesCount() {//Counts the complete lines made
+  private int completeLinesCount() {//Counts the complete lines made
 
   }
 
 //Helper
-  public static int columnHeight(int c) {
+  private int columnHeight(int c) {
     boolean pieceFound = false;
     int colHeight = 0;
     int i = 0;
