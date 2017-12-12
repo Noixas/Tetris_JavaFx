@@ -261,4 +261,8 @@ public class Board extends GameObject {
   {
     return _board;
   }
+
+  public Pentomino getActivePentomino() {
+    return _activePentomino;
+  }
 }
