@@ -33,11 +33,10 @@ public class BoardUI extends GameObject {
 		preview.setStrokeWidth(3);
 
     Label previewTest = new Label();
-    previewTest.setText(_board.getPreviewInt() + "");
     previewTest.setStyle("-fx-font: 30 arial;");
     previewTest.relocate(80, 30);
 
-
+    previewTest.setText(Piece.getPiece(_board.getPreviewInt()).toString());
 
 
 
