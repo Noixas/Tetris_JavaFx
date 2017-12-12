@@ -29,9 +29,13 @@ public class BoardUI extends GameObject {
 		preview.relocate(70, 20);
 		preview.setStroke(Color.rgb(255, 0, 0, .99));
 		preview.setStrokeWidth(3);
-    rightPane.getChildren().add(preview);
-  }
 
+    //Board.getPreviewPentomino();
+    rightPane.getChildren().addAll(preview);
+  }
+  public void updatePreview() {
+
+  }
 
   private void createTimer(Pane rightPane) {
     Rectangle timerBox = new Rectangle(250, 40);
