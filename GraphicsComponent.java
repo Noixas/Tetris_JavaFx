@@ -10,12 +10,14 @@ public class GraphicsComponent extends Component{
     public static final int TILE_SIZE = 50;
     public static final int GRID_WIDTH = 10;
     public static final int GRID_HEIGHT = 15;
+    private Color _color;
   public GraphicsComponent(GameObject pOwner, GraphicsContext pGc) {
     _owner = pOwner;
     _pentomino = (Pentomino) _owner;
     _owner.addComponent(this);
     _pent = _pentomino.getPentArray();
     _gc = pGc;
+    _color = selectcolor(_pentomino);
   }
   @Override
   public void Update()
@@ -42,6 +44,7 @@ public class GraphicsComponent extends Component{
   }
   private void Render(GraphicsContext gc)
   {
+      
   		for(int i = 0; i < _pent[0].length; i++)
   		{
   			for(int j = 0; j < _pent.length; j++)
@@ -50,7 +53,7 @@ public class GraphicsComponent extends Component{
           if(_pent[j][i] != '0'){
             gc.setFill(Color.WHITE);
   				  gc.fillRect(((_pentomino.getX()) +(i* TILE_SIZE)),_pentomino.getY() + (j* TILE_SIZE), TILE_SIZE, TILE_SIZE);
-	          gc.setFill(Color.BLUE);
+            gc.setFill(_color);
             gc.fillRect((_pentomino.getX()) +(i* TILE_SIZE) +1,_pentomino.getY() + (j* TILE_SIZE) +1, TILE_SIZE-2, TILE_SIZE-2);
 
     			}
@@ -64,5 +67,29 @@ public class GraphicsComponent extends Component{
     public void DisableBlinking()
     {
       _blink = false;
+    }
+
+    public Color selectcolor(Pentomino p){
+      switch (p.getType()){
+        case 0: return Color.PURPLE;
+        case 1: return Color.PURPLE;
+        case 2: return Color.PURPLE;
+        case 3: return Color.PURPLE;
+        case 4: return Color.PURPLE;
+        case 5: return Color.PURPLE;
+        case 6: return Color.PURPLE;
+        case 7: return Color.PURPLE;
+        case 8: return Color.PURPLE;
+        case 9: return Color.PURPLE;
+        case 10: return Color.PURPLE;
+        case 11: return Color.PURPLE;
+        case 12: return Color.PURPLE;
+        case 13: return Color.PURPLE;
+        case 14: return Color.PURPLE;
+        case 15: return Color.PURPLE;
+        case 16: return Color.PURPLE; 
+        case 17: return Color.PURPLE;
+        default: return Color.RED;
+      }
     }
 }
