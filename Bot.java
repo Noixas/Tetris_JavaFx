@@ -1,4 +1,4 @@
-public class Bot {
+/*public class Bot {
   List<Pentomino> boardPreviews = new ArrayList<Pentomino> ();
   Board currentBoard = getBoard();
   public static void startBot() {
@@ -26,7 +26,7 @@ public class Bot {
 
   public static int bumpinessCount() {//Counts how bumpy the "mass of pentoinoes is"
   for(int i=0;i<currentBoard[0].length;i++) {
-    
+
   }
     //How many sides are open?
     //The difference in height between each column?
@@ -61,3 +61,4 @@ public class Bot {
     return colHeight;
   }
 }
+*/
