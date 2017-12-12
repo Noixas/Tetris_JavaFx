@@ -50,6 +50,7 @@ public class Board extends GameObject {
       PhysicsPentomino phyP = new PhysicsPentomino(newP[i],_speed);
       addPentominoToBoard(newP[i],newP[i].getPivot());
       addChild(newP[i]);
+      newP[i].toString();
     }
   }
   public boolean tryMove(Pentomino pPiece, int pDir)
@@ -193,7 +194,10 @@ public class Board extends GameObject {
 
   private void newPentomino()
   {
-    Pentomino p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),_pp.getPentPool().pop(),_tileSize,this);
+   Pentomino p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),_pp.getPentPool().pop(),_tileSize,this);
+//Erase line below, only for debug purposes
+  //  Pentomino p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),0,_tileSize,this);
+
     InputPentomino inputP = new InputPentomino(p);
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
