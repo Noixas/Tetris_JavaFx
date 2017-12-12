@@ -72,24 +72,24 @@ public class GraphicsComponent extends Component{
     public Color selectcolor(Pentomino p){
       switch (p.getType()){
         case 0: return Color.PURPLE;
-        case 1: return Color.PURPLE;
-        case 2: return Color.PURPLE;
-        case 3: return Color.PURPLE;
-        case 4: return Color.PURPLE;
-        case 5: return Color.PURPLE;
-        case 6: return Color.PURPLE;
-        case 7: return Color.PURPLE;
-        case 8: return Color.PURPLE;
-        case 9: return Color.PURPLE;
-        case 10: return Color.PURPLE;
-        case 11: return Color.PURPLE;
-        case 12: return Color.PURPLE;
-        case 13: return Color.PURPLE;
-        case 14: return Color.PURPLE;
-        case 15: return Color.PURPLE;
-        case 16: return Color.PURPLE; 
-        case 17: return Color.PURPLE;
-        default: return Color.RED;
+        case 1: return Color.WHITE;
+        case 2: return Color.BLUE;
+        case 3: return Color.RED;
+        case 4: return Color.PINK;
+        case 5: return Color.YELLOW;
+        case 6: return Color.GREEN;
+        case 7: return Color.ORANGE;
+        case 8: return Color.LIGHTBLUE;
+        case 9: return Color.DARKBLUE;
+        case 10: return Color.GREY;
+        case 11: return Color.GOLD;
+        case 12: return Color.KHAKI;
+        case 13: return Color.LIGHTSALMON;
+        case 14: return Color.LIMEGREEN;
+        case 15: return Color.MAGENTA;
+        case 16: return Color.SILVER; 
+        case 17: return Color.TAN;
+        default: return Color.BROWN;
       }
     }
 }
