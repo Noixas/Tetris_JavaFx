@@ -1,6 +1,11 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.canvas.*;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import java.util.List;
 import java.util.LinkedList;
 public class World extends GameObject{
@@ -10,16 +15,36 @@ public class World extends GameObject{
 	public static final int GRID_HEIGHT = 15;
 	public static World world;
 	private Board _board;
-	public World(Canvas pCanvas) {
+	public World(GridPane root) {
+
+		int tile_size = 50;
+		Pane left = new Pane();
+		left.setStyle("-fx-background-color: #357dff");
+		left.setPrefSize(390,750);
+		Pane right = new Pane();
+		right.setStyle("-fx-background-color: #357dff");
+		right.setPrefSize(390,750);
+		Pane worldPane = new Pane();
+		worldPane.setStyle("-fx-background-color: black;");
+		worldPane.setPrefSize(tile_size*10,tile_size*15);
+
+
+		Canvas canvas = new Canvas(500,750);
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		root.add(left, 0, 0, 1, 1);
+		root.add(worldPane, 1, 0, 1, 1);
+		root.add(right, 2, 0, 1, 1);
+		worldPane.getChildren().addAll(canvas);
+
+		BoardUI constructUI = new BoardUI(right, left);
+
+		addChild(constructUI);
+
 		world = this;
-		_canvas = pCanvas;
+		_canvas = canvas;
 		_board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D());
 		addChild(_board);
 
-	}
-	public void addCanvas(Canvas pCanvas)
-	{
-		_canvas = pCanvas;
 	}
 	public void Update() {
 		if(Input.keyPressed("ESCAPE")) {
