@@ -9,8 +9,10 @@ public class BoardUI extends GameObject {
 
   Label gameTimer;
   Label scoreCounter;
+  Board _board;
 
-  public BoardUI(Pane rightPane, Pane leftPane) {
+  public BoardUI(Pane rightPane, Pane leftPane, Board pBoard) {
+    _board = pBoard;
     createPreview(rightPane);
     createTimer(rightPane);
     createCounter(rightPane);
@@ -30,8 +32,16 @@ public class BoardUI extends GameObject {
 		preview.setStroke(Color.rgb(255, 0, 0, .99));
 		preview.setStrokeWidth(3);
 
-    //Board.getPreviewPentomino();
-    rightPane.getChildren().addAll(preview);
+    Label previewTest = new Label();
+    previewTest.setStyle("-fx-font: 30 arial;");
+    previewTest.relocate(80, 30);
+
+    previewTest.setText(Piece.getPiece(_board.getPreviewInt()).toString());
+
+
+
+
+    rightPane.getChildren().addAll(preview, previewTest);
   }
   public void updatePreview() {
 

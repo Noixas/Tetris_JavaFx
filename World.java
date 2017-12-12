@@ -36,14 +36,17 @@ public class World extends GameObject{
 		root.add(right, 2, 0, 1, 1);
 		worldPane.getChildren().addAll(canvas);
 
-		BoardUI constructUI = new BoardUI(right, left);
 
-		addChild(constructUI);
+
+
 
 		world = this;
 		_canvas = canvas;
 		_board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D());
 		addChild(_board);
+
+		BoardUI constructUI = new BoardUI(right, left, _board);
+		addChild(constructUI);
 
 	}
 	public void Update() {
