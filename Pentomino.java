@@ -90,18 +90,21 @@ public class Pentomino extends GameObject {
 		pVec.x = Math.abs(pVec.x-_pivot.x);
 		pVec.y = Math.abs(pVec.y-_pivot.y);
 		_pentomino[(int)pVec.y][(int)pVec.x] = '0';
+		//checkIfSplitPentomino();
 	}
 	private void checkIfSplitPentomino()
 	{
 		int counter = _pentomino[0].length - 1;
 		for(int i = 0; i < _pentomino.length; i++)
 			for(int j = 0; j < _pentomino[0].length; j++){
-				if(_pentomino[j][i] == '0')	counter--;
+				if(_pentomino[i][j] == '0')	counter--;
 				if(counter == 0)	SplitPentomino(i);
 		}
+		counter = _pentomino[0].length - 1;
 	}
 	private void SplitPentomino(int pRow)
 	{
+		if(pRow != 0){
 		char[][] above = new char[pRow-1][_pentomino[0].length];
 		char[][] below = new char[_pentomino.length - pRow][_pentomino[0].length];
 		System.out.println("ABOVE \n"+above);
@@ -111,7 +114,8 @@ public class Pentomino extends GameObject {
 		Pentomino[] newP = new Pentomino[2];
 		newP[0] = a;
 		newP[1] = b;
-		_board().addSplitPentomino(this,newP);
+		_board.addSplitPentomino(this,newP);
+	}
 	}
 	public void fallAllTheWay()//APROVED
 	{
