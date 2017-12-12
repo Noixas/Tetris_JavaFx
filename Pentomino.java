@@ -104,13 +104,21 @@ public class Pentomino extends GameObject {
 	}
 	private void SplitPentomino(int pRow)
 	{
-		if(pRow != 0){
+		if(pRow != 0 && pRow != getPentominoHeight()-1){
 		char[][] above = new char[pRow-1][_pentomino[0].length];
 		char[][] below = new char[_pentomino.length - pRow][_pentomino[0].length];
 		System.out.println("ABOVE \n"+above);
 		System.out.println("BELOW \n"+below);
 		Pentomino a = new Pentomino(new Vector2D(xPos, yPos),above,_tileSize,_board);
-		Pentomino b = new Pentomino(new Vector2D(xPos, yPos+(pRow*_tileSize)),above,_tileSize,_board);
+		Pentomino b = new Pentomino(new Vector2D(xPos, yPos+(pRow*_tileSize)),below,_tileSize,_board);
+		Vector2D aPivot = a.getPivot();
+		aPivot.x = aPivot.x/_tileSize;
+		aPivot.y = aPivot.y/_tileSize;
+		a.setPivot(aPivot);
+		Vector2D bPivot = b.getPivot();
+		bPivot.x = bPivot.x/_tileSize;
+		bPivot.y = bPivot.y/_tileSize;
+		b.setPivot(bPivot);
 		Pentomino[] newP = new Pentomino[2];
 		newP[0] = a;
 		newP[1] = b;

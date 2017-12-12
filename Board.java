@@ -252,5 +252,8 @@ public class Board extends GameObject {
       //Preview next pentominoe
       //Start Score
   }
-
+  public Pentomino[][] getBoardArray()
+  {
+    return _board;
+  }
 }
