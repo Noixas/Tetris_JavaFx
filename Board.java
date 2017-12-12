@@ -203,15 +203,14 @@ public class Board extends GameObject {
     if(_pp.getPentPool().empty()) _pp.newPentPool();
   }
 
-  public void getPreviewPentomino() {
-    Pentomino previewP = new Pentomino(new Vector2D((_width*_tileSize)/2,0),_pp.getPentPool().peek(),_tileSize,this);
-    GraphicsComponent graphPreview = new GraphicsComponent(previewP,_gc);
+  public int getPreviewInt() {
+    int previewInt = _pp.getPentPool().peek();
+    return previewInt;
   }
   private void SpawnPentomino()//APROVED
   {
     if(_done) return;//If we are done, stop spawning pentominoes
     newPentomino();
-    getPreviewPentomino();
 
     if(checkLose(_activePentomino))//check if spawning this pentomino will make the game lose
     {
