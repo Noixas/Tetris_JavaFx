@@ -44,7 +44,7 @@ public class GraphicsComponent extends Component{
   }
   private void Render(GraphicsContext gc)
   {
-      
+    if(_pent.length>0)
   		for(int i = 0; i < _pent[0].length; i++)
   		{
   			for(int j = 0; j < _pent.length; j++)

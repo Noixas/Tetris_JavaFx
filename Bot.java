@@ -1,6 +1,10 @@
-/*public class Bot {
-  private List<Board> boardPreviews = new ArrayList<Board> ();
-  private Board _currentBoard = new Board();
+/*public class Bot extends GameObject {
+  private Pentomino[][] _currentBoard;
+  private Pentomino _activePentomino;
+  private Board _board;
+  private boardHeight = _currentBoard.length;
+  private boardWidth = _currentBoard[0].length;
+
 
   public void startBot() {
     int botInt = 0;
@@ -10,22 +14,20 @@
     }
   }
 
-  private Bot(currentboard) {
-    Update();
-
+  private Bot(Pentomino[][] currentBoard, Board board) {
+    this._currentBoard = currentBoard;
+    this._board = board;
   }
 
   private void Update() {
-    this._currentBoard =
-  }
-
-  private void makeBoardPreview() {
-    boardPreviews.add(candidateBoard);
-
+    this._activePentomino = _board.getActivePentomino();
+    addChild();
   }
 
   private void checkMoveOutcome() {
+    for() {
 
+    }
   }
 
 //Heuristics
@@ -33,7 +35,7 @@
 
   }
 
-  private int bumpinessCount() {//Counts how bumpy the "mass of pentoinoes is"
+  private int bumpinessCount() {//Counts how bumpy the "mass of pentominoes" is
   for(int i=0;i<currentBoard[0].length;i++) {
 
   }
@@ -50,8 +52,12 @@
     return totalHeight;
   }
 
-  private int completeLinesCount() {//Counts the complete lines made
+  private int completeRowCount() {//Counts the complete lines made
 
+  }
+
+  private int heuristicsScorer() {
+    return holesCount() + bumpinessCount() + heightCount() + completeRowCount();
   }
 
 //Helper
