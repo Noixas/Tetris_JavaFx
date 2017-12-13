@@ -4,12 +4,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import java.util.ArrayList;
 
 public class BoardUI extends GameObject {
 
   Label gameTimer;
   Label scoreCounter;
   Board _board;
+  public static final int TILE_SIZE = 25;
+
+
 
   public BoardUI(Pane rightPane, Pane leftPane, Board pBoard) {
     _board = pBoard;
@@ -32,16 +36,28 @@ public class BoardUI extends GameObject {
 		preview.setStroke(Color.rgb(255, 0, 0, .99));
 		preview.setStrokeWidth(3);
 
-    Label previewTest = new Label();
-    previewTest.setStyle("-fx-font: 30 arial;");
-    previewTest.relocate(80, 30);
+    char[][] _pent = Piece.getPiece(_board.getPreviewInt());
+    ArrayList<Rectangle> rectList = new ArrayList<Rectangle>();
 
-    previewTest.setText(Piece.getPiece(_board.getPreviewInt()).toString());
+    for(int i = 0; i < _pent[0].length; i++)
+    {
+      for(int j = 0; j < _pent.length; j++)
+      {
+
+        if(_pent[j][i] != '0'){
+          rectList.add(new Rectangle(170 + (TILE_SIZE * i), 50 + (TILE_SIZE * j), TILE_SIZE, TILE_SIZE));
+
+        }
+      }
+    }
+
+    for(int i = 0; i < rectList.size(); i++) {
+      rectList.get(i).setFill(Color.rgb(255, 0, 0, .99));
+      rectList.get(i).setStroke(Color.rgb(255, 255, 255, .99));
+    }
 
 
-
-
-    rightPane.getChildren().addAll(preview, previewTest);
+    rightPane.getChildren().addAll(preview, rectList.get(0), rectList.get(1), rectList.get(2), rectList.get(3), rectList.get(4));
   }
   public void updatePreview() {
 
