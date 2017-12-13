@@ -1,65 +1,91 @@
 /*public class Bot extends GameObject {
-  private Pentomino[][] _currentBoard;
+  private Pentomino[][] _boardArray;
   private Pentomino _activePentomino;
-  private Board _board;
-  private int boardHeight = _currentBoard.length;
-  private int boardWidth = _currentBoard[0].length;
+  private Board _activeBoard;
+  private Pentomino _candidatePentomino;
+  private Board _candidateBoard;
+  private int boardHeight = _boardArray.length;
+  private int boardWidth = _boardArray[0].length;
   private double holesWeight;
   private double bumpinessWeight;
   private double heightWeight;
   private double rowWeight;
+  private boolean startNewTrial = true;
   private int moves = 0;
   private int rotation = 0;
+  private MoveLog logBest;
+  private MoveLog logNew;
 
-  public void startBot() {
-    int botInt = 0;
-    while(botInt < 10) {
-      Input.keyPressed("UP");
-      botInt++;
+
+  private Bot(Pentomino[][] activeBoard, Board board) {
+    this._boardArray = activeBoard;
+    this._activeBoard = board;
+  }
+
+  public void Update() {
+    this._activePentomino = _activeBoard.getActivePentomino();
+    if(startNewTrial) {
+      startNewTrial = false;
     }
   }
 
-  private Bot(Pentomino[][] currentBoard, Board board) {
-    this._currentBoard = currentBoard;
-    this._board = board;
-  }
 
-  private void Update() {
-    this._activePentomino = _board.getActivePentomino();
-    addChild();
-  }
-
-
-  private void newAttempt() {
-    Board _candidateBoard = _currentBoard.clone();
-    Pentomino[][] _candidatePentomino = _activePentomino.clone();
-    moveAllToLeft();
-    tryPentominoPosition();
-  }
 
   private void newTrial() {
     moves = 0;
     rotation = 0;
-    newAttempt();
-  }
-
-  private void bestMove() {
-
-  }
-
-  private void moveAllToLeft() {
-    while(_board.tryMove(_candidatePentomino, -1)) {
-      _activePentomino.move(-1);
+    while(!startNewTrial) {
+      newAttempt();
+      if(moves==0) {
+        logBest = logNew;
+      } else {
+        selectBestScore();
+      }
     }
-    _activePentomino.fallAllTheWay();
+    _candidatePentomino.rotate(logBest.getRotation());
+    for(int i=0;i<=logBest.getMoves();i++) {
+      _candidatePentomino.move(1);
+    }
+  }
+
+  private void newAttempt() {
+    Board _candidateBoard = (Board)((Board)_activeBoard).clone();
+    Pentomino _candidatePentomino = (Pentomino)((Pentomino)_activePentomino).clone();
+    moveAllToLeft();
+    tryPentominoPosition();
+    logNew = new MoveLog(heuristicsScorer(), moves, rotation);
   }
 
   private void tryPentominoPosition() {
-    if(board.tryMove(_candidatePentomino, 1)) {
-      for(int i=0;i<=moves;i++) {
-        _candidatePentomino.move(1);
+    for(int i=0;i<=moves;i++) {
+      _candidatePentomino.move(1);
+    }
+    if(!_candidateBoard.tryMove(_candidatePentomino, 1)) {
+      startNewTrial = true;
+    }
+    _candidatePentomino.fallAllTheWay();
+  }
+
+  private void moveAllToLeft() {
+    while(_activeBoard.tryMove(_candidatePentomino, -1)) {
+      _candidatePentomino.move(-1);
+    }
+    _candidatePentomino.fallAllTheWay();
+  }
+
+  private void selectBestScore() {
+    if(logBest.getScore() < logNew.getScore()) {
+      logBest = logNew;
+    } else if(logBest.getScore() == logNew.getScore()) {
+      double rnd = Math.random();
+      if(Math.random()<0.5) {
+        logBest = logNew;
       }
     }
+  }
+
+  private double heuristicsScorer() {
+    return (double)holesWeight*holesCount() + (double)bumpinessWeight*bumpinessCount() + (double)heightWeight*heightCount() + (double)rowWeight*completeRowCount();
   }
 
 //Heuristics
@@ -69,26 +95,22 @@
 
   private int bumpinessCount() { //Counts how bumpy the "mass of pentominoes" is
     int totalBumpiness = 0;
-    for(int i=0;i<_candidateBoard[0].length - 1;i++) {
-      totalBumpiness += abs(columnHeight(i) - columnHeight(i+1));
+    for(int i=0;i<_boardArray[0].length - 1;i++) {
+      totalBumpiness += Math.abs(columnHeight(i) - columnHeight(i+1));
     }
     return totalBumpiness;
   }
 
   private int heightCount() { //Counts the cumulative height of all the columns
     int totalHeight = 0;
-    for(int i=0;i<_candidateBoard.length;i++) {
-      totalHeight += _candidateBoard.columnHeight(i);
+    for(int i=0;i<_boardArray.length;i++) {
+      totalHeight += columnHeight(i);
     }
     return totalHeight;
   }
 
-  private int completeRowCount() { //Counts the complete lines made
+  private double completeRowCount() { //Counts the complete lines made
 
-  }
-
-  private int heuristicsScorer() {
-    return holesWeight*_candidateBoard.holesCount() + bumpinessWeight*_candidateBoard.bumpinessCount() + heightWeight*_candidateBoard.heightCount() + rowWeight*_candidateBoard.completeRowCount();
   }
 
 //Helper
@@ -96,8 +118,8 @@
     boolean pieceFound = false;
     int colHeight = 0;
     int i = 0;
-    while(i<_candidateBoard[0][i].length && !pieceFound) {
-      if(_candidateBoard[c][i] = '0') {
+    while(i<_boardArray[0].length && !pieceFound) {
+      if(_boardArray[c][i] == '0') {
         colHeight++;
         i++;
       } else {
