@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.LinkedList;
 public class World extends GameObject{
 	Canvas _canvas;
+	Canvas _previewCanvas;
 	public static final int TILE_SIZE = 50;
 	public static final int GRID_WIDTH = 10;
 	public static final int GRID_HEIGHT = 15;
@@ -35,7 +36,6 @@ public class World extends GameObject{
 		root.add(worldPane, 1, 0, 1, 1);
 		root.add(right, 2, 0, 1, 1);
 		worldPane.getChildren().addAll(canvas);
-
 
 
 
