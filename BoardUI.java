@@ -13,7 +13,7 @@ public class BoardUI extends GameObject {
   Board _board;
   private static final int TILE_SIZE = 25;
   private char[][] _pent;
-
+  private ArrayList<Rectangle> rectList = new ArrayList<Rectangle>();
 
 
   public BoardUI(Pane rightPane, Pane leftPane, Board pBoard) {
@@ -31,6 +31,17 @@ public class BoardUI extends GameObject {
 
   public void updatePreview() {
     _pent = Piece.getPiece(_board.getPreviewInt());
+    int count =0;
+    for(int i = 0; i < _pent[0].length; i++) {
+      for(int j = 0; j < _pent.length; j++) {
+        if(_pent[j][i] != '0'){
+
+          rectList.get(count).relocate(160 + (TILE_SIZE * i), 40 + (TILE_SIZE * j));
+          //rectList.get(j).relocate(170 + (TILE_SIZE * j), 50 + (TILE_SIZE * i));
+          count++;
+        }
+      }
+    }
   }
 
   private void createPreview(Pane rightPane) {
@@ -42,20 +53,14 @@ public class BoardUI extends GameObject {
 		preview.setStroke(Color.rgb(255, 0, 0, .99));
 		preview.setStrokeWidth(3);
 
-    char[][] _pent = Piece.getPiece(_board.getPreviewInt());
-    ArrayList<Rectangle> rectList = new ArrayList<Rectangle>();
 
-    for(int i = 0; i < _pent[0].length; i++) {
-      for(int j = 0; j < _pent.length; j++) {
-        if(_pent[j][i] != '0'){
-          rectList.add(new Rectangle(170 + (TILE_SIZE * j), 50 + (TILE_SIZE * i), TILE_SIZE, TILE_SIZE));
-        }
-      }
-    }
-    for(int i = 0; i < rectList.size(); i++) {
+    for(int i = 0; i < 5; i++) {
+      rectList.add(new Rectangle(TILE_SIZE, TILE_SIZE));
       rectList.get(i).setFill(Color.rgb(255, 0, 0, .99));
       rectList.get(i).setStroke(Color.rgb(255, 255, 255, .99));
     }
+
+
     rightPane.getChildren().addAll(preview, rectList.get(0), rectList.get(1), rectList.get(2), rectList.get(3), rectList.get(4));
   }
 
