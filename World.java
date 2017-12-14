@@ -16,6 +16,7 @@ public class World extends GameObject{
 	public static final int GRID_HEIGHT = 15;
 	public static World world;
 	private Board _board;
+	private BoardUI constructUI;
 	public World(GridPane root) {
 
 		int tile_size = 50;
@@ -45,7 +46,7 @@ public class World extends GameObject{
 		_board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D());
 		addChild(_board);
 
-		BoardUI constructUI = new BoardUI(right, left, _board);
+		 constructUI = new BoardUI(right, left, _board);
 		addChild(constructUI);
 
 	}
@@ -96,5 +97,6 @@ public class World extends GameObject{
 	  removeChild(_board);
 	  _board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D());
 	 	addChild(_board);
+		constructUI.updateBoard(_board);
 	}
 }

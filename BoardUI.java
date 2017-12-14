@@ -29,6 +29,10 @@ public class BoardUI extends GameObject {
     spaceControl(leftPane);
   }
 
+  public void updateBoard(Board pBoard) {
+    _board = pBoard;
+  }
+
   public void updatePreview() {
     _pent = Piece.getPiece(_board.getPreviewInt());
     int count =0;
