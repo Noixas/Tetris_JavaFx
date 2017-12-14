@@ -19,8 +19,7 @@ public class Board extends GameObject {
   private float             _speed = .3f;
   private Random            _random = new Random();
   private int               _rowCombo = 1;
-
-  private PentominoesPool  _pp = new PentominoesPool();
+  private PentominoesPool   _pp = new PentominoesPool();
 
   public Board(int pWidth, int pHeight, int pTileSize, GraphicsContext pGc) {
     _width = pWidth;

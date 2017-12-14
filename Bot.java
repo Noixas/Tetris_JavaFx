@@ -1,21 +1,24 @@
-/*public class Bot extends GameObject {
+public class Bot extends GameObject {
   private Pentomino[][] _boardArray;
   private Pentomino _activePentomino;
   private Board _activeBoard;
+  private Pentomino[][] _candidateBoardArray;
   private Pentomino _candidatePentomino;
-  private Board _candidateBoard;
+  //private Board _candidateBoard;
   private int boardHeight = _boardArray.length;
   private int boardWidth = _boardArray[0].length;
-  private double holesWeight;
-  private double bumpinessWeight;
-  private double heightWeight;
-  private double rowWeight;
-  private boolean startNewTrial = true;
+  private int countx = 0;
+  private int county = 0;
+  private double holesWeight = 1;
+  private double bumpinessWeight = 1;
+  private double heightWeight = 1;
+  private double rowWeight = 1;
+  private boolean newPentomino = true;
   private int moves = 0;
   private int rotation = 0;
   private MoveLog logBest;
   private MoveLog logNew;
-
+  private int rowCombo;
 
   private Bot(Pentomino[][] activeBoard, Board board) {
     this._boardArray = activeBoard;
@@ -24,20 +27,19 @@
 
   public void Update() {
     this._activePentomino = _activeBoard.getActivePentomino();
-    if(startNewTrial) {
-      startNewTrial = false;
+    if(newPentomino) {
+      newPentomino = false;
+      newTrial();
     }
   }
-
-
 
   private void newTrial() {
     moves = 0;
     rotation = 0;
-    while(!startNewTrial) {
+    while(!newPentomino) {
       newAttempt();
-      if(moves==0) {
-        logBest = logNew;
+      if(logBest == null) {
+        copyMoveLog();
       } else {
         selectBestScore();
       }
@@ -49,49 +51,77 @@
   }
 
   private void newAttempt() {
-    Board _candidateBoard = (Board)((Board)_activeBoard).clone();
-    Pentomino _candidatePentomino = (Pentomino)((Pentomino)_activePentomino).clone();
+    Pentomino _candidatePentomino = _activePentomino;
+    Vector2D newPos = _candidatePentomino.getPivot();
+    Vector2D SpawnPos = new Vector2D(newPos.x,newPos.y);
     moveAllToLeft();
     tryPentominoPosition();
+    copyPentominoBoard();
+
+    //newPos.x += countx;
+    newPos.y += county;
+    addPentominoToBoard(_candidatePentomino, newPos);
+    //update pent at board
     logNew = new MoveLog(heuristicsScorer(), moves, rotation);
+    _candidatePentomino.restartArray();
+    _activeBoard.updatePentominoAtBoard(_candidatePentomino,SpawnPos);//reset to spawn pos
   }
 
   private void tryPentominoPosition() {
-    for(int i=0;i<=moves;i++) {
+    for(int i=0;i<moves;i++) {
       _candidatePentomino.move(1);
     }
-    if(!_candidateBoard.tryMove(_candidatePentomino, 1)) {
-      startNewTrial = true;
+    if(!_activeBoard.tryMove(_candidatePentomino, 1)) {
+      newPentomino = true;
     }
-    _candidatePentomino.fallAllTheWay();
+    moves++;
+    //_candidatePentomino.fallAllTheWay();
+
+    while(_activeBoard.tryMove(_candidatePentomino, 0))
+    county++;
   }
 
   private void moveAllToLeft() {
     while(_activeBoard.tryMove(_candidatePentomino, -1)) {
       _candidatePentomino.move(-1);
     }
-    _candidatePentomino.fallAllTheWay();
   }
 
   private void selectBestScore() {
     if(logBest.getScore() < logNew.getScore()) {
-      logBest = logNew;
+      copyMoveLog();
     } else if(logBest.getScore() == logNew.getScore()) {
-      double rnd = Math.random();
       if(Math.random()<0.5) {
-        logBest = logNew;
+        copyMoveLog();
       }
     }
   }
 
   private double heuristicsScorer() {
-    return (double)holesWeight*holesCount() + (double)bumpinessWeight*bumpinessCount() + (double)heightWeight*heightCount() + (double)rowWeight*completeRowCount();
+    return -(double)holesWeight*holesCount() - (double)bumpinessWeight*bumpinessCount() - (double)heightWeight*heightCount() + (double)rowWeight*rowCombo;
   }
 
 //Heuristics
   private int holesCount() { //Counts how many "holes" there are
-
+    return 0;
   }
+
+  /*public boolean emptySpaceIsolated(char[][] pBoard, int x, int y)
+	{
+		//char[][] trackEmpty = new char[pBoard.length][pBoard[0].length];
+		if(y > 0 && pBoard[x][y-1] == '0')//left
+		{
+			return false;
+		}
+		else if(x > 0 && pBoard[x-1][y] == '0')//top
+			return false;
+		else if(x < pBoard.length-1 && pBoard[x+1][y] == '0')//bottom
+			return false;
+		else if(y < pBoard[x].length-1 && pBoard[x][y+1] == '0')//right
+			return false;
+		else
+			return true;//backtrack
+	}*/
 
   private int bumpinessCount() { //Counts how bumpy the "mass of pentominoes" is
     int totalBumpiness = 0;
@@ -109,24 +139,80 @@
     return totalHeight;
   }
 
-  private double completeRowCount() { //Counts the complete lines made
-
-  }
-
 //Helper
+
   private int columnHeight(int c) {
     boolean pieceFound = false;
     int colHeight = 0;
     int i = 0;
     while(i<_boardArray[0].length && !pieceFound) {
-      if(_boardArray[c][i] == '0') {
+      if(_boardArray[c][i] == null) {
         colHeight++;
         i++;
       } else {
         pieceFound = true;
       }
     }
-    return colHeight;
+    return colHeight-rowCombo;
   }
+
+  private Pentomino[][] copyPentominoBoard() { //Deep copy of the board representing the pentominoes
+    _candidateBoardArray = new Pentomino[boardHeight][boardWidth];
+    for(int i=0;i<boardHeight;i++) {
+      for(int j=0;i<boardWidth;j++) {
+        _candidateBoardArray[i][j] = _boardArray[i][j];
+      }
+    }
+    return _candidateBoardArray;
+  }
+
+  private void copyMoveLog() { //Deep copy of moves log object
+    double score = logNew.getScore();
+    int moves = logNew.getMoves();
+    int rotation = logNew.getRotation();
+    logBest = new MoveLog(score, moves, rotation);
+  }
+  public void addPentominoToBoard(Pentomino pPent, Vector2D pVec)
+  {
+      char[][] pos = pPent.getPentArray();
+      for(int i = 0; i < pos.length; i++)
+        for(int j = 0; j < pos[0].length; j++)
+          if(pos[i][j] != '0')
+          {
+            _candidateBoardArray[(int)pVec.y+i][(int)pVec.x+j] = pPent;
+          }
+      pPent.setPivot(pVec);
+  }
+  public int checkRow()//APROVED
+  {
+    int counter = 1;
+    rowCombo = 0;
+    for(int i = 0; i < _candidateBoardArray.length; i++)
+      for(int j = 0; j < _candidateBoardArray[0].length; j++)
+      {
+        if(_candidateBoardArray[i][j] == null)
+        {
+          j = _candidateBoardArray[0].length;
+          counter = 1;
+        }
+        else counter++;
+
+        if(counter == _candidateBoardArray[0].length){
+          eraseRow(i);
+          counter = 1;
+          rowCombo++;
+        }
+      }
+      return rowCombo;
+    }
+
+    public void eraseRow(int pPos)//Aproved
+    {
+      for(int j = 0; j < _candidateBoardArray[pPos].length; j++)
+      {
+        _candidateBoardArray[pPos][j].eraseBlock(new Vector2D(j,pPos));//x,y
+        _activeBoard.updatePentominoAtBoard(_candidateBoardArray[pPos][j],_candidateBoardArray[pPos][j].getPivot());
+        _candidateBoardArray[pPos][j] = null;
+      }
+    }
 }
-*/

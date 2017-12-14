@@ -148,6 +148,10 @@ public class Pentomino extends GameObject {
 			}
 		}
 	}
+	public void restartArray()
+	{
+		_pentomino = _pentominoes.get(_rotation);
+	}
 	public void setPivot(Vector2D pPivot)
 	{
 		_pivot = pPivot;
