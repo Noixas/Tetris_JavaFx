@@ -33,6 +33,10 @@ public class Bot extends GameObject {
     }
   }
 
+  private boolean makeMove() {
+    
+  }
+
   private void newTrial() {
     moves = 0;
     rotation = 0;

@@ -43,7 +43,7 @@ public class World extends GameObject{
 
 		world = this;
 		_canvas = canvas;
-		_board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D());
+		_board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D(),1);
 		addChild(_board);
 
 		 constructUI = new BoardUI(right, left, _board);
