@@ -30,9 +30,10 @@ public class Bot extends GameObject {
 
   public void Update() {
 
-    this._activePentomino = _activeBoard.getActivePentomino();
 
-    if(newPentomino) {
+    if(_activePentomino != _activeBoard.getActivePentomino()) {
+      this._activePentomino = _activeBoard.getActivePentomino();
+
       newPentomino = false;
       newTrial();
       System.out.println("sdd");
@@ -86,14 +87,9 @@ public class Bot extends GameObject {
     //_candidatePentomino.fallAllTheWay();
 
     while(_activeBoard.tryMove(_candidatePentomino, 0)){
-    //  System.out.println(" update"+county);
-
-    newPos.y += county;
+    newPos.y += 1;
     addPentominoToBoard(_candidatePentomino, newPos);
-//    System.out.println(_activeBoard.toString());
 
-  //  System.exit(0);
-        county++;
 
     }
   }
