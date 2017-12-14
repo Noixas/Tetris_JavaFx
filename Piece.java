@@ -129,22 +129,22 @@ private static char[][] x = {
     {'l','l'}};
     static{
 			//TODO: ask teacher if good programming practice
-			pieces.add(l);//1
-      pieces.add(x);//2
-      pieces.add(f);//3
-      pieces.add(v);//4
-      pieces.add(w);//5
-      pieces.add(y);//6
-      pieces.add(i);//7
-      pieces.add(t);//8
-      pieces.add(z);//9
-      pieces.add(u);//10
-      pieces.add(n);//11
-      pieces.add(p);//12
+			pieces.add(l);//0
+      pieces.add(x);//1
+      pieces.add(f);//2
+      pieces.add(v);//3
+      pieces.add(w);//4
+      pieces.add(y);//5
+      pieces.add(i);//6
+      pieces.add(t);//7
+      pieces.add(z);//8
+      pieces.add(u);//9
+      pieces.add(n);//10
+      pieces.add(p);//11
       for(int i = 0; i < 12/*size*/; i++)
       {
         if(i != 1 ){//Avoid x
-          if(i != 3 && i != 6 && i != 7 && i != 9){ //This improves A LOT the performance
+          if(i != 3 && i != 4 && i != 6 && i != 7 && i != 9){ //This improves A LOT the performance
             pieces.add(flip(pieces.get(i)));
           }
         }

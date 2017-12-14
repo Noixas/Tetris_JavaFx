@@ -19,16 +19,21 @@ public class Board extends GameObject {
   private float             _speed = .3f;
   private Random            _random = new Random();
   private int               _rowCombo = 1;
+  private PentominoesPool   _pp = new PentominoesPool();
+  private int               _gameMode;
 
-  private PentominoesPool  _pp = new PentominoesPool();
-
-  public Board(int pWidth, int pHeight, int pTileSize, GraphicsContext pGc) {
+  public Board(int pWidth, int pHeight, int pTileSize, GraphicsContext pGc, int pGameMode) {
+    _gameMode = pGameMode;
     _width = pWidth;
     _height = pHeight;
     _tileSize = pTileSize;
     _gc = pGc; //The context where we will draw the board
     _board = new Pentomino[_height][_width];
     SpawnPentomino();///Spawn the first pentomino
+    if(_gameMode == 2) {
+      Bot bot = new Bot(_board, this);
+      addChild(bot);
+    }
   }//APROVED
   public void addPentominoToBoard(Pentomino pPent, Vector2D pVec)
   {
@@ -263,5 +268,9 @@ public class Board extends GameObject {
   public Pentomino[][] getBoardArray()
   {
     return _board;
+  }
+
+  public Pentomino getActivePentomino() {
+    return _activePentomino;
   }
 }

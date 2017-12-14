@@ -4,12 +4,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import java.util.ArrayList;
 
 public class BoardUI extends GameObject {
 
   Label gameTimer;
   Label scoreCounter;
   Board _board;
+  private static final int TILE_SIZE = 25;
+  private char[][] _pent;
+  private ArrayList<Rectangle> rectList = new ArrayList<Rectangle>();
+
 
   public BoardUI(Pane rightPane, Pane leftPane, Board pBoard) {
     _board = pBoard;
@@ -20,7 +25,27 @@ public class BoardUI extends GameObject {
     leftControl(leftPane);
     rightControl(leftPane);
     upControl(leftPane);
+    downControl(leftPane);
     spaceControl(leftPane);
+  }
+
+  public void updateBoard(Board pBoard) {
+    _board = pBoard;
+  }
+
+  public void updatePreview() {
+    _pent = Piece.getPiece(_board.getPreviewInt());
+    int count =0;
+    for(int i = 0; i < _pent[0].length; i++) {
+      for(int j = 0; j < _pent.length; j++) {
+        if(_pent[j][i] != '0'){
+
+          rectList.get(count).relocate(160 + (TILE_SIZE * i), 40 + (TILE_SIZE * j));
+          //rectList.get(j).relocate(170 + (TILE_SIZE * j), 50 + (TILE_SIZE * i));
+          count++;
+        }
+      }
+    }
   }
 
   private void createPreview(Pane rightPane) {
@@ -32,20 +57,17 @@ public class BoardUI extends GameObject {
 		preview.setStroke(Color.rgb(255, 0, 0, .99));
 		preview.setStrokeWidth(3);
 
-    Label previewTest = new Label();
-    previewTest.setStyle("-fx-font: 30 arial;");
-    previewTest.relocate(80, 30);
 
-    previewTest.setText(Piece.getPiece(_board.getPreviewInt()).toString());
+    for(int i = 0; i < 5; i++) {
+      rectList.add(new Rectangle(TILE_SIZE, TILE_SIZE));
+      rectList.get(i).setFill(Color.rgb(255, 0, 0, .99));
+      rectList.get(i).setStroke(Color.rgb(255, 255, 255, .99));
+    }
 
 
-
-
-    rightPane.getChildren().addAll(preview, previewTest);
+    rightPane.getChildren().addAll(preview, rectList.get(0), rectList.get(1), rectList.get(2), rectList.get(3), rectList.get(4));
   }
-  public void updatePreview() {
 
-  }
 
   private void createTimer(Pane rightPane) {
     Rectangle timerBox = new Rectangle(250, 40);
@@ -70,6 +92,7 @@ public class BoardUI extends GameObject {
   {
     updateTime();
     updateCounter();
+    updatePreview();
   }
 
   private void createCounter(Pane rightPane) {
@@ -216,12 +239,46 @@ public class BoardUI extends GameObject {
     leftPane.getChildren().addAll(upArrowBox, upArrow, upDescBox, upDesc);
   }
 
+  private void downControl(Pane leftPane) {
+    Rectangle downArrowBox = new Rectangle(50, 50);
+    downArrowBox.setArcWidth(12.5);
+    downArrowBox.setArcHeight(12.5);
+    downArrowBox.setFill(Color.rgb(0, 0, 0, .99));
+    downArrowBox.relocate(30, 210);
+    downArrowBox.setStroke(Color.rgb(255, 0, 0, .99));
+    downArrowBox.setStrokeWidth(3);
+
+    Label downArrow = new Label();
+    downArrow.setText("v");
+    downArrow.setStyle("-fx-font: 40 arial;");
+    downArrow.setTextFill(Color.rgb(255, 0, 0, .80));
+    downArrow.relocate(44, 210);
+
+    Rectangle downDescBox = new Rectangle(200, 50);
+    downDescBox.setArcWidth(12.5);
+    downDescBox.setArcHeight(12.5);
+    downDescBox.setFill(Color.rgb(0, 0, 0, .99));
+    downDescBox.relocate(110, 210);
+    downDescBox.setStroke(Color.rgb(255, 0, 0, .99));
+    downDescBox.setStrokeWidth(3);
+
+    Label downDesc = new Label();
+    downDesc.setText("Rotate");
+    downDesc.setStyle("-fx-font: 40 arial");
+    downDesc.setTextFill(Color.rgb(255, 0, 0, .80));
+    downDesc.relocate(114, 210);
+
+    leftPane.getChildren().addAll(downArrowBox, downArrow, downDescBox, downDesc);
+  }
+
+
+
   private void spaceControl(Pane leftPane) {
     Rectangle spaceBox = new Rectangle(50, 50);
     spaceBox.setArcWidth(12.5);
     spaceBox.setArcHeight(12.5);
     spaceBox.setFill(Color.rgb(0, 0, 0, .99));
-    spaceBox.relocate(30, 210);
+    spaceBox.relocate(30, 270);
     spaceBox.setStroke(Color.rgb(255, 0, 0, .99));
     spaceBox.setStrokeWidth(3);
 
@@ -229,13 +286,13 @@ public class BoardUI extends GameObject {
     space.setText("\u2423");
     space.setStyle("-fx-font: 48 arial;");
     space.setTextFill(Color.rgb(255, 0, 0, .80));
-    space.relocate(30, 196);
+    space.relocate(30, 256);
 
     Rectangle spaceDescBox = new Rectangle(200, 50);
     spaceDescBox.setArcWidth(12.5);
     spaceDescBox.setArcHeight(12.5);
     spaceDescBox.setFill(Color.rgb(0, 0, 0, .99));
-    spaceDescBox.relocate(110, 210);
+    spaceDescBox.relocate(110, 270);
     spaceDescBox.setStroke(Color.rgb(255, 0, 0, .99));
     spaceDescBox.setStrokeWidth(3);
 
@@ -243,7 +300,7 @@ public class BoardUI extends GameObject {
     spaceDesc.setText("Set down");
     spaceDesc.setStyle("-fx-font: 40 arial");
     spaceDesc.setTextFill(Color.rgb(255, 0, 0, .80));
-    spaceDesc.relocate(114, 210);
+    spaceDesc.relocate(114, 270);
 
     leftPane.getChildren().addAll(spaceBox, space, spaceDescBox, spaceDesc);
   }
