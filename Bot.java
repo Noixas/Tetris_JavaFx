@@ -5,8 +5,9 @@ public class Bot extends GameObject {
   private Pentomino[][] _candidateBoardArray;
   private Pentomino _candidatePentomino;
   //private Board _candidateBoard;
-  private int boardHeight = _boardArray.length;
-  private int boardWidth = _boardArray[0].length;
+//  private Pentomino _candidatePentomino;
+  private int boardHeight;
+  private int boardWidth;
   private int countx = 0;
   private int county = 0;
   private double holesWeight = 1;
@@ -20,21 +21,26 @@ public class Bot extends GameObject {
   private MoveLog logNew;
   private int rowCombo;
 
-  private Bot(Pentomino[][] activeBoard, Board board) {
+  public Bot(Pentomino[][] activeBoard, Board board) {
     this._boardArray = activeBoard;
     this._activeBoard = board;
+    boardHeight = _boardArray.length;
+    boardWidth = _boardArray[0].length;
   }
 
   public void Update() {
+
     this._activePentomino = _activeBoard.getActivePentomino();
+
     if(newPentomino) {
       newPentomino = false;
       newTrial();
+      System.out.println("sdd");
     }
   }
 
   private boolean makeMove() {
-    
+    return false;
   }
 
   private void newTrial() {
@@ -48,30 +54,28 @@ public class Bot extends GameObject {
         selectBestScore();
       }
     }
-    _candidatePentomino.rotate(logBest.getRotation());
+    //_candidatePentomino.rotate(logBest.getRotation());
     for(int i=0;i<=logBest.getMoves();i++) {
       _candidatePentomino.move(1);
     }
   }
 
   private void newAttempt() {
-    Pentomino _candidatePentomino = _activePentomino;
+     _candidatePentomino = _activePentomino;
     Vector2D newPos = _candidatePentomino.getPivot();
     Vector2D SpawnPos = new Vector2D(newPos.x,newPos.y);
     moveAllToLeft();
-    tryPentominoPosition();
+    tryPentominoPosition( newPos);
     copyPentominoBoard();
 
     //newPos.x += countx;
-    newPos.y += county;
-    addPentominoToBoard(_candidatePentomino, newPos);
     //update pent at board
     logNew = new MoveLog(heuristicsScorer(), moves, rotation);
     _candidatePentomino.restartArray();
     _activeBoard.updatePentominoAtBoard(_candidatePentomino,SpawnPos);//reset to spawn pos
   }
 
-  private void tryPentominoPosition() {
+  private void tryPentominoPosition(Vector2D newPos) {
     for(int i=0;i<moves;i++) {
       _candidatePentomino.move(1);
     }
@@ -81,8 +85,17 @@ public class Bot extends GameObject {
     moves++;
     //_candidatePentomino.fallAllTheWay();
 
-    while(_activeBoard.tryMove(_candidatePentomino, 0))
-    county++;
+    while(_activeBoard.tryMove(_candidatePentomino, 0)){
+    //  System.out.println(" update"+county);
+
+    newPos.y += county;
+    addPentominoToBoard(_candidatePentomino, newPos);
+//    System.out.println(_activeBoard.toString());
+
+  //  System.exit(0);
+        county++;
+
+    }
   }
 
   private void moveAllToLeft() {
@@ -163,7 +176,7 @@ public class Bot extends GameObject {
   private Pentomino[][] copyPentominoBoard() { //Deep copy of the board representing the pentominoes
     _candidateBoardArray = new Pentomino[boardHeight][boardWidth];
     for(int i=0;i<boardHeight;i++) {
-      for(int j=0;i<boardWidth;j++) {
+      for(int j=0;j<boardWidth;j++) {
         _candidateBoardArray[i][j] = _boardArray[i][j];
       }
     }

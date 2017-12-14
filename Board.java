@@ -201,7 +201,7 @@ public class Board extends GameObject {
   {
    Pentomino p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),_pp.getPentPool().pop(),_tileSize,this);
 //Erase line below, only for debug purposes
-     p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),0,_tileSize,this);
+    // p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),0,_tileSize,this);
 
     InputPentomino inputP = new InputPentomino(p);
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
