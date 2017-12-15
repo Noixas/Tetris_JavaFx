@@ -34,6 +34,15 @@ public static char[][] getPiece(int pIndex)
     finalPiece[i][j]=buffer[i][j];
 		return finalPiece;
 }
+public static char[][] getPieceWithRotation(int pIndex)
+{
+	char[][] buffer = pieces.get(pIndex);
+	char[][] finalPiece = new char[buffer.length][buffer[0].length];
+	for(int i=0; i<buffer.length; i++)
+  for(int j=0; j<buffer[i].length; j++)
+    finalPiece[i][j]=buffer[i][j];
+		return finalPiece;
+}
 public static int getPiecesQuantity()
 {
 	return pieces.size();
@@ -69,6 +78,20 @@ public static int getPiecesQuantity()
     }
     return newPentomino;
   }
+	public static void PrintBoard(char[][] pBoard)
+	{
+		String board  = "";
+		for(int i = 0; i < pBoard.length; i++)
+		{
+			for(int j = 0; j < pBoard[i].length; j++)
+			{
+				board += pBoard[i][j];
+
+			}
+			board += "\n";
+		}
+		System.out.println(board);
+	}
   private static char [][] p = {
     {'p','p'},
     {'p','p'},
