@@ -23,6 +23,7 @@ public class Bot extends GameObject {
 
   public Bot(Pentomino[][] activeBoard, Board board) {
     this._boardArray = activeBoard;
+    copyPentominoBoard();
     this._activeBoard = board;
     boardHeight = _boardArray.length;
     boardWidth = _boardArray[0].length;
@@ -54,6 +55,7 @@ public class Bot extends GameObject {
       } else {
         selectBestScore();
       }
+
     }
     //_candidatePentomino.rotate(logBest.getRotation());
     for(int i=0;i<=logBest.getMoves();i++) {
@@ -65,6 +67,7 @@ public class Bot extends GameObject {
      _candidatePentomino = _activePentomino;
     Vector2D newPos = _candidatePentomino.getPivot();
     Vector2D SpawnPos = new Vector2D(newPos.x,newPos.y);
+    copyPentominoBoard();
     moveAllToLeft();
     tryPentominoPosition( newPos);
     copyPentominoBoard();
@@ -88,7 +91,8 @@ public class Bot extends GameObject {
 
     while(_activeBoard.tryMove(_candidatePentomino, 0)){
     newPos.y += 1;
-    addPentominoToBoard(_candidatePentomino, newPos);
+    System.out.println(_activeBoard.toString());
+    _activeBoard.updatePentominoAtBoard(_candidatePentomino, newPos);
 
 
     }

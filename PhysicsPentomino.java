@@ -58,7 +58,7 @@ public class PhysicsPentomino extends Component {
     _lastBlock = _pentomino.getY() +  _pentomino.getPentominoHeight();//save in which block we are
 
 
-  //  System.out.println(_board.toString());
+    System.out.println(_board.toString());
   }
   private boolean checkFallMove()//APROVED
   {
