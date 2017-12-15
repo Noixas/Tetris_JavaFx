@@ -22,6 +22,8 @@ public class Pentomino extends GameObject {
 		_type= pType;
     _pentominoes = Piece.getPieces(_type);//Get all posible ways of the pentomino
     _pentomino = _pentominoes.get(_rotation);
+		xPos = _pivot.x *_tileSize;//Update world/graphics pos
+		yPos = _pivot.y * _tileSize;
 	}
 		public Pentomino(Vector2D pPos, char[][] pPent,int pTileSize, Board pBoard) {
 			super((int)pPos.x, (int)pPos.y);
@@ -102,6 +104,10 @@ public class Pentomino extends GameObject {
 		}
 		counter = _pentomino[0].length - 1;
 	}
+	/**
+	 * Split the pentomino if there is an empty row in between
+	 * @param int pRow [The row to be deleted]
+	 */
 	private void SplitPentomino(int pRow)
 	{
 		if(pRow != 0 && pRow != getPentominoHeight()-1){

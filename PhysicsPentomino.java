@@ -41,10 +41,15 @@ public class PhysicsPentomino extends Component {
   {
     _sideMove = _board.tryMove(_pentomino, pDir);
     if(_sideMove){
+      if(pDir != 0){
       Vector2D v = _pentomino.getPivot();
       v.x += pDir; //increase pivot point
       _owner.worldMove(pDir, 0, _pentomino.getTileSize());//move world positiong (For the graphics)
       _board.updatePentominoAtBoard(_pentomino, v);//Update the position in the board
+      }
+      else {
+        fallStepBoard();
+      }
     }
   }
 

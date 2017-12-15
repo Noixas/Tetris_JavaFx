@@ -12,14 +12,13 @@ public class World extends GameObject{
 	Canvas _canvas;
 	Canvas _previewCanvas;
 	public static final int TILE_SIZE = 50;
-	public static final int GRID_WIDTH = 10;
+	public static final int GRID_WIDTH = 5;
 	public static final int GRID_HEIGHT = 15;
 	public static World world;
 	private Board _board;
 	private BoardUI constructUI;
 	public World(GridPane root) {
 
-		int tile_size = 50;
 		Pane left = new Pane();
 		left.setStyle("-fx-background-color: #357dff");
 		left.setPrefSize(390,750);
@@ -28,10 +27,10 @@ public class World extends GameObject{
 		right.setPrefSize(390,750);
 		Pane worldPane = new Pane();
 		worldPane.setStyle("-fx-background-color: black;");
-		worldPane.setPrefSize(tile_size*10,tile_size*15);
+		worldPane.setPrefSize(TILE_SIZE*GRID_WIDTH,TILE_SIZE*GRID_HEIGHT);
 
 
-		Canvas canvas = new Canvas(500,750);
+		Canvas canvas = new Canvas(TILE_SIZE*GRID_WIDTH,TILE_SIZE*GRID_HEIGHT);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		root.add(left, 0, 0, 1, 1);
 		root.add(worldPane, 1, 0, 1, 1);
@@ -43,7 +42,7 @@ public class World extends GameObject{
 
 		world = this;
 		_canvas = canvas;
-		_board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D(),2);
+		_board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D(),1);
 		addChild(_board);
 
 		 constructUI = new BoardUI(right, left, _board);
@@ -95,7 +94,7 @@ public class World extends GameObject{
 		Score.Restart();
 	  Time.StartTime();
 	  removeChild(_board);
-	  _board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D(),2);
+	  _board = new Board(GRID_WIDTH,GRID_HEIGHT,TILE_SIZE, _canvas.getGraphicsContext2D(),1);
 	 	addChild(_board);
 		constructUI.updateBoard(_board);
 	}

@@ -91,9 +91,9 @@ public class Bot extends GameObject {
 
     while(_activeBoard.tryMove(_candidatePentomino, 0)){
     newPos.y += 1;
+  //  _activeBoard.updatePentominoAtBoard(_candidatePentomino, newPos);
+    _candidatePentomino.move(0);
     System.out.println(_activeBoard.toString());
-    _activeBoard.updatePentominoAtBoard(_candidatePentomino, newPos);
-
 
     }
   }

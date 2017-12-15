@@ -7,12 +7,16 @@ public class GraphicsComponent extends Component{
     private float _blinking =  .15f;
     private float _timePased = 0;
     private boolean _blink = false;
-    public static final int TILE_SIZE = 50;
-    public static final int GRID_WIDTH = 10;
-    public static final int GRID_HEIGHT = 15;
+    private int _tileSize ;
+    private int _grid_Width ;
+    private int _grid_Height;
     private Color _color;
   public GraphicsComponent(GameObject pOwner, GraphicsContext pGc) {
     _owner = pOwner;
+    _tileSize = World.TILE_SIZE;
+    _grid_Width = World.GRID_WIDTH;
+    _grid_Height = World.GRID_HEIGHT;
+
     _pentomino = (Pentomino) _owner;
     _owner.addComponent(this);
     _pent = _pentomino.getPentArray();
@@ -52,9 +56,9 @@ public class GraphicsComponent extends Component{
 
           if(_pent[j][i] != '0'){
             gc.setFill(Color.WHITE);
-  				  gc.fillRect(((_pentomino.getX()) +(i* TILE_SIZE)),_pentomino.getY() + (j* TILE_SIZE), TILE_SIZE, TILE_SIZE);
+  				  gc.fillRect(((_pentomino.getX()) +(i* _tileSize)),_pentomino.getY() + (j* _tileSize), _tileSize, _tileSize);
             gc.setFill(_color);
-            gc.fillRect((_pentomino.getX()) +(i* TILE_SIZE) +1,_pentomino.getY() + (j* TILE_SIZE) +1, TILE_SIZE-2, TILE_SIZE-2);
+            gc.fillRect((_pentomino.getX()) +(i* _tileSize) +1,_pentomino.getY() + (j* _tileSize) +1, _tileSize-2, _tileSize-2);
 
     			}
         }
@@ -87,7 +91,7 @@ public class GraphicsComponent extends Component{
         case 13: return Color.LIGHTSALMON;
         case 14: return Color.LIMEGREEN;
         case 15: return Color.MAGENTA;
-        case 16: return Color.SILVER; 
+        case 16: return Color.SILVER;
         case 17: return Color.TAN;
         default: return Color.BROWN;
       }
