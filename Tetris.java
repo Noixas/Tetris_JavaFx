@@ -32,7 +32,7 @@ public class Tetris extends Application {
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Tetris!");
 		GridPane root = new GridPane();
-		Scene scene = new Scene(root, 1280, 750);
+		Scene scene = new Scene(root, 1030, 750);
 		primaryStage.setScene(scene);
 		World worldGame = new World(root);
 		Input.setScene(scene);
