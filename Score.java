@@ -1,3 +1,6 @@
+/**
+ * Objects that keep track of the current score
+ */
 public class Score {
   private static int _score = 0;
   private static int points = 0;

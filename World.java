@@ -8,6 +8,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import java.util.List;
 import java.util.LinkedList;
+/**
+ * GameObject that contains all the other gameObjects
+ */
 public class World extends GameObject{
 	Canvas _canvas;
 	Canvas _previewCanvas;

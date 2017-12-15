@@ -1,5 +1,8 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+/**
+ * Component in charge of drawing its owner pentomino
+ */
 public class GraphicsComponent extends Component{
   private Pentomino _pentomino;
     private char[][] _pent;

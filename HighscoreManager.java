@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
-
+/**
+ * Manages all the scores and save them in a external file
+ */
 public class HighscoreManager {
   private static ArrayList<HScore> hScores;
 

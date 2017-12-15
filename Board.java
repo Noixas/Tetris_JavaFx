@@ -3,6 +3,9 @@ import java.util.LinkedList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import java.util.Random;
+/**
+ * Contains all the information related to the game logic
+ */
 public class Board extends GameObject {
   private int               _width;
   private int               _height;

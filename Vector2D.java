@@ -1,3 +1,6 @@
+/**
+ * Helper class to save and manipulate 2D vectors
+ */
 public class Vector2D{
   public float x;
   public float y;

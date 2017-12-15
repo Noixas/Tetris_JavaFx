@@ -5,7 +5,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
-
+/**
+ * Contains the UI elements of board class
+ */
 public class BoardUI extends GameObject {
 
   Label gameTimer;

@@ -5,7 +5,7 @@ import java.lang.Math;
 import java.util.LinkedList;
 
 /**
- *
+ *Main container class of the pentomino information
  */
 public class Pentomino extends GameObject {
 	private List<char[][]> 		_pentominoes = new LinkedList<char[][]>();

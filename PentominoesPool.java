@@ -4,6 +4,9 @@ import java.util.Random;
  * @author      Giacomo Anerdi
  *  This class creates and object which handles the randomization of the pentomino pool.
  */
+/**
+ *  This class creates and object which handles the randomization of the pentomino pool.
+ */
 public class PentominoesPool {
   public int[] pentArray = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17};
   public Stack<Integer> pentPool = new Stack<Integer> ();
