@@ -3,6 +3,10 @@ import javafx.scene.paint.Color;
 import java.util.List;
 import java.lang.Math;
 import java.util.LinkedList;
+
+/**
+ *
+ */
 public class Pentomino extends GameObject {
 	private List<char[][]> 		_pentominoes = new LinkedList<char[][]>();
   private char[][] 					_pentomino;

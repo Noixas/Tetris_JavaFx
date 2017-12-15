@@ -1,5 +1,9 @@
- import java.util.List;
+import java.util.List;
 import java.util.LinkedList;
+
+/**
+ * The GameObject class is a parent to most of the other objects interact with the player.
+ */
 public class GameObject {
   protected GameObject _parent;
   protected List<GameObject> _children = new LinkedList<GameObject>();
@@ -12,34 +16,61 @@ public class GameObject {
   //TODO add list of components and create its addMEthod and a remove method
   //NOTE: All remove methods should be overwritten so we can remove stuff by either index, type or if the objects are equals()
   //TODO removeChild()
+
   public GameObject() {
     System.out.println("A new game object has been created!");
   }
+
+  /**
+   * Constructor which places the object onto the board and applies that to the Vector2D object.
+   * @param pX x position of the object.
+   * @param pY y position of the object.
+   */
   public GameObject(int pX, int pY) {
     xPos = pX;
     yPos = pY;
     _position = new Vector2D(xPos,yPos);
   }
+
+  /**
+   * Reference to the parent of this object in the hierarchy
+   * @param parent parent
+   */
   public void addParent(GameObject parent){
     _parent = parent;
   }
+
   public void Update() {
-    //TODO  Update all of my children first
 
   }
+
+  /**
+   * Add the child to our children list and inform it who is their father
+   * @param child child
+   */
   public void addChild(GameObject child) {
     _children.add(child);
     child.addParent(this);
   }
+
+  /**
+   * Remove the child to our children list and remove reference to its father
+   * @param child child
+   */
   public void removeChild(GameObject child)
   {
     child.clearParent();
     _children.remove(child);
   }
+
+  /**
+   * Clears the reference to the parent.
+   */
   public void clearParent()
   {
     _parent = null;
   }
+
   public List<GameObject> getAllChildren(List<GameObject> pList)
 	{
 		for(int i = 0; i < _children.size(); i++)
@@ -49,6 +80,7 @@ public class GameObject {
 		}
 		return pList;
 	}
+
   public List<GameObject> getChildren()
 	{
 		return _children;

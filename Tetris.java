@@ -1,3 +1,5 @@
+
+
 import javafx.application.Application;
 import javafx.animation.AnimationTimer;
 import java.util.Random;
@@ -17,9 +19,15 @@ import javafx.event.*;
 //import java.util.Scanner;
 //TODO clean this class and just have relevant information on it
 //TODO Just keep the JAVAFX and a world update
+/**
+ * Main class which calls all the graphical and logical aspects of the game.
+ */
 public class Tetris extends Application {
 	long time = 0;
 
+	/**
+	 * Main method which starts the timer
+	 */
 	public static void main(String[] args) {
 		Time.StartTime();
 		HighscoreManager.init();
@@ -29,6 +37,10 @@ public class Tetris extends Application {
 	}
 
 	@Override
+	/**
+	 * 	Method that creates the window.
+	 *	@param primaryStage main stage
+	 */
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Tetris!");
 		GridPane root = new GridPane();

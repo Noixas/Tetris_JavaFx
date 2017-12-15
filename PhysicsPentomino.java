@@ -1,3 +1,6 @@
+/**
+ * This class handels the physics of the pentominoes.
+ */
 public class PhysicsPentomino extends Component {
   private Pentomino        _pentomino;
 	protected float          _speed;
@@ -7,6 +10,10 @@ public class PhysicsPentomino extends Component {
   private boolean          _sideMove = true;
   private boolean          _fallMove= true;
   private float            _moveStep = 1f;
+
+  /**
+   * Constr
+   */
   public PhysicsPentomino(GameObject pOwner, float pSpeed) {
     _owner = pOwner;
     _speed = pSpeed;

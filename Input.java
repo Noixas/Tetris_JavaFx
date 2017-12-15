@@ -5,11 +5,17 @@ import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.scene.input.KeyEvent;
 
-
+/**
+ *
+ */
 public class Input {
 	private static List<String> input = new LinkedList<String>();
 	private static Scene scene;
 	private static List<String> pressed = new LinkedList<String>();
+
+	/**
+   *	
+   */
 	public static void setScene(Scene pScene) {
 		scene = pScene;
 		scene.setOnKeyPressed(
@@ -35,6 +41,10 @@ public class Input {
 				}
 			});
 	}
+
+	/**
+   *
+   */
 	public static boolean keyPressed(String pKey) {
 		if(input.contains(pKey)) {
 			input.remove(pKey);
@@ -45,13 +55,15 @@ public class Input {
 			return false;
 		}
 	}
+
+	/**
+   *
+   */
 	public static void clearInput() {
 		for(int i=0; i<input.size(); i++) {
 			String news = input.get(i);
 			pressed.add(news);
 		}
 		input.clear();
-
-
 	}
 }
