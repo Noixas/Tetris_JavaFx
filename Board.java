@@ -34,6 +34,11 @@ public class Board extends GameObject {
       Bot bot = new Bot(_board, this);
       addChild(bot);
     }
+    else if(_gameMode == 1)
+    {
+      System.out.println("Game mode 1");
+      SmartOrderer smart = new SmartOrderer();
+    }
   }//APROVED
   public void addPentominoToBoard(Pentomino pPent, Vector2D pVec)
   {
