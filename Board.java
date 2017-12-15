@@ -185,16 +185,25 @@ public class Board extends GameObject {
       {
         if(_board[i][j] == null)
         {
-          j = _board[0].length;
           counter = 1;
+          j = _board[0].length+1;
         }
-        else counter++;
+        else {
+          System.out.println("J is " +j);
+          counter++;
 
-        if(counter == _board[0].length){
-          eraseRow(i);
-          counter = 1;
-        }
+            System.out.println("count is "+ counter);
+          if(counter >= _board[0].length  && j == _board[0].length-1){
+            System.out.println("Row erased, count was "+ counter);
+            System.out.println("_board[0].length "+ _board[0].length);
+
+            eraseRow(i);
+            counter = 1;
+          }
+          }
+
       }
+      counter = 1;
     }
 
   private void newPentomino()
