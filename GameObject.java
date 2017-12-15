@@ -53,10 +53,10 @@ public class GameObject {
 	{
 		return _children;
 	}
-  public void translate(float xPos, float yPos, float pDistance)
+  public void translate(float pxPos, float pyPos, float pDistance)
   {
-    xPos = xPos * pDistance;
-    yPos = yPos * pDistance;
+    xPos = pxPos * pDistance;
+    yPos = pyPos * pDistance;
     _position.setXY(xPos,yPos);
   }
   public void worldMove(float xDir, float yDir, float pDistance)

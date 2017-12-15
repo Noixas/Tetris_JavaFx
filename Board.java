@@ -199,7 +199,9 @@ public class Board extends GameObject {
 
   private void newPentomino()
   {
-   Pentomino p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),_pp.getPentPool().pop(),_tileSize,this);
+    int startPos = (_width - (int)(_width/2));
+
+   Pentomino p = new Pentomino(new Vector2D(startPos*_tileSize,0),_pp.getPentPool().pop(),_tileSize,this);
 //Erase line below, only for debug purposes
     // p = new Pentomino(new Vector2D((_width*_tileSize)/2,0),0,_tileSize,this);
 
@@ -207,7 +209,12 @@ public class Board extends GameObject {
     GraphicsComponent graphP = new GraphicsComponent(p,_gc);
     PhysicsPentomino phyP = new PhysicsPentomino(p,_speed);
     _activePentomino = p;
-    addPentominoToBoard(p,new Vector2D(_width/2,0));
+    System.out.println((_width - (int)(_width/2)));
+    int pentWidth = p.getPentArray()[0].length;
+      startPos = (5-pentWidth);
+    p.translate(startPos*_tileSize, 0, 1);
+    p.setPivot(new Vector2D(startPos,0));
+    addPentominoToBoard(p,new Vector2D(startPos,0));
     addChild(p);
     if(_pp.getPentPool().empty()) _pp.newPentPool();
   }

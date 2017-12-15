@@ -22,8 +22,9 @@ public class Pentomino extends GameObject {
 		_type= pType;
     _pentominoes = Piece.getPieces(_type);//Get all posible ways of the pentomino
     _pentomino = _pentominoes.get(_rotation);
-		xPos = _pivot.x *_tileSize;//Update world/graphics pos
-		yPos = _pivot.y * _tileSize;
+		for(int i = 0; i < _pentomino.length; i++)
+			for(int j = 0; j < _pentomino[0].length; j++)
+					System.out.println(_pentomino[i][j]);
 	}
 		public Pentomino(Vector2D pPos, char[][] pPent,int pTileSize, Board pBoard) {
 			super((int)pPos.x, (int)pPos.y);
